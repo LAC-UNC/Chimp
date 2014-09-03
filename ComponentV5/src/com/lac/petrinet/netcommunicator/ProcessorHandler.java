@@ -3,7 +3,6 @@ package com.lac.petrinet.netcommunicator;
 import procesadorPNVirtual.ProcesadorPetriVirtual;
 
 public class ProcessorHandler {
-	//TODO: when having multiple processors, we must change the parameter to get the transition quantities.
 	private static ProcesadorPetriVirtual virtualProcessor;
 
 	// Singleton  // 
@@ -29,7 +28,7 @@ public class ProcessorHandler {
 		if (INSTANCE == null){
 			createInstance(configFilePath, transitionQuantity);
 		}else{
-			//TODO: handle if the user pass a config file path but the instance already exits
+			//TODO: handle if the user pass a config file path but the instance already exists
 		}
 		return INSTANCE;
 	}

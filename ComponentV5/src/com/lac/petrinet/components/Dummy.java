@@ -6,7 +6,7 @@ import com.lac.petrinet.netcommunicator.Transition;
 
 public abstract class Dummy implements Callable<Void> {
 	
-	Transition transition;
+	private Transition transition;
 	
 	@Override
 	public Void call() throws Exception {
