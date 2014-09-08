@@ -8,7 +8,7 @@ import com.lac.petrinet.netcommunicator.Transition;
 public class Soul {
 
 	static private Dispatcher dispatcher ;
-	static private PetriNetMapper petriNet =  PetriNetMapper.getInstance();
+	static private PetriNetMapper petriNet;
 	// the objective of the ProcessorHandler here is just to create the instance with the parameters given.
 	static private ProcessorHandler processor ;
 	
@@ -39,9 +39,15 @@ public class Soul {
 	}
 	
 	
-	public void starts(String configFilePath, int transitionQuantity) {
+	public void starts(String configFilePath, int transitionQuantity) throws PetriNetException {
 		//TODO: create start
-		processor = ProcessorHandler.getInstance(configFilePath,transitionQuantity);
+		// first we read the PNML in order to create the trnasitions that we need
+		PetriNetMapper.getInstance(configFilePath);
+		// then we need to create the configuration files for the virtual processor
+		//TODO: create the files for ProcesadorVirtual.
+		String newFilePath= ""; 
+		// Then, create the processor handler with the path to the config files just created.  
+		processor = ProcessorHandler.getInstance(newFilePath,transitionQuantity);
 		dispatcher = new Dispatcher();
 		new Thread(dispatcher).start();
 	}

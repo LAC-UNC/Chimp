@@ -6,10 +6,10 @@ import com.lac.petrinet.components.Dummy;
 
 public class Transition {
 
-	String name ;
+	private String name;
 	private int transitionId;
 	private int netId;
-	ArrayList<Dummy> dummyCollection = new ArrayList<Dummy>();
+	private ArrayList<Dummy> dummyCollection = new ArrayList<Dummy>();
 	private ProcessorHandler processor  ;
 	
 	
@@ -34,6 +34,22 @@ public class Transition {
 		this.netId = netId;
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public ArrayList<Dummy> getDummyCollection() {
+		return dummyCollection;
+	}
+
+	public void setDummyCollection(ArrayList<Dummy> dummyCollection) {
+		this.dummyCollection = dummyCollection;
+	}
+
 	public void addDummy(Dummy d){
 		dummyCollection.add(d);
 	}
