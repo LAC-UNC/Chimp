@@ -11,7 +11,9 @@ import com.lac.petrinet.netcommunicator.Transition;
 public class PetriNetMapper {
 
 	private static TransitionGroup transitionsMapper ;
+	private static TransitionGroup transitionsMapperIncomplete ;
 	private static ConfigurationReader configReader ;
+	
 
 	// Singleton  // 
 	private static PetriNetMapper INSTANCE = null;
@@ -68,11 +70,21 @@ public class PetriNetMapper {
 	}
 
 	public Transition getInformedTransition(String transitionName){
-		return transitionsMapper.getInformedTransitions().get(transitionName);
+		Transition transit = transitionsMapper.getInformedTransitions().get(transitionName);
+		if( transit == null){
+			transit = new Transition(transitionName);
+			transitionsMapperIncomplete.getInformedTransitions().put(transitionName, transit);
+		}
+		return transit;
 	}
 
 	public Transition getFiredTransition(String transitionName){
-		return transitionsMapper.getFiredTransitions().get(transitionName);
+		Transition transit =  transitionsMapper.getFiredTransitions().get(transitionName);
+		if( transit == null){
+			transit = new Transition(transitionName);
+			transitionsMapperIncomplete.getFiredTransitions().put(transitionName, transit);
+		}
+		return transit;
 	}
 
 

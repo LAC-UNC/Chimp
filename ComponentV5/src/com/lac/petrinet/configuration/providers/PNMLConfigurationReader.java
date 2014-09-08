@@ -25,6 +25,7 @@ import com.lac.petrinet.netcommunicator.Transition;
 public class PNMLConfigurationReader implements ConfigurationReader {
 	
 	private TransitionGroup transitions;
+//	private synchronized static int transitionID;
 	
 	/**
 	 * Constructor.

@@ -21,6 +21,10 @@ public class Transition {
 		 processor = ProcessorHandler.getInstance(null,null) ;
 	}
 	
+	public Transition(String name){
+		this.name =name;
+	}
+	
 	public int getTransitionId() {
 		return transitionId;
 	}
