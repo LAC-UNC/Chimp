@@ -4,14 +4,15 @@ import java.util.ArrayList;
 
 import com.lac.petrinet.configuration.ConfigurationReader;
 import com.lac.petrinet.configuration.TransitionGroup;
+import com.lac.petrinet.configuration.providers.FakeConfigurationReader;
 import com.lac.petrinet.configuration.providers.PNMLConfigurationReader;
 import com.lac.petrinet.exceptions.PetriNetException;
 import com.lac.petrinet.netcommunicator.Transition;
 
 public class PetriNetMapper {
 
-	private static TransitionGroup transitionsMapper ;
-	private static TransitionGroup transitionsMapperIncomplete ;
+	private TransitionGroup transitionsMapper ;
+	private TransitionGroup transitionsMapperIncomplete ;
 	private static ConfigurationReader configReader ;
 	
 
@@ -19,25 +20,12 @@ public class PetriNetMapper {
 	private static PetriNetMapper INSTANCE = null;
 	private PetriNetMapper(){}
 
-	private static void createInstance(String path) throws PetriNetException {
-		if (INSTANCE == null) {
-			synchronized(PetriNetMapper.class) {
-				if (INSTANCE == null) { 
-					INSTANCE = new PetriNetMapper();
-					// TODO: handle dynamically the reader.
-					configReader = new PNMLConfigurationReader();
-					transitionsMapper = configReader.getConfiguration(path);
-				}
-			}
-		}
-	}
-
 	private static void createInstance(){
 		if (INSTANCE == null) {
 			synchronized(PetriNetMapper.class) {
 				if (INSTANCE == null) { 
 					INSTANCE = new PetriNetMapper();
-					transitionsMapper = new TransitionGroup();
+					INSTANCE.transitionsMapper = new TransitionGroup();
 				}
 			}
 		}
@@ -50,14 +38,6 @@ public class PetriNetMapper {
 		return INSTANCE;
 	}
 	
-	public static PetriNetMapper getInstance(String path) throws PetriNetException {
-		if (INSTANCE == null){
-			createInstance(path);
-		}
-		return INSTANCE;
-	}
-	
-
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		throw new CloneNotSupportedException(); 
@@ -86,6 +66,14 @@ public class PetriNetMapper {
 		}
 		return transit;
 	}
-
-
+	
+	public void setConfigurationFake(FakeConfigurationReader reader) throws PetriNetException{
+		this.configReader = reader;
+		this.transitionsMapper = this.configReader.getConfiguration("");
+	}
+	
+	public void setConfigurationPNML(String path) throws PetriNetException{
+		this.configReader = new PNMLConfigurationReader();
+		this.transitionsMapper = this.configReader.getConfiguration(path);
+	}
 }

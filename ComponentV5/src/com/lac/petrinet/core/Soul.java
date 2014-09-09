@@ -1,6 +1,7 @@
 package com.lac.petrinet.core;
 
 import com.lac.petrinet.components.Dummy;
+import com.lac.petrinet.configuration.providers.FakeConfigurationReader;
 import com.lac.petrinet.exceptions.PetriNetException;
 import com.lac.petrinet.netcommunicator.ProcessorHandler;
 import com.lac.petrinet.netcommunicator.Transition;
@@ -8,9 +9,9 @@ import com.lac.petrinet.netcommunicator.Transition;
 public class Soul {
 
 	static private Dispatcher dispatcher ;
-	static private PetriNetMapper petriNet;
+	static private PetriNetMapper petriNet = PetriNetMapper.getInstance();
 	// the objective of the ProcessorHandler here is just to create the instance with the parameters given.
-	static private ProcessorHandler processor ;
+	static private ProcessorHandler processor;
 	
 	
 	public synchronized static void associate(String nameTransitionOutput, Class<? extends Dummy> clazz, String nameTransitionInput, 
@@ -39,10 +40,10 @@ public class Soul {
 	}
 	
 	
-	public void starts(String configFilePath, int transitionQuantity) throws PetriNetException {
+	public static void starts(String configFilePath, int transitionQuantity) throws PetriNetException {
 		//TODO: create start
 		// first we read the PNML in order to create the trnasitions that we need
-		PetriNetMapper.getInstance(configFilePath);
+		petriNet.setConfigurationPNML(configFilePath);
 		// then we need to create the configuration files for the virtual processor
 		//TODO: create the files for ProcesadorVirtual.
 		String newFilePath= ""; 
@@ -52,5 +53,17 @@ public class Soul {
 		new Thread(dispatcher).start();
 	}
 	
+	public static void starts(FakeConfigurationReader reader, int transitionQuantity) throws PetriNetException {
+		//TODO: create start
+		// first we read the PNML in order to create the trnasitions that we need
+		petriNet.setConfigurationFake(reader);
+		// then we need to create the configuration files for the virtual processor
+		//TODO: create the files for ProcesadorVirtual.
+		String newFilePath= ""; 
+		// Then, create the processor handler with the path to the config files just created.  
+		processor = ProcessorHandler.getInstance(newFilePath,transitionQuantity);
+		dispatcher = new Dispatcher();
+		new Thread(dispatcher).start();
+	}
 	
 }
