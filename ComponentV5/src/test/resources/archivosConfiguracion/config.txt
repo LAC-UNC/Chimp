@@ -1,0 +1,8 @@
+<incidencia>incidenciaX.txt</incidencia>
+<marcado>marcadoX.txt</marcado>
+<cotas>cotasX.txt</cotas>
+<automaticos>automaticosX.txt</automaticos>
+<prioridades>prioridadesX.txt</prioridades>
+<prioridadesDistribuidas>prioridadesDistribuidas.txt</prioridadesDistribuidas>
+<sinInforme>sinInformeX.txt</sinInforme>
+<relacion>relacionX.txt</relacion>
