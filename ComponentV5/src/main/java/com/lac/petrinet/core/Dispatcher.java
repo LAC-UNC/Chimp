@@ -8,23 +8,20 @@ import com.lac.petrinet.netcommunicator.Transition;
 
 public class Dispatcher implements Runnable {
 
-	private ExecutorService pool ;
-	private PetriNetMapper petriNet ;
+	private ExecutorService threadPool ;
+	private PetriNet petriNet ;
 	
-	public Dispatcher(){
-		pool = Executors.newCachedThreadPool();
-		petriNet = PetriNetMapper.getInstance();
+	public Dispatcher(PetriNet petriNet){
+		this.threadPool = Executors.newCachedThreadPool();
+		this.petriNet = petriNet;
 	}
 	
 	public void run() {
-		while(Boolean.TRUE){
-			for(Transition transition : petriNet.getAllInformedTransitions()){
-				// for each over the dummies to execute. If the transition was NOT informed, then 
-				// the collection returned is empty.
-				for(Dummy dummy : transition.listen()){
-					pool.submit(dummy);
-				}
-			}
-		}
+		throw new UnsupportedOperationException();
 	}
+	
+	public void start(){
+		throw new UnsupportedOperationException();
+	}
+	
 }

@@ -5,19 +5,20 @@ import com.lac.petrinet.exceptions.PetriNetException;
 import com.lac.petrinet.netcommunicator.Transition;
 
 public class FakeConfigurationReader implements ConfigurationReader {
-	TransitionGroup tg = new TransitionGroup();
+//	TODO: after all the code is done, re-code this MOCK. 
+//	TransitionGroup tg = new TransitionGroup();
 	
 	@Override
 	public TransitionGroup getConfiguration(String path)
 			throws PetriNetException {
-		return tg;
+		throw new UnsupportedOperationException();
 	}
 
-	public void addFiredTransition(String tid, Transition t) {
-		tg.getFiredTransitions().put(tid, t);
-	}
-	
-	public void addInformedTransition(String tid, Transition t) {
-		tg.getInformedTransitions().put(tid, t);
-	}
+//	public void addFiredTransition(String tid, Transition t) {
+//		tg.getFiredTransitions().put(tid, t);
+//	}
+//	
+//	public void addInformedTransition(String tid, Transition t) {
+//		tg.getInformedTransitions().put(tid, t);
+//	}
 }

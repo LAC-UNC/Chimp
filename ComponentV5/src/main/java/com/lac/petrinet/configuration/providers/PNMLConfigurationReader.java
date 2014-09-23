@@ -19,6 +19,7 @@ import com.lac.petrinet.configuration.PNData;
 import com.lac.petrinet.configuration.ConfigurationReader;
 import com.lac.petrinet.configuration.TransitionGroup;
 import com.lac.petrinet.exceptions.PetriNetException;
+import com.lac.petrinet.netcommunicator.FiredTransition;
 import com.lac.petrinet.netcommunicator.Transition;
 
 /**
@@ -122,19 +123,20 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 					primerValor = "A";
 					segundoValor = "N";
 				}
-				
-				Transition t = new Transition(transitionID, 0);
-				transitionID++;
-				if(primerValor.compareToIgnoreCase("d") == 0 && primerValor.compareToIgnoreCase("a") != 0){
-					this.transitions.getFiredTransitions().put(idTransicion, t);
-				}else{
-					throw new PetriNetException("Transition has invalid etiquete for fire. Transition id: " + idTransicion);
-				}
-				if(segundoValor.compareTo("i") == 0 && primerValor.compareToIgnoreCase("n") != 0){
-					this.transitions.getInformedTransitions().put(idTransicion, t);
-				}else{
-					throw new PetriNetException("Transition has invalid etiquete for inform. Transition id: " + idTransicion);
-				}
+
+				// TODO: re code the transition genereation. 
+//				Transition t = new FiredTransition(transitionID);
+//				transitionID++;
+//				if(primerValor.compareToIgnoreCase("d") == 0 && primerValor.compareToIgnoreCase("a") != 0){
+//					this.transitions.getFiredTransitions().put(idTransicion, t);
+//				}else{
+//					throw new PetriNetException("Transition has invalid etiquete for fire. Transition id: " + idTransicion);
+//				}
+//				if(segundoValor.compareTo("i") == 0 && primerValor.compareToIgnoreCase("n") != 0){
+//					this.transitions.getInformedTransitions().put(idTransicion, t);
+//				}else{
+//					throw new PetriNetException("Transition has invalid etiquete for inform. Transition id: " + idTransicion);
+//				}
 			}
 		}
 		return this.transitions;
