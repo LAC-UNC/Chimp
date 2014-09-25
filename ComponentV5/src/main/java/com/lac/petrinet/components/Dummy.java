@@ -6,14 +6,21 @@ import com.lac.petrinet.core.PetriNet;
 
 public abstract class Dummy implements Callable<Void> {
 	
-	private String transitionName;
+	protected String transitionName;
 	private PetriNet petriNet;  
 	
 	abstract protected void execute();
 	
+	protected Dummy(PetriNet pn, String tName){
+		this.petriNet = pn;
+		this.transitionName = tName;
+	}
+	
 	@Override
 	public Void call() throws Exception {
-		throw new UnsupportedOperationException();
+		execute();
+		petriNet.fire(transitionName);
+		return null;
 	}
 
 	public void setTransitionName(String transitionName) {

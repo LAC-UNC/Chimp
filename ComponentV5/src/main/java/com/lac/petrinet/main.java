@@ -5,8 +5,6 @@ import com.lac.petrinet.core.Soul;
 import com.lac.petrinet.exceptions.PetriNetException;
 import com.lac.petrinet.netcommunicator.Transition;
 
-import manualTests.ResourceOne;
-
 /**
  * I think for the core, there shouldn't be any main....
  * @author icaio
