@@ -1,6 +1,7 @@
 package manualTests.integration;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,25 +32,55 @@ public class MockedConfigurationMockedProcessor {
 			MockedConfigurationMockedProcessor.sharedCounter++;
 			MockedConfigurationMockedProcessor.last = this.msg;
 			System.out.println(this.msg);
+			
 			return;
 		}
 	}
 	
-	public static void main() {
+	public static void main(String[] args) {
 		//This is some similar to what a Chimp user can do.
 		PetriNet pn = loadConfiguration();
 		
-		MockedConfigurationMockedProcessor.Counter dumb1 = new MockedConfigurationMockedProcessor.Counter(pn,"someFired11", "OneDummy");
-		MockedConfigurationMockedProcessor.Counter dumb2 = new MockedConfigurationMockedProcessor.Counter(pn,"someFired12", "OtherDummy");
-		MockedConfigurationMockedProcessor.Counter dumb3 = new MockedConfigurationMockedProcessor.Counter(pn,"someFired13", "TheBestDummy");
+		MockedConfigurationMockedProcessor.Counter dumb1 = new MockedConfigurationMockedProcessor.Counter(pn,"someFired11", "One");
+		MockedConfigurationMockedProcessor.Counter dumb2 = new MockedConfigurationMockedProcessor.Counter(pn,"someFired12", "Two");
+		MockedConfigurationMockedProcessor.Counter dumb3 = new MockedConfigurationMockedProcessor.Counter(pn,"someFired13", "Three");
 			
 		pn.assignDummy("someInformed1", dumb1);
 		pn.assignDummy("someInformed2", dumb2);
 		pn.assignDummy("someInformed3", dumb3);
 		
-		pn.startListening(3);
+		when(mockedProcessor.listen(1)).thenReturn(true);
+		when(mockedProcessor.listen(2)).thenReturn(false);
+		when(mockedProcessor.listen(3)).thenReturn(false);
+		pn.nextCicle();
+		when(mockedProcessor.listen(1)).thenReturn(false);
+		when(mockedProcessor.listen(2)).thenReturn(true);
+		when(mockedProcessor.listen(3)).thenReturn(false);
+		pn.nextCicle();
+		when(mockedProcessor.listen(1)).thenReturn(false);
+		when(mockedProcessor.listen(2)).thenReturn(false);
+		when(mockedProcessor.listen(3)).thenReturn(true);
+		pn.nextCicle();
+		when(mockedProcessor.listen(1)).thenReturn(false);
+		when(mockedProcessor.listen(2)).thenReturn(true);
+		when(mockedProcessor.listen(3)).thenReturn(false);
+		pn.nextCicle();
+		when(mockedProcessor.listen(1)).thenReturn(false);
+		when(mockedProcessor.listen(2)).thenReturn(false);
+		when(mockedProcessor.listen(3)).thenReturn(true);
+		pn.nextCicle();
+		when(mockedProcessor.listen(1)).thenReturn(true);
+		when(mockedProcessor.listen(2)).thenReturn(false);
+		when(mockedProcessor.listen(3)).thenReturn(true);
+		pn.nextCicle();
+		pn.nextCicle();
+		pn.nextCicle();
+		when(mockedProcessor.listen(1)).thenReturn(true);
+		when(mockedProcessor.listen(2)).thenReturn(true);
+		when(mockedProcessor.listen(3)).thenReturn(true);
+		pn.nextCicle();
 		
-		
+		System.out.println("end..");
 	}
 	
 	public static PetriNet loadConfiguration() {

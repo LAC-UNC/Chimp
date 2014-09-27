@@ -15,25 +15,26 @@ public class PetriNet {
 	Map<String, FiredTransition> firedTransitions = new HashMap<String, FiredTransition>(); 
 	
 	public void startListening(){
-		Iterator<Entry<String, InformedTransition>> it;
 		while(true) { // As far as I know, this method can't be tested because of this infinite cycle.
-		    it = informedTransitions.entrySet().iterator();
-		    while (it.hasNext()) {
-		        Map.Entry<String, InformedTransition> pairs = (Entry<String, InformedTransition>)it.next();
-		        ((InformedTransition) pairs.getValue()).communicate();
-		    }
+			this.nextCicle();
 		}
 	}
 	
 	public void startListening(int numberOfCicles){
-		Iterator<Entry<String, InformedTransition>> it;
 		while(numberOfCicles-- > 0) {
-		    it = informedTransitions.entrySet().iterator();
-		    while (it.hasNext()) {
-		        Map.Entry<String, InformedTransition> pairs = (Entry<String, InformedTransition>)it.next();
-		        ((InformedTransition) pairs.getValue()).communicate();
-		    }
+			this.nextCicle();
 		}
+	}
+	
+	public void nextCicle(){
+		Iterator<Entry<String, InformedTransition>> it;
+	    it = informedTransitions.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry<String, InformedTransition> pairs = (Entry<String, InformedTransition>)it.next();
+	        ((InformedTransition) pairs.getValue()).communicate();
+	    }
+		
+		return;
 	}
 	
 	public void assignDummy(String transition, Dummy dumb){
