@@ -3,14 +3,9 @@ package automaticTests.netcommunicatior;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.never;
-
-import java.lang.reflect.Field;
-import java.util.Collection;
 
 import org.testng.annotations.Test;
 
-import com.lac.petrinet.components.Dummy;
 import com.lac.petrinet.netcommunicator.InformedTransition;
 import com.lac.petrinet.netcommunicator.ProcessorHandler;
 import com.lac.petrinet.commonfake.DummyClass;
