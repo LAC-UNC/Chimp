@@ -11,9 +11,9 @@ public class InformedTransition extends Transition {
 	private ExecutorService threadPool;
 	private ArrayList<Dummy> dummies;
 	
-	public InformedTransition(ProcessorHandler processor, int trasitionId) {
+	public InformedTransition(ProcessorHandler processor, int trasitionId, ExecutorService threadPool) {
 		super(processor, trasitionId);
-		this.threadPool = Executors.newCachedThreadPool();
+		this.threadPool = threadPool;
 		this.dummies = new ArrayList<Dummy>();
 	}
 	

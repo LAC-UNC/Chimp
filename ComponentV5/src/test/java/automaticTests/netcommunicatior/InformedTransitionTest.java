@@ -4,6 +4,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.testng.annotations.Test;
 
 import com.lac.petrinet.netcommunicator.InformedTransition;
@@ -16,10 +19,11 @@ import static org.testng.AssertJUnit.*;
 public class InformedTransitionTest {
 	
 	private ProcessorHandler mockedProcessor = mock(ProcessorHandler.class);
+	private ExecutorService threadPool = Executors.newCachedThreadPool();
 	
 	@Test
 	public void addDummyToTransition() {
-		InformedTransition it = new InformedTransition(mockedProcessor, 7170);
+		InformedTransition it = new InformedTransition(mockedProcessor, 7170, threadPool);
 		DummyClass dumb = new DummyClass("someTransition");
 		
 		assertFalse(it.contains(dumb));
@@ -29,7 +33,7 @@ public class InformedTransitionTest {
 	
 	@Test
 	public void transitionShouldListenTheProcessorWhenCommunicate() {
-		InformedTransition it = new InformedTransition(mockedProcessor, 717);
+		InformedTransition it = new InformedTransition(mockedProcessor, 717, threadPool);
 		it.communicate();
 		verify(mockedProcessor).listen(717);
 	}
@@ -49,7 +53,7 @@ public class InformedTransitionTest {
 	
 	@Test
 	public void transitionShouldExecuteTaskWhenIsTriggered() {
-		InformedTransition it = new InformedTransition(mockedProcessor, 7);
+		InformedTransition it = new InformedTransition(mockedProcessor, 7, threadPool);
 		DummyClass dumb = new DummyClass("someTransition");
 		
 		when(mockedProcessor.listen(7)).thenReturn(true);

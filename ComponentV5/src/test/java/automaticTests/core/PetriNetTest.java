@@ -8,6 +8,8 @@ import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
 import static org.testng.AssertJUnit.assertSame;
 
+import java.util.concurrent.ExecutorService;
+
 import org.testng.annotations.Test;
 
 import com.lac.petrinet.commonfake.DummyClass;
@@ -19,6 +21,7 @@ import com.lac.petrinet.netcommunicator.ProcessorHandler;
 public class PetriNetTest {
 	
 	private InformedTransition itmocked = mock(InformedTransition.class);
+	private ExecutorService threadPool;
 	private FiredTransition ftmocked = mock(FiredTransition.class);
 	private ProcessorHandler mockedProcessor = mock(ProcessorHandler.class);
 	
@@ -52,7 +55,7 @@ public class PetriNetTest {
 	@Test
 	public void assignDummyToInformedFromPetriNet() {
 		PetriNet p = new PetriNet();
-		InformedTransition it = new InformedTransition(mockedProcessor, 216);
+		InformedTransition it = new InformedTransition(mockedProcessor, 216, threadPool);
 		DummyClass dumb = new DummyClass(p,"someFired");
 		
 		p.addInformed("someInformed", it);
@@ -66,9 +69,9 @@ public class PetriNetTest {
 	@Test
 	public void startListeningShouldListenToTheTransitionOnTheProcessor() {
 		PetriNet p = new PetriNet();
-		InformedTransition it1 = new InformedTransition(mockedProcessor, 1);
-		InformedTransition it2 = new InformedTransition(mockedProcessor, 2);
-		InformedTransition it3 = new InformedTransition(mockedProcessor, 3);
+		InformedTransition it1 = new InformedTransition(mockedProcessor, 1, threadPool);
+		InformedTransition it2 = new InformedTransition(mockedProcessor, 2, threadPool);
+		InformedTransition it3 = new InformedTransition(mockedProcessor, 3, threadPool);
 		FiredTransition ft1 = new FiredTransition(mockedProcessor, 11);
 		FiredTransition ft2 = new FiredTransition(mockedProcessor, 12);
 		FiredTransition ft3 = new FiredTransition(mockedProcessor, 13);
@@ -82,10 +85,6 @@ public class PetriNetTest {
 		p.addFired("someFired1", ft1);
 		p.addFired("someFired2", ft2);
 		p.addFired("someFired3", ft3);
-		
-		p.assignDummy("someInformed1", dumb1);
-		p.assignDummy("someInformed1", dumb2);
-		p.assignDummy("someInformed1", dumb3);
 		
 		p.startListening(1);
 		
