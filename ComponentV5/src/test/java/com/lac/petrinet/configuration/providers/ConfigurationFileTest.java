@@ -1,4 +1,4 @@
-package automaticTests.configuration;
+package com.lac.petrinet.configuration.providers;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import com.lac.petrinet.configuration.PNData;
 import com.lac.petrinet.configuration.providers.PNMLConfigurationReader;
 import com.lac.petrinet.exceptions.PetriNetException;
 
-public class ConfigurationFileTests {
+public class ConfigurationFileTest {
 
 	String configurationFilePath ;
 	String pnmlFilePath;
@@ -54,7 +54,7 @@ public class ConfigurationFileTests {
 		PNData pnData = new PNData();
 		pnData.cargarRed(pnmlFilePath);
 		PNMLConfigurationReader pnmlConfigurator = new PNMLConfigurationReader();
-		pnmlConfigurator.generarArchivosConfiguracion(pnData, configurationFilePath);
+//		pnmlConfigurator.generarArchivosConfiguracion(pnData, configurationFilePath);
 		
 		// test if the files are created
 		for(String fileName : fileNames){
@@ -68,7 +68,7 @@ public class ConfigurationFileTests {
 		PNData pnData = new PNData();
 		pnData.cargarRed(pnmlFilePath);
 		PNMLConfigurationReader pnmlConfigurator = new PNMLConfigurationReader();
-		pnmlConfigurator.generarArchivosConfiguracion(pnData, configurationFilePath);
+//		pnmlConfigurator.generarArchivosConfiguracion(pnData, configurationFilePath);
 		
 		for(String fileName : fileNames){
 			String actualString = FileUtils.readFileToString((new File(tempFolder.getPath()+ fileName)));
@@ -79,7 +79,7 @@ public class ConfigurationFileTests {
 
 	private String getJarpath() throws URISyntaxException {
 		final String uri;
-		uri = ConfigurationFileTests.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+		uri = ConfigurationFileTest.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
 		return uri;
 	}
 	

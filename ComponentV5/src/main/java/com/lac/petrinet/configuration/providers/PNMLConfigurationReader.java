@@ -17,7 +17,7 @@ import org.xml.sax.SAXException;
 
 import com.lac.petrinet.configuration.PNData;
 import com.lac.petrinet.configuration.ConfigurationReader;
-import com.lac.petrinet.configuration.TransitionGroup;
+import com.lac.petrinet.core.PetriNet;
 import com.lac.petrinet.exceptions.PetriNetException;
 import com.lac.petrinet.netcommunicator.FiredTransition;
 import com.lac.petrinet.netcommunicator.Transition;
@@ -27,8 +27,6 @@ import com.lac.petrinet.netcommunicator.Transition;
  * 
  */
 public class PNMLConfigurationReader implements ConfigurationReader {
-	
-	private TransitionGroup transitions;
 	
 	/**
 	 * Nombre de archivo para la matriz de incidencia.
@@ -66,20 +64,12 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 
 	
 	/**
-	 * Constructor.
-	 * @param pathARedPetri
-	 * @throws PetriNetException 
-	 */
-	public PNMLConfigurationReader()  {
-		this.transitions = new TransitionGroup();
-	}
-
-	/**
 	 * Read the values from PNML file y create the transitions instance adding it to the transitions attribute. 
 	 * @param pathARedPetri Path to PNML file
 	 * @throws PetriNetException 
 	 */
-	private TransitionGroup createTransitionsFromPNML(final String pathARedPetri) throws PetriNetException {
+	private PetriNet createPNFromPNML(final String pathARedPetri) throws PetriNetException {
+		PetriNet petriNet = new PetriNet();
 		int transitionID = 0;
   		final File xmlFile = new File(pathARedPetri);
 		final DocumentBuilderFactory dbFactory =
@@ -139,21 +129,24 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 //				}
 			}
 		}
-		return this.transitions;
+		return petriNet;
 	}
 	
-	public TransitionGroup getTransitions(){
-		return this.transitions;
-	}
-	
-	public TransitionGroup updateTransitions(String pathARedPetri) throws PetriNetException{
-		return createTransitionsFromPNML(pathARedPetri);
-	}
-
 	@Override
-	public TransitionGroup getConfiguration(String path) throws PetriNetException {
-		createTransitionsFromPNML(path);
-		return this.transitions;
+	public PetriNet loadConfiguration(String configFilepath) throws PetriNetException {
+		//create temporal folder for configuratin fi
+		
+		// create configuration files for processor and Transitions
+		PNData pnData = new PNData();
+		pnData.cargarRed(configFilepath);
+		generateConfigFiles(pnData, configFilepath);
+		
+		// create processorHandler
+		
+		// Assign ProcessorHandler to Transitions 
+		
+		
+		return null;
 	}
 	
 	/**
@@ -162,10 +155,10 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 	 * de la red.
 	 * @param pathArchivos path del proyecto.
 	 */
-	public  void generarArchivosConfiguracion(
+	private void generateConfigFiles(
 			final PNData infoRed,
-			final String pathArchivos) {
-		final String pathConfig = pathArchivos + "\\archivosConfiguracion";
+			final String exitFilePath) {
+		final String pathConfig = exitFilePath + "\\archivosConfiguracion";
 		final File folderConfig = new File(pathConfig);
 		folderConfig.mkdirs();
 		////Se genera la matriz de prioridades distribuidas con un vector nulo,
