@@ -5,14 +5,13 @@ import java.util.Collection;
 import com.lac.petrinet.components.Dummy;
 
 public class FiredTransition extends Transition {
-
 	
-	
+	public FiredTransition(ProcessorHandler processor, int trasitionId) {
+		super(processor, trasitionId);
+	}
 	
 	@Override
-	public Collection<Dummy> communicate() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+	public void communicate() {
+		this.processor.fire(this.transitionId);
 	}
-
 }

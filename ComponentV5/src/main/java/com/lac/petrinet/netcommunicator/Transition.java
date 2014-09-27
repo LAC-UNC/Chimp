@@ -7,10 +7,22 @@ import com.lac.petrinet.components.Dummy;
 public abstract class Transition {
 
 	@SuppressWarnings("unused")
-	private int transitionId;
+	protected int transitionId;
 	@SuppressWarnings("unused")
-	private ProcessorHandler processor  ;
+	protected ProcessorHandler processor;
 	
-	public abstract Collection<Dummy> communicate();
+	public Transition(ProcessorHandler processor, int trasitionId) {
+		this.setProcessor(processor);
+		this.setTransitionId(trasitionId);
+	}
 	
+	public abstract void communicate();
+	
+	protected void setTransitionId(int transitionId){
+		this.transitionId = transitionId;
+	}
+	
+	protected void setProcessor(ProcessorHandler processor){
+		this.processor = processor;
+	}
 }
