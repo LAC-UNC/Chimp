@@ -1,8 +1,9 @@
 package com.lac.petrinet.core;
 
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.lac.petrinet.components.Dummy;
 import com.lac.petrinet.netcommunicator.FiredTransition;
@@ -13,23 +14,30 @@ public class PetriNet {
 	Map<String,InformedTransition> informedTransitions = new HashMap<String, InformedTransition>(); 
 	Map<String, FiredTransition> firedTransitions = new HashMap<String, FiredTransition>(); 
 	
-	public Collection<Dummy> listenAll(){
-		throw new UnsupportedOperationException();
+	public void startListening(int numberOfCicles){
+		Iterator<Entry<String, InformedTransition>> it;
+		while(true) { // As far as I know, this method can't be tested because of this infinite cycle.
+		    it = informedTransitions.entrySet().iterator();
+		    while (it.hasNext()) {
+		        Map.Entry<String, InformedTransition> pairs = (Entry<String, InformedTransition>)it.next();
+		        ((InformedTransition) pairs.getValue()).communicate();
+		    }
+		}
 	}
 	
-	public void assignDummy(String transition, Dummy dummy){
-		throw new UnsupportedOperationException();
+	public void assignDummy(String transition, Dummy dumb){
+		informedTransitions.get(transition).addDummy(dumb);
 	}
 	
 	public void fire(String transition){
-		throw new UnsupportedOperationException();
+		firedTransitions.get(transition).communicate();
 	}
 	
-	public void addInformed(InformedTransition informedTransition){
-		throw new UnsupportedOperationException();	
+	public void addInformed(String name, InformedTransition informedTransition){
+		informedTransitions.put(name, informedTransition);
 	}
 	
-	public void addFired(FiredTransition fireTransition){
-		throw new UnsupportedOperationException();
+	public void addFired(String name, FiredTransition firedTransition){
+		firedTransitions.put(name, firedTransition);
 	}
 }
