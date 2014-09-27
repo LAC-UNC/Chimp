@@ -32,4 +32,8 @@ public class InformedTransition extends Transition {
 	public void addDummy(Dummy dumb) {
 		this.dummies.add(dumb);
 	}
+	
+	public boolean contains(Dummy dumb) {
+		return this.dummies.contains(dumb);
+	}
 }

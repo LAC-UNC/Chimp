@@ -1,55 +1,64 @@
 package automaticTests.core;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
-
-import java.lang.reflect.Field;
-import java.util.HashMap;
+import static org.testng.AssertJUnit.assertSame;
 
 import org.testng.annotations.Test;
 
-import com.lac.petrinet.components.Dummy;
+import com.lac.petrinet.commonfake.DummyClass;
 import com.lac.petrinet.core.PetriNet;
+import com.lac.petrinet.netcommunicator.FiredTransition;
 import com.lac.petrinet.netcommunicator.InformedTransition;
 import com.lac.petrinet.netcommunicator.ProcessorHandler;
 
 public class PetriNetTest {
 	
 	private InformedTransition itmocked = mock(InformedTransition.class);
-	
-	@SuppressWarnings("unchecked")
-	public HashMap<String, InformedTransition> getInformedFromPetriNet(PetriNet obj) {
-		Field field;
-		try {
-			field = PetriNet.class.getDeclaredField("informedTransitions");
-			field.setAccessible(true);
-			return (HashMap<String, InformedTransition>) field.get(obj);
-		} catch (NoSuchFieldException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
+	private FiredTransition ftmocked = mock(FiredTransition.class);
+	private ProcessorHandler mockedProcessor = mock(ProcessorHandler.class);
 	
 	@Test
 	public void addInformedTransitionToPetriNet() {
 		PetriNet p = new PetriNet();
 		
-		assertFalse(this.getInformedFromPetriNet(p).containsValue(itmocked));
-		assertFalse(this.getInformedFromPetriNet(p).containsKey("someInformed"));
 		p.addInformed("someInformed", itmocked);
-		assertTrue(this.getInformedFromPetriNet(p).containsValue(itmocked));
-		assertTrue(this.getInformedFromPetriNet(p).containsKey("someInformed"));
+		assertSame(p.getInformed("someInformed"), itmocked) ;
+	}
+	
+	@Test
+	public void addFiredTransitionToPetriNet() {
+		PetriNet p = new PetriNet();
+		
+		p.addFired("someFired", ftmocked);
+		assertSame(p.getFired("someFired"), ftmocked) ;
+	}
+	
+	@Test
+	public void fireAFiredFromPetriNet() {
+		PetriNet p = new PetriNet();
+		
+		//I mock the processor instead the transition to make the test the most implementation agnostic as possible
+		p.addFired("someFired", new FiredTransition(mockedProcessor, 213));
+		p.fire("someFired");
+		
+		verify(mockedProcessor).fire(213);
+	}
+	
+	@Test
+	public void assignDummyToInformedFromPetriNet() {
+		PetriNet p = new PetriNet();
+		InformedTransition it = new InformedTransition(mockedProcessor, 216);
+		DummyClass dumb = new DummyClass(p,"someFired");
+		
+		p.addInformed("someInformed", it);
+		p.addFired("someFired", new FiredTransition(mockedProcessor, 27));
+		
+		assertFalse(it.contains(dumb));
+		p.assignDummy("someInformed", dumb);
+		assertTrue(it.contains(dumb));
 	}
 }

@@ -30,6 +30,7 @@ public class PetriNet {
 	}
 	
 	public void fire(String transition){
+		// TODO: What happen when there is no transition with the given name??
 		firedTransitions.get(transition).communicate();
 	}
 	
@@ -39,5 +40,13 @@ public class PetriNet {
 	
 	public void addFired(String name, FiredTransition firedTransition){
 		firedTransitions.put(name, firedTransition);
+	}
+	
+	public FiredTransition getFired(String name) {
+		return firedTransitions.get(name);
+	}
+	
+	public InformedTransition getInformed(String name) {
+		return informedTransitions.get(name);
 	}
 }
