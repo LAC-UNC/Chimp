@@ -9,14 +9,11 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.concurrent.ExecutorService;
 
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import automaticTests.components.DummyTests;
 
 import com.lac.petrinet.components.Dummy;
 import com.lac.petrinet.core.PetriNet;
-import com.lac.petrinet.netcommunicator.FiredTransition;
 import com.lac.petrinet.netcommunicator.InformedTransition;
 import com.lac.petrinet.netcommunicator.ProcessorHandler;
 
