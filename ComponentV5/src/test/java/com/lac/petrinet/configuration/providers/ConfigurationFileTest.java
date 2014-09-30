@@ -38,7 +38,7 @@ public class ConfigurationFileTest {
 	@BeforeSuite
 	private void pathAndFolderConfiguration() throws URISyntaxException, IOException{
 		// source of the sample pnml
-		pnmlFilePath = getJarpath() + "/automaticTests/resources/pnml/barcos-conContrainst.pnml";
+		pnmlFilePath = getJarpath() + "/pnml/barcos-conContrainst.pnml";
 		// destination folder of the new created files. 		
 		Path tempFolderPath = Files.createTempDirectory("ConfigTempFolder");
 		tempFolder = tempFolderPath.toFile();
@@ -51,10 +51,8 @@ public class ConfigurationFileTest {
 	public void configurationFileCreatingTest() throws PetriNetException {
 		
 		// creation of the configuration files
-		PNData pnData = new PNData();
-		pnData.cargarRed(pnmlFilePath);
 		PNMLConfigurationReader pnmlConfigurator = new PNMLConfigurationReader();
-//		pnmlConfigurator.generarArchivosConfiguracion(pnData, configurationFilePath);
+		pnmlConfigurator.loadConfiguration(pnmlFilePath);
 		
 		// test if the files are created
 		for(String fileName : fileNames){
@@ -63,12 +61,10 @@ public class ConfigurationFileTest {
 	}
 	
 	@Test
-	public void configurationFileContentTest() throws IOException, URISyntaxException{
+	public void configurationFileContentTest() throws IOException, URISyntaxException, PetriNetException{
 		// creation of the configuration files
-		PNData pnData = new PNData();
-		pnData.cargarRed(pnmlFilePath);
 		PNMLConfigurationReader pnmlConfigurator = new PNMLConfigurationReader();
-//		pnmlConfigurator.generarArchivosConfiguracion(pnData, configurationFilePath);
+		pnmlConfigurator.loadConfiguration(pnmlFilePath);
 		
 		for(String fileName : fileNames){
 			String actualString = FileUtils.readFileToString((new File(tempFolder.getPath()+ fileName)));

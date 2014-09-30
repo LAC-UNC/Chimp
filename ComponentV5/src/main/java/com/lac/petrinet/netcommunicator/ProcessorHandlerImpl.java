@@ -1,7 +1,25 @@
 package com.lac.petrinet.netcommunicator;
 
 
-public class ProcessorHandlerImpl {
+public class ProcessorHandlerImpl implements ProcessorHandler{
+
+	@Override
+	public void fire(int transitionId) {
+			throw new UnsupportedOperationException();
+		
+	}
+
+	@Override
+	public boolean listen(int transitionId) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setConfiguration(String filesPath) {
+		throw new UnsupportedOperationException();		
+	}
+	
+	
 //	private static ProcesadorPetriVirtual virtualProcessor;
 //
 //	// Singleton  // 

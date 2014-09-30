@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,7 +22,9 @@ import com.lac.petrinet.configuration.ConfigurationReader;
 import com.lac.petrinet.core.PetriNet;
 import com.lac.petrinet.exceptions.PetriNetException;
 import com.lac.petrinet.netcommunicator.FiredTransition;
-import com.lac.petrinet.netcommunicator.Transition;
+import com.lac.petrinet.netcommunicator.InformedTransition;
+import com.lac.petrinet.netcommunicator.ProcessorHandler;
+import com.lac.petrinet.netcommunicator.ProcessorHandlerImpl;
 
 /**
  * Read the PNML file and create all the transition instances that are inform or fired, and stored it.
@@ -66,9 +70,10 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 	/**
 	 * Read the values from PNML file y create the transitions instance adding it to the transitions attribute. 
 	 * @param pathARedPetri Path to PNML file
+	 * @param processorHandler 
 	 * @throws PetriNetException 
 	 */
-	private PetriNet createPNFromPNML(final String pathARedPetri) throws PetriNetException {
+	private PetriNet createPNFromPNML(final String pathARedPetri, ProcessorHandler processorHandler) throws PetriNetException {
 		PetriNet petriNet = new PetriNet();
 		int transitionID = 0;
   		final File xmlFile = new File(pathARedPetri);
@@ -115,38 +120,45 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 				}
 
 				// TODO: re code the transition genereation. 
-//				Transition t = new FiredTransition(transitionID);
-//				transitionID++;
-//				if(primerValor.compareToIgnoreCase("d") == 0 && primerValor.compareToIgnoreCase("a") != 0){
-//					this.transitions.getFiredTransitions().put(idTransicion, t);
-//				}else{
-//					throw new PetriNetException("Transition has invalid etiquete for fire. Transition id: " + idTransicion);
-//				}
-//				if(segundoValor.compareTo("i") == 0 && primerValor.compareToIgnoreCase("n") != 0){
-//					this.transitions.getInformedTransitions().put(idTransicion, t);
-//				}else{
-//					throw new PetriNetException("Transition has invalid etiquete for inform. Transition id: " + idTransicion);
-//				}
+				if(primerValor.compareToIgnoreCase("d") == 0 && primerValor.compareToIgnoreCase("a") != 0){
+					FiredTransition newTransition = new FiredTransition(processorHandler, transitionID);
+					petriNet.addFired(idTransicion, newTransition);
+				}else{
+					throw new PetriNetException("Transition has invalid etiquete for fire. Transition id: " + idTransicion);
+				}
+				if(segundoValor.compareTo("i") == 0 && primerValor.compareToIgnoreCase("n") != 0){
+					InformedTransition newTransition = new InformedTransition(processorHandler, transitionID);
+					petriNet.addInformed(idTransicion, newTransition);
+				}else{
+					throw new PetriNetException("Transition has invalid etiquete for inform. Transition id: " + idTransicion);
+				}
+				transitionID++;
 			}
 		}
 		return petriNet;
 	}
 	
 	@Override
-	public PetriNet loadConfiguration(String configFilepath) throws PetriNetException {
-		//create temporal folder for configuratin fi
-		
+	public PetriNet loadConfiguration(String pnmlFilepath) throws PetriNetException {
+		//create temporal folder for configuration files
+		Path tempFolderPath = null;
+		try {
+			tempFolderPath = Files.createTempDirectory("ConfigTempFolder");
+		} catch (IOException e) {
+			throw new PetriNetException(e.getMessage(), e);
+		}
+		File tempFolder = tempFolderPath.toFile();
+		tempFolder.deleteOnExit();
 		// create configuration files for processor and Transitions
 		PNData pnData = new PNData();
-		pnData.cargarRed(configFilepath);
-		generateConfigFiles(pnData, configFilepath);
-		
+		pnData.cargarRed(pnmlFilepath);
+		generateConfigFiles(pnData, tempFolderPath.toString());
 		// create processorHandler
-		
-		// Assign ProcessorHandler to Transitions 
-		
-		
-		return null;
+		ProcessorHandler processorHandler = new ProcessorHandlerImpl();
+		processorHandler.setConfiguration(tempFolderPath.toString());
+		// Create PetriNet and assign processorHandler to its.
+		PetriNet petriNet = createPNFromPNML(pnmlFilepath, processorHandler);
+		return petriNet;
 	}
 	
 	/**

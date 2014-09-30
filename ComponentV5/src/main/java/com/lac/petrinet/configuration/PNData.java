@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import unc.fcefyn.lac.tesisCaroFurey.herramientaPN.manejadorEtiquetas.Etiqueta;
-import unc.fcefyn.lac.tesisCaroFurey.herramientaPN.manejadorEtiquetas.ManejadorEtiquetas;
-import unc.fcefyn.lac.tesisCaroFurey.herramientaPN.manejadorIntervalos.Intervalo;
-import unc.fcefyn.lac.tesisCaroFurey.herramientaPN.manejadorIntervalos.ManejadorIntervalos;
-import unc.fcefyn.lac.tesisCaroFurey.herramientaPN.manejadorMatrizyMarcado.ManejadorXMLMatrizYMarcado;
-import unc.fcefyn.lac.tesisCaroFurey.herramientaPN.manejadorMatrizyMarcado.MatrizIncidenciaMarcadoInicial;
-import unc.fcefyn.lac.tesisCaroFurey.herramientaPN.manejadorMatrizyMarcado.ProcesaXML;
+import com.lac.petrinet.configuration.data.Etiqueta;
+import com.lac.petrinet.configuration.data.Intervalo;
+import com.lac.petrinet.configuration.data.MatrizIncidenciaMarcadoInicial;
+import com.lac.petrinet.configuration.handler.ManejadorEtiquetas;
+import com.lac.petrinet.configuration.handler.ManejadorIntervalos;
+import com.lac.petrinet.configuration.handler.ManejadorXMLMatrizYMarcado;
+import com.lac.petrinet.configuration.handler.ProcesaXML;
+
 
 /**
  * Clase abstracta para el manejo de redes de petri.
@@ -31,10 +32,6 @@ public class PNData {
 	 * Intancia con los datos de la matriz de incidencia y el marcado inicial.
 	 */
 	protected MatrizIncidenciaMarcadoInicial matrizIncidenciaMarcadoInicial;
-	/**
-	 * manejadorXMLMatrizYMarcado un manejador.
-	 */
-	private ManejadorXMLMatrizYMarcado manejadorXMLMatrizYMarcado;
 	/**
 	 * Un manejador de etiquetas.
 	 */
@@ -80,7 +77,6 @@ public class PNData {
 	public final void cargarRed(final String filePNML) {
 		this.generarMatrizIncidenciaYMarcado(filePNML);
 
-		this.manejadorXMLMatrizYMarcado = new ManejadorXMLMatrizYMarcado();
 		this.manejadorEtiquetas = new ManejadorEtiquetas(filePNML);
 		this.manejadorIntervalos = new ManejadorIntervalos(filePNML);
 	}
