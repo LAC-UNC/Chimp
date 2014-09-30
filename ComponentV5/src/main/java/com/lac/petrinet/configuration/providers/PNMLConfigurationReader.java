@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -75,6 +77,7 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 	 */
 	private PetriNet createPNFromPNML(final String pathARedPetri, ProcessorHandler processorHandler) throws PetriNetException {
 		PetriNet petriNet = new PetriNet();
+		ExecutorService threadPool = Executors.newCachedThreadPool();
 		int transitionID = 0;
   		final File xmlFile = new File(pathARedPetri);
 		final DocumentBuilderFactory dbFactory =
@@ -127,7 +130,7 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 					throw new PetriNetException("Transition has invalid etiquete for fire. Transition id: " + idTransicion);
 				}
 				if(segundoValor.compareTo("i") == 0 && primerValor.compareToIgnoreCase("n") != 0){
-					InformedTransition newTransition = new InformedTransition(processorHandler, transitionID);
+					InformedTransition newTransition = new InformedTransition(processorHandler, transitionID,threadPool);
 					petriNet.addInformed(idTransicion, newTransition);
 				}else{
 					throw new PetriNetException("Transition has invalid etiquete for inform. Transition id: " + idTransicion);
