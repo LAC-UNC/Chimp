@@ -157,8 +157,7 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 		pnData.cargarRed(pnmlFilepath);
 		generateConfigFiles(pnData, tempFolderPath.toString());
 		// create processorHandler
-		ProcessorHandler processorHandler = new ProcessorHandlerImpl();
-		processorHandler.setConfiguration(tempFolderPath.toString());
+		ProcessorHandler processorHandler = new ProcessorHandlerImpl(tempFolderPath.toString(), pnData.getTransiciones().size());
 		// Create PetriNet and assign processorHandler to its.
 		PetriNet petriNet = createPNFromPNML(pnmlFilepath, processorHandler);
 		return petriNet;

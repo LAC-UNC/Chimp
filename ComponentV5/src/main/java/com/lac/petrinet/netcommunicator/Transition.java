@@ -25,4 +25,8 @@ public abstract class Transition {
 	protected void setProcessor(ProcessorHandler processor){
 		this.processor = processor;
 	}
+	
+	public int getTransitionId() {
+		return transitionId;
+	}
 }
