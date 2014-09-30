@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.ExecutorService;
@@ -123,16 +124,16 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 				}
 
 				// TODO: re code the transition genereation. 
-				if(primerValor.compareToIgnoreCase("d") == 0 && primerValor.compareToIgnoreCase("a") != 0){
+				if(primerValor.compareToIgnoreCase("d") == 0 ){
 					FiredTransition newTransition = new FiredTransition(processorHandler, transitionID);
 					petriNet.addFired(idTransicion, newTransition);
-				}else{
+				}else if(primerValor.compareToIgnoreCase("a") != 0 ){
 					throw new PetriNetException("Transition has invalid etiquete for fire. Transition id: " + idTransicion);
 				}
-				if(segundoValor.compareTo("i") == 0 && primerValor.compareToIgnoreCase("n") != 0){
+				if(segundoValor.compareToIgnoreCase("i") == 0 ){
 					InformedTransition newTransition = new InformedTransition(processorHandler, transitionID,threadPool);
 					petriNet.addInformed(idTransicion, newTransition);
-				}else{
+				}else if(segundoValor.compareToIgnoreCase("n") != 0){
 					throw new PetriNetException("Transition has invalid etiquete for inform. Transition id: " + idTransicion);
 				}
 				transitionID++;
@@ -144,20 +145,18 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 	@Override
 	public PetriNet loadConfiguration(String pnmlFilepath) throws PetriNetException {
 		//create temporal folder for configuration files
-		Path tempFolderPath = null;
+		String configFolderParentPath;
 		try {
-			tempFolderPath = Files.createTempDirectory("ConfigTempFolder");
-		} catch (IOException e) {
-			throw new PetriNetException(e.getMessage(), e);
+			configFolderParentPath = getJarpath();
+		} catch (URISyntaxException e) {
+			throw new PetriNetException(e.getMessage(), e); 
 		}
-		File tempFolder = tempFolderPath.toFile();
-		tempFolder.deleteOnExit();
 		// create configuration files for processor and Transitions
 		PNData pnData = new PNData();
 		pnData.cargarRed(pnmlFilepath);
-		generateConfigFiles(pnData, tempFolderPath.toString());
+		String configFileFolderPath = generateConfigFiles(pnData, configFolderParentPath);
 		// create processorHandler
-		ProcessorHandler processorHandler = new ProcessorHandlerImpl(tempFolderPath.toString(), pnData.getTransiciones().size());
+		ProcessorHandler processorHandler = new ProcessorHandlerImpl(pathForPNNVHack(configFileFolderPath), pnData.getTransiciones().size());
 		// Create PetriNet and assign processorHandler to its.
 		PetriNet petriNet = createPNFromPNML(pnmlFilepath, processorHandler);
 		return petriNet;
@@ -168,11 +167,16 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 	 * @param infoRed instancia de Herramienta red de petri con informacion
 	 * de la red.
 	 * @param pathArchivos path del proyecto.
+	 * @return path to the folder that contain all the configuration files. 
 	 */
-	private void generateConfigFiles(
-			final PNData infoRed,
-			final String exitFilePath) {
-		final String pathConfig = exitFilePath + "\\archivosConfiguracion";
+	private String generateConfigFiles( final PNData infoRed, final String exitFilePath) {
+		String pathConfig ;
+		if(exitFilePath.endsWith("/") || exitFilePath.endsWith("\\")){
+			pathConfig =  exitFilePath + "archivosConfiguracion";
+		}
+		else{
+			pathConfig = exitFilePath + "\\archivosConfiguracion";
+		}
 		final File folderConfig = new File(pathConfig);
 		folderConfig.mkdirs();
 		////Se genera la matriz de prioridades distribuidas con un vector nulo,
@@ -209,6 +213,7 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 		//Se genera el archivo de configuracion con los nombres del resto de los
 		//archivos.
 		generarArchivoConfig(pathConfig + "\\config.txt");
+		return pathConfig + "\\config.txt";
 	}
 	
 	/**
@@ -380,6 +385,20 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 		}
 	}
 	
+	
+	/**
+	 * This method is a hack in order to work around the way taht PNNV expect the path to the configuration files folder. 
+	 * @return
+	 */
+	private String pathForPNNVHack(String path){
+		return path.replace("/", "\\");
+	}
+	
+	private String getJarpath() throws URISyntaxException {
+		final String uri;
+		uri = ConfigurationFileTest.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+		return uri;
+	}
 	
 	
 }
