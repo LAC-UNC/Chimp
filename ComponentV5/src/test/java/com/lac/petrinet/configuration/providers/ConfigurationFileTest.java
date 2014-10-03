@@ -1,20 +1,23 @@
 package com.lac.petrinet.configuration.providers;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
-import com.lac.petrinet.configuration.providers.PNMLConfigurationReader;
+import com.lac.petrinet.configuration.PNData;
+import com.lac.petrinet.core.PetriNet;
 import com.lac.petrinet.exceptions.PetriNetException;
+import com.lac.petrinet.netcommunicator.FiredTransition;
+import com.lac.petrinet.netcommunicator.InformedTransition;
 
 public class ConfigurationFileTest {
 
@@ -32,6 +35,32 @@ public class ConfigurationFileTest {
 			"/archivosConfiguracion/prioridadesDistribuidas.txt",
 			"/archivosConfiguracion/relacion0.txt",
 			"/archivosConfiguracion/sinInforme0.txt"
+			);
+	
+	List<String> informedTransitionsName = Arrays.asList(
+			"SolicitarCanal1",
+			"SolicitarCanal1Der",
+			"SolicitarCanal2",
+			"SolicitarCanal2Der",
+			"SolicitarCanal3",
+			"SolicitarCanal3Der",
+			"SolicitarDarsena1",
+			"SolicitarDarsena2",
+			"SolicitarDarsena3",
+			"SolicitarDarsena4"
+			);
+	
+	List<String> firedTransitionsName = Arrays.asList(
+			"SalirCanal1",
+			"SalirCanal3",
+			"SolicitarCanal1Der",
+			"SolicitarCanal2",
+			"SolicitarCanal2Der",
+			"SolicitarCanal3",
+			"SolicitarDarsena1",
+			"SolicitarDarsena2", 
+			"SolicitarDarsena3",
+			"SolicitarDarsena4"
 			);
 	
 	@BeforeSuite
@@ -75,6 +104,89 @@ public class ConfigurationFileTest {
 		}
 	}
 
+	@Test
+	public void allInformedExistsTest() throws PetriNetException{
+		PNMLConfigurationReader pnmlConfigurator = new PNMLConfigurationReader();
+		PetriNet petriNet = pnmlConfigurator.loadConfiguration(pnmlFilePath);
+		
+		for(String transitionName : informedTransitionsName){
+			Assert.assertNotNull(petriNet.getInformed(transitionName), "Informed transition doesn't exist for Name: " + transitionName);  
+		}
+	}
+	
+	@Test
+	public void allFiredExistsTest() throws PetriNetException{
+		PNMLConfigurationReader pnmlConfigurator = new PNMLConfigurationReader();
+		PetriNet petriNet = pnmlConfigurator.loadConfiguration(pnmlFilePath);
+		
+		for(String transitionName : firedTransitionsName){
+			Assert.assertNotNull(petriNet.getFired(transitionName), "Fired transition doesn't exist for Name: " + transitionName);  
+		}
+	}
+	
+	
+	@Test
+	public void incidenceMatrixPositionRelationTest() throws PetriNetException{
+		// This is the the class that has the incidence matrix, and We will test against that matrix the corresponding value
+		// of the incidence vector for each Transition
+		PNData pnData = new PNData();
+		pnData.cargarRed(pnmlFilePath);
+		
+		// we need to load the configuration in order to have the transitions created and use the id number associated to each of them.
+		PNMLConfigurationReader pnmlConfigurator = new PNMLConfigurationReader();
+		PetriNet petriNet = pnmlConfigurator.loadConfiguration(pnmlFilePath);
+		
+		Map<String, int[]> expectedIncidenceMap = getExpectedIncidenceMatrixMap();
+		
+		for(String transitionName :   expectedIncidenceMap.keySet()){
+			
+			// checking the fired transitions. 
+			FiredTransition fired = petriNet.getFired(transitionName);
+			// we don't care if the transition is not a fired one, because there is another test that checks if all the fired exists.
+			if(fired != null){
+				int idFired = fired.getTransitionId();
+				for(int i  = 0 ; i< pnData.getMatrizIncidenciaNegativa().length ; i ++){
+					int result = pnData.getMatrizIncidenciaPositiva()[i][idFired] -  pnData.getMatrizIncidenciaNegativa()[i][idFired]  ; 
+					Assert.assertEquals(result, expectedIncidenceMap.get(transitionName)[i], "Incidence matrix does not match. "
+							+ "Probably transition Id is incorrect. Transition name: " + transitionName+ " , position: " + 
+							i);
+				}
+			}
+			// checking the informed transitions.
+			InformedTransition informed = petriNet.getInformed(transitionName);
+			// we don't care if the transition is not a fired one, because there is another test that checks if all the fired exists.
+			if(informed != null){
+				int idInformed = informed.getTransitionId();
+				for(int i  = 0 ; i< pnData.getMatrizIncidenciaNegativa().length ; i ++){
+					int result = pnData.getMatrizIncidenciaPositiva()[i][idInformed] - pnData.getMatrizIncidenciaNegativa()[i][idInformed]  ; 
+					Assert.assertEquals(result, expectedIncidenceMap.get(transitionName)[i], "Incidence matrix does not match. "
+							+ "Probably transition Id is incorrect.Transition name: " + transitionName + " , position: " + 
+							i);
+				}
+			}
+		}
+		
+		
+	}
+	
+	
+	private Map<String, int[]> getExpectedIncidenceMatrixMap(){
+		Map<String, int[]> incidenceMatrix = new HashMap<String,int[]>();
+		incidenceMatrix.put("SalirCanal1", new int[] {1,0,1,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,1});
+		incidenceMatrix.put("SalirCanal3",  new int[] {0,1,0,0,1,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,1,0,0});
+		incidenceMatrix.put("SolicitarCanal1",  new int[] {0,-1,-1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,-1,-1});
+		incidenceMatrix.put("SolicitarCanal1Der",  new int[] {0,0,-1,0,0,0,1,0,0,0,1,0,0,0,0,0,-1,0,0,0,1,0});
+		incidenceMatrix.put("SolicitarCanal2",  new int[] {0,0,0,-1,0,1,0,0,0,0,0,1,0,0,0,-1,0,0,0,-1,0,0});
+		incidenceMatrix.put("SolicitarCanal2Der",  new int[] {0,0,0,-1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,-1,0,0,-1});
+		incidenceMatrix.put("SolicitarCanal3",  new int[] {0,0,0,0,-1,0,0,1,0,0,0,0,0,1,0,0,0,-1,0,0,1,0});
+		incidenceMatrix.put("SolicitarCanal3Der",  new int[] {-1,0,0,0,-1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,-1,-1,0});
+		incidenceMatrix.put("SolicitarDarsena1",  new int[] {0,0,1,0,0,-1,0,0,0,-1,0,0,0,0,0,1,0,0,0,0,0,0});
+		incidenceMatrix.put("SolicitarDarsena2",  new int[] {0,0,0,1,0,0,-1,0,0,0,0,0,-1,0,0,0,1,0,0,1,0,0});
+		incidenceMatrix.put("SolicitarDarsena3",  new int[] {0,0,0,1,0,0,0,-1,0,0,0,-1,0,0,0,0,0,1,0,0,0,1});
+		incidenceMatrix.put("SolicitarDarsena4",  new int[] {0,0,0,0,1,0,0,0,-1,0,0,0,0,0,-1,0,0,0,1,0,0,0});
+		
+		return incidenceMatrix;
+	}
 	
 	private String getJarpath() throws URISyntaxException {
 		final String uri;

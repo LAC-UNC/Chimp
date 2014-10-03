@@ -26,6 +26,9 @@ public class PetriNet {
 		}
 	}
 	
+	/**
+	 * Check only 1 time the communicate() of all the informed transitions. 
+	 */
 	public void nextCicle(){
 		Iterator<Entry<String, InformedTransition>> it;
 	    it = informedTransitions.entrySet().iterator();
