@@ -31,6 +31,19 @@
       </plugin>
     </plugins>
   </build>
+
+	<distributionManagement>
+		<repository>
+			<id>deployment</id>
+			<name>Internal Releases</name>
+			<url>http://http://nexusdiy-projintegration.rhcloud.com/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>deployment</id>
+			<name>Internal Releases</name>
+			<url>http://your.server.com:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
   
   <dependencies>
 	<dependency>
