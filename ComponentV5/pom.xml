@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>lac</groupId>
   <artifactId>ConcurrenceHandler</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <name>concurrenceHandler</name>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
@@ -31,17 +31,24 @@
       </plugin>
     </plugins>
   </build>
+  
+  <scm>
+   <connection>scm:git:https://github.com/LAC-UNC/Chimp.git</connection>
+   <url>https://github.com/LAC-UNC/Chimp</url>
+   <developerConnection>scm:git:https://github.com/LAC-UNC/Chimp.git</developerConnection>
+  <tag>ConcurrenceHandler-0.0.1</tag>
+  </scm>
 
 	<distributionManagement>
 		<repository>
-			<id>deployment</id>
+			<id>releases</id>
 			<name>Internal Releases</name>
 			<url>http://http://nexusdiy-projintegration.rhcloud.com/nexus/content/repositories/releases/</url>
 		</repository>
 		<snapshotRepository>
-			<id>deployment</id>
+			<id>snapshots</id>
 			<name>Internal Releases</name>
-			<url>http://your.server.com:8081/nexus/content/repositories/snapshots/</url>
+			<url>http://nexusdiy-projintegration.rhcloud.com/nexus/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
   

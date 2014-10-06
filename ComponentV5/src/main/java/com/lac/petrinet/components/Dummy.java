@@ -3,13 +3,14 @@ package com.lac.petrinet.components;
 import java.util.concurrent.Callable;
 
 import com.lac.petrinet.core.PetriNet;
+import com.lac.petrinet.exceptions.PetriNetException;
 
 public abstract class Dummy implements Callable<Void> {
 	
 	protected String transitionName;
 	private PetriNet petriNet;  
 	
-	abstract protected void execute();
+	abstract protected void execute() throws PetriNetException;
 	
 	protected Dummy(PetriNet pn, String tName){
 		this.petriNet = pn;
