@@ -43,7 +43,7 @@
 		<repository>
 			<id>releases</id>
 			<name>Internal Releases</name>
-			<url>http://http://nexusdiy-projintegration.rhcloud.com/nexus/content/repositories/releases/</url>
+			<url>http://nexusdiy-projintegration.rhcloud.com/nexus/content/repositories/releases/</url>
 		</repository>
 		<snapshotRepository>
 			<id>snapshots</id>
