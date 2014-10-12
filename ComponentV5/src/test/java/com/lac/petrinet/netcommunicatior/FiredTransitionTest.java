@@ -1,4 +1,4 @@
-package automaticTests.netcommunicatior;
+package com.lac.petrinet.netcommunicatior;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

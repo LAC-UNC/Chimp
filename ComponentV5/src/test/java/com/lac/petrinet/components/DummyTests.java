@@ -1,4 +1,4 @@
-package automaticTests.components;
+package com.lac.petrinet.components;
 
 import org.testng.annotations.Test;
 

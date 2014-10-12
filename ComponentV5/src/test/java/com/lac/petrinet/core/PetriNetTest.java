@@ -1,4 +1,4 @@
-package automaticTests.core;
+package com.lac.petrinet.core;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
