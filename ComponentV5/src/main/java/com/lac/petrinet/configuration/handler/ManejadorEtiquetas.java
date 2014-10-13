@@ -76,8 +76,11 @@ public class ManejadorEtiquetas {
 			final Node transition = listaTransiciones.item(temp);
 			if (transition.getNodeType() == Node.ELEMENT_NODE) {
 				final Element transicion = (Element) transition;
-				idTransicion = transicion.getAttribute("id");
-				final NodeList texto = transicion.getElementsByTagName("text");
+				//idTransicion = transicion.getAttribute("id");
+				final Element name = (Element) transicion.getElementsByTagName("name").item(0);
+				idTransicion = name.getElementsByTagName("text").item(0).getTextContent();
+				final Element label = (Element) transicion.getElementsByTagName("label").item(0);
+				final NodeList texto = label.getElementsByTagName("text");
 				if (texto.item(0) != null) {
 					String[] aux;
 					final String delimiter = ",";
