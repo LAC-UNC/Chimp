@@ -38,35 +38,19 @@ public class ConfigurationFileTest {
 			);
 	
 	List<String> informedTransitionsName = Arrays.asList(
-			"SolicitarCanal1",
-			"SolicitarCanal1Der",
-			"SolicitarCanal2",
-			"SolicitarCanal2Der",
-			"SolicitarCanal3",
-			"SolicitarCanal3Der",
-			"SolicitarDarsena1",
-			"SolicitarDarsena2",
-			"SolicitarDarsena3",
-			"SolicitarDarsena4"
+			"t0",
+			"t1"
 			);
 	
 	List<String> firedTransitionsName = Arrays.asList(
-			"SalirCanal1",
-			"SalirCanal3",
-			"SolicitarCanal1Der",
-			"SolicitarCanal2",
-			"SolicitarCanal2Der",
-			"SolicitarCanal3",
-			"SolicitarDarsena1",
-			"SolicitarDarsena2", 
-			"SolicitarDarsena3",
-			"SolicitarDarsena4"
+			"t1",
+			"t2"
 			);
 	
 	@BeforeSuite
 	private void pathAndFolderConfiguration() throws URISyntaxException, IOException{
 		// source of the sample pnml
-		pnmlFilePath = getJarpath() + "/pnml/barcos-conContrainst.pnml";
+		pnmlFilePath = getJarpath() + "/pnml/simplePnml.pnml";
 		// destination folder of the new created files. 		
 //		Path tempFolderPath = Files.createTempDirectory("ConfigTempFolder");
 //		tempFolder = tempFolderPath.toFile();
