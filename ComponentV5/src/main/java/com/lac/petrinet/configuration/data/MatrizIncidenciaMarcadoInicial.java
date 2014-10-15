@@ -44,6 +44,7 @@ public class MatrizIncidenciaMarcadoInicial {
 	 */
 	private HashMap<String, String[]> arcos;
 
+
 	/**
 	 * Contador para los numeros de transiciones agregados.
 	 */
@@ -144,8 +145,10 @@ public class MatrizIncidenciaMarcadoInicial {
 	 * el momento. Este metodo debe ser llamado una vez se termine de cargar
 	 * todos los compenentes de la red de petri de la que se desea obtener la
 	 * matriz.
+	 * @param idsMap 
 	 */
-	public void crearMatriz() {
+	public void crearMatriz(Map<String, String> idsMap) {
+		replaceBrokenArcIds(idsMap);
 		this.positiva = new int[this.plazas.size()][this.transiciones.size()];
 		this.negativa = new int[this.plazas.size()][this.transiciones.size()];
 		this.marcadoInicial = new int [this.plazas.size()];
@@ -279,5 +282,20 @@ public class MatrizIncidenciaMarcadoInicial {
 					"Transicion: " + tra + " columna: " +
 							this.transiciones.get(tra));
 		}
+	}
+	
+	/**
+	 * for new pnml standar, the id is a random auto incremental number now, and we manage that the id is the 
+	 * transition name. so, in the idsMaps it is the relation between the id and the transition name, we just replace the 
+	 * ids from the source and target of the Arc elements for the name of the transitions and places. 
+	 * @param idsMaps
+	 */
+	private void replaceBrokenArcIds(Map<String,String> idsMaps){
+		for(String key : arcos.keySet() ){
+			String[] arco = arcos.get(key);
+			arco[0] = idsMaps.get(arco[0]); 
+			arco[1] = idsMaps.get(arco[1]); 
+		}
+
 	}
 }

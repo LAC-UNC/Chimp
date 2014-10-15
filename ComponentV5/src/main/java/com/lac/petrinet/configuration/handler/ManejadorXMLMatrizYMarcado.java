@@ -1,5 +1,8 @@
 package com.lac.petrinet.configuration.handler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -41,15 +44,23 @@ public class ManejadorXMLMatrizYMarcado extends DefaultHandler {
 	/**
 	 * Variable booleana.
 	 */
-	private boolean bText;
+	private boolean isText;
 	/**
 	 * Variable booleana.
 	 */
-	private boolean bAPeso;
+	private boolean isAPeso;
 	/**
 	 * Variable booleana.
 	 */
-	private boolean bTMarcadoInicial;
+	private boolean isTMarcadoInicial;
+	
+	private boolean isActualTransition;
+	
+	private boolean isPlace;
+	
+	private Map<String, String> idsMap ;
+	
+	private String tempId;
 	/**
 	 * Constructor.
 	 */
@@ -58,16 +69,20 @@ public class ManejadorXMLMatrizYMarcado extends DefaultHandler {
 		this.plaza = new Plaza();
 		this.transicion = new Transicion();
 		this.arco = new Arco();
-		this.bText = false;
-		this.bAPeso = false;
-		this.bTMarcadoInicial = false;
+		this.isText = false;
+		this.isAPeso = false;
+		this.isTMarcadoInicial = false;
+		this.isActualTransition = false;
+		this.isPlace = false;
+		this.idsMap = new HashMap<String,String>();
+		this.tempId=null;
 	}
 	@Override
 	public void startDocument() throws SAXException {
 	}
 	@Override
 	public void endDocument() throws SAXException {
-		this.matriz.crearMatriz();
+		this.matriz.crearMatriz(idsMap);
 	}
 	@Override
 	public void startElement(final String uri, final String localName, final String name,
@@ -76,12 +91,14 @@ public class ManejadorXMLMatrizYMarcado extends DefaultHandler {
 		switch (localName) {
 			case "place":
 				this.actual = this.plaza;
-				this.actual.setId(attributes.getValue("id"));
+				this.tempId = attributes.getValue("id");
+				this.isPlace = true;
 				break;
 
 			case "transition":
 				this.actual = this.transicion;
-				this.actual.setId(attributes.getValue("id"));
+				this.tempId = attributes.getValue("id");
+				isActualTransition = true;
 				break;
 
 			case "arc":
@@ -92,15 +109,15 @@ public class ManejadorXMLMatrizYMarcado extends DefaultHandler {
 				break;
 
 			case "initialMarking":
-				this.bTMarcadoInicial = true;
+				this.isTMarcadoInicial = true;
 				break;
 
 			case "inscription":
-				this.bAPeso = true;
+				this.isAPeso = true;
 				break;
 
 			case "text":
-				this.bText = true;
+				this.isText = true;
 				break;
 			default:
 				break;
@@ -116,18 +133,26 @@ public class ManejadorXMLMatrizYMarcado extends DefaultHandler {
 		//(de una plaza) o "inscription" (de un arco), entonces se
 		//establece el valor 
 		//del elemento actual.
-		if (this.bText) {
-			if (this.bAPeso || this.bTMarcadoInicial) {
+		if (this.isText) {
+			if (this.isAPeso || this.isTMarcadoInicial) {
 				//Se setea el valor del elemento actual
 				this.actual.setValorElemento(Integer.parseInt(String.valueOf(ch, start, length)));
 				//se limpian las banderas para proximas etiquetas
-				this.bText = false;
-				this.bAPeso = false;
-				this.bTMarcadoInicial = false;
+				this.isText = false;
+				this.isAPeso = false;
+				this.isTMarcadoInicial = false;
+			}
+			else if(isActualTransition || isPlace ){ 
+				String humanId = new String(ch,start,length);
+				this.actual.setId(humanId);
+				this.isActualTransition = false;
+				isPlace = false;
+				this.isText=false;
+				idsMap.put(tempId, humanId);
 			}
 			//si bText es true, pero bAPeso y bTMarcadoInicial son falso, se cambia bTexto a false
 			else {
-				this.bText = false;
+				this.isText = false;
 			}
 		}
 	}

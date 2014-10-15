@@ -398,7 +398,7 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 	
 	private String getJarpath() throws URISyntaxException {
 		final String uri;
-		uri = ConfigurationFileTest.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+		uri = PNMLConfigurationReader.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
 		return uri;
 	}
 	

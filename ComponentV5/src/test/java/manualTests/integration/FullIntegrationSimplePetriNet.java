@@ -12,7 +12,7 @@ public class FullIntegrationSimplePetriNet {
 	public static void main(String[] args) {
 		PNMLConfigurationReader pnmlConfigurator = new PNMLConfigurationReader();
 		try {
-			PetriNet pn = pnmlConfigurator.loadConfiguration(getJarpath() + "pnml/simple.pnml");
+			PetriNet pn = pnmlConfigurator.loadConfiguration(getJarpath() + "pnml/simplePnml.pnml");
 		} catch (PetriNetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
