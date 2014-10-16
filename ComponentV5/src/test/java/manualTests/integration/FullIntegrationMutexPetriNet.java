@@ -44,15 +44,17 @@ public class FullIntegrationMutexPetriNet {
 			pn.assignDummy("t0", dumb1);
 			pn.assignDummy("t3", dumb2);
 			
-			pn.nextCicle();
-			pn.nextCicle();
-			pn.nextCicle();
-			pn.nextCicle();
-			pn.nextCicle();
-			pn.nextCicle();
-			pn.nextCicle();
-			pn.nextCicle();
-			pn.nextCicle();
+			while(true){
+				pn.nextCicle();
+			}
+//			pn.nextCicle();
+//			pn.nextCicle();
+//			pn.nextCicle();
+//			pn.nextCicle();
+//			pn.nextCicle();
+//			pn.nextCicle();
+//			pn.nextCicle();
+//			pn.nextCicle();
 		} catch (PetriNetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,6 +1,6 @@
 package com.lac.petrinet.netcommunicator;
 
-import procesadorPNVirtual.ProcesadorPetriVirtual;
+import petrinet.support.procesadorPNVirtual.ProcesadorPetriVirtual;
 
 
 public class ProcessorHandlerImpl implements ProcessorHandler{
