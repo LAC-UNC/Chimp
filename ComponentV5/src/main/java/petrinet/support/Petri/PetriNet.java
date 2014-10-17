@@ -1,5 +1,7 @@
  package petrinet.support.Petri;
  
+import java.util.Random;
+
 import petrinet.support.IOFiles.ManejadorTXT;
  
  public class PetriNet
@@ -197,15 +199,21 @@ import petrinet.support.IOFiles.ManejadorTXT;
    private void calcularDisparoFinal()
    {
      int[][] temp = producto(this.matriz_prioridad, this.disparos_red);
+     int cantidadPosibles=0;
+     int indexPosibles[] = new int[temp.length];
      
- 
      int[][] seleccion = new int[this.matriz_incidencia[0].length][1];
      for (int i = 0; i < temp.length; i++) {
        if (temp[i][0] == 1)
        {
-         seleccion[i][0] = 1;
-         break;
+    	   indexPosibles[cantidadPosibles] = i;
+    	   cantidadPosibles++;
        }
+     }
+     if(cantidadPosibles > 0 ){
+    	 Random r = new Random();
+    	 int index = indexPosibles[r.nextInt(cantidadPosibles)];
+    	 seleccion[index][0] = 1;
      }
      this.disparo_final = producto(transpuesta(this.matriz_prioridad), seleccion);
    }

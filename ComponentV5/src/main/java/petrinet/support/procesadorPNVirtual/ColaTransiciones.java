@@ -26,5 +26,6 @@ public class ColaTransiciones
   public synchronized void encolar(int transicion)
   {
       this.valores[transicion]++;
+//      notifyAll();
   }
 }

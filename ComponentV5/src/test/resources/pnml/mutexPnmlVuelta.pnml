@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-1280-3D8D1-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-BD0-B3D87-0" type ="http://www.laas.fr/tina/tpn">
   <name>
-   <text>mutexPnml</text>
+   <text>mutexPnmlVuelta</text>
   </name>
- <page id="g-1280-3D8E5-1">
-  <place id="p-1280-3D8E9-2">
+ <page id="g-BD0-B3D99-1">
+  <place id="p-BD0-B3D9E-2">
   <name>
    <text>p0</text>
     <graphics>
@@ -16,10 +16,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="50" y="60"/>
+    <position x="60" y="60"/>
    </graphics>
   </place>
-  <place id="p-1280-3D906-3">
+  <place id="p-BD0-B3DBD-3">
   <name>
    <text>p1</text>
     <graphics>
@@ -27,10 +27,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="50" y="220"/>
+    <position x="60" y="220"/>
    </graphics>
   </place>
-  <place id="p-1280-3D910-4">
+  <place id="p-BD0-B3DC7-4">
   <name>
    <text>p2</text>
     <graphics>
@@ -38,10 +38,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="50" y="390"/>
+    <position x="60" y="390"/>
    </graphics>
   </place>
-  <place id="p-1280-3D918-5">
+  <place id="p-BD0-B3DD0-5">
   <name>
    <text>p3</text>
     <graphics>
@@ -49,10 +49,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="370" y="220"/>
+    <position x="380" y="220"/>
    </graphics>
   </place>
-  <place id="p-1280-3D920-6">
+  <place id="p-BD0-B3DD7-6">
   <name>
    <text>p4</text>
     <graphics>
@@ -60,10 +60,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="370" y="380"/>
+    <position x="380" y="380"/>
    </graphics>
   </place>
-  <place id="p-1280-3D928-7">
+  <place id="p-BD0-B3DDF-7">
   <name>
    <text>p5</text>
     <graphics>
@@ -74,10 +74,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="370" y="50"/>
+    <position x="380" y="50"/>
    </graphics>
   </place>
-  <place id="p-1280-3D930-8">
+  <place id="p-BD0-B3DE7-8">
   <name>
    <text>p6</text>
     <graphics>
@@ -88,10 +88,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="220" y="100"/>
+    <position x="230" y="100"/>
    </graphics>
   </place>
-  <transition id="t-1280-3D938-9">
+  <transition id="t-BD0-B3DF0-9">
   <name>
    <text>t0</text>
     <graphics>
@@ -105,10 +105,10 @@
     </graphics>
    </label>
    <graphics>
-    <position x="50" y="140"/>
+    <position x="60" y="140"/>
    </graphics>
   </transition>
-  <transition id="t-1280-3D944-10">
+  <transition id="t-BD0-B3DFC-10">
   <name>
    <text>t1</text>
     <graphics>
@@ -122,10 +122,10 @@
     </graphics>
    </label>
    <graphics>
-    <position x="50" y="300"/>
+    <position x="60" y="300"/>
    </graphics>
   </transition>
-  <transition id="t-1280-3D94D-11">
+  <transition id="t-BD0-B3E05-11">
   <name>
    <text>t2</text>
     <graphics>
@@ -139,10 +139,10 @@
     </graphics>
    </label>
    <graphics>
-    <position x="50" y="480"/>
+    <position x="60" y="480"/>
    </graphics>
   </transition>
-  <transition id="t-1280-3D957-12">
+  <transition id="t-BD0-B3E4D-12">
   <name>
    <text>t3</text>
     <graphics>
@@ -156,10 +156,10 @@
     </graphics>
    </label>
    <graphics>
-    <position x="370" y="140"/>
+    <position x="380" y="140"/>
    </graphics>
   </transition>
-  <transition id="t-1280-3D961-13">
+  <transition id="t-BD0-B3E58-13">
   <name>
    <text>t4</text>
     <graphics>
@@ -173,10 +173,10 @@
     </graphics>
    </label>
    <graphics>
-    <position x="370" y="300"/>
+    <position x="380" y="300"/>
    </graphics>
   </transition>
-  <transition id="t-1280-3D96A-14">
+  <transition id="t-BD0-B3E61-14">
   <name>
    <text>t5</text>
     <graphics>
@@ -190,42 +190,52 @@
     </graphics>
    </label>
    <graphics>
-    <position x="370" y="460"/>
+    <position x="380" y="460"/>
    </graphics>
   </transition>
-  <arc id="e-1280-3D975-15" source="p-1280-3D8E9-2" target="t-1280-3D938-9">
+  <arc id="e-BD0-B3E6D-15" source="p-BD0-B3D9E-2" target="t-BD0-B3DF0-9">
   </arc>
-  <arc id="e-1280-3D97A-16" source="p-1280-3D930-8" target="t-1280-3D938-9">
+  <arc id="e-BD0-B3E72-16" source="p-BD0-B3DE7-8" target="t-BD0-B3DF0-9">
   </arc>
-  <arc id="e-1280-3D97D-17" source="p-1280-3D930-8" target="t-1280-3D957-12">
+  <arc id="e-BD0-B3E74-17" source="p-BD0-B3DE7-8" target="t-BD0-B3E4D-12">
   </arc>
-  <arc id="e-1280-3D980-18" source="p-1280-3D928-7" target="t-1280-3D957-12">
+  <arc id="e-BD0-B3E76-18" source="p-BD0-B3DDF-7" target="t-BD0-B3E4D-12">
   </arc>
-  <arc id="e-1280-3DA1A-19" source="t-1280-3D957-12" target="p-1280-3D918-5">
+  <arc id="e-BD0-B3F61-19" source="t-BD0-B3E4D-12" target="p-BD0-B3DD0-5">
   </arc>
-  <arc id="e-1280-3DA1C-20" source="p-1280-3D918-5" target="t-1280-3D961-13">
+  <arc id="e-BD0-B3F64-20" source="p-BD0-B3DD0-5" target="t-BD0-B3E58-13">
   </arc>
-  <arc id="e-1280-3DA1F-21" source="t-1280-3D944-10" target="p-1280-3D930-8">
+  <arc id="e-BD0-B3F66-21" source="t-BD0-B3E05-11" target="p-BD0-B3D9E-2">
    <graphics>
-    <position x="146" y="308" />
-    <position x="188" y="136" />
+    <position x="23" y="397" />
+    <position x="25" y="135" />
    </graphics>  </arc>
-  <arc id="e-1280-3DA30-22" source="t-1280-3D944-10" target="p-1280-3D910-4">
-  </arc>
-  <arc id="e-1280-3DA33-23" source="p-1280-3D910-4" target="t-1280-3D94D-11">
-  </arc>
-  <arc id="e-1280-3DA35-24" source="t-1280-3D961-13" target="p-1280-3D920-6">
-  </arc>
-  <arc id="e-1280-3DA37-25" source="p-1280-3D920-6" target="t-1280-3D96A-14">
-  </arc>
-  <arc id="e-1280-3DA3A-26" source="t-1280-3D961-13" target="p-1280-3D930-8">
+  <arc id="e-BD0-B3F79-22" source="t-BD0-B3E61-14" target="p-BD0-B3DDF-7">
    <graphics>
-    <position x="266" y="292" />
-    <position x="248" y="136" />
+    <position x="444" y="396" />
+    <position x="444" y="138" />
    </graphics>  </arc>
-  <arc id="e-1280-3DA46-27" source="t-1280-3D938-9" target="p-1280-3D906-3">
+  <arc id="e-BD0-B3F85-23" source="t-BD0-B3DFC-10" target="p-BD0-B3DE7-8">
+   <graphics>
+    <position x="156" y="308" />
+    <position x="198" y="136" />
+   </graphics>  </arc>
+  <arc id="e-BD0-B3F90-24" source="t-BD0-B3DFC-10" target="p-BD0-B3DC7-4">
   </arc>
-  <arc id="e-1280-3DA48-28" source="p-1280-3D906-3" target="t-1280-3D944-10">
+  <arc id="e-BD0-B3F92-25" source="p-BD0-B3DC7-4" target="t-BD0-B3E05-11">
+  </arc>
+  <arc id="e-BD0-B3F95-26" source="t-BD0-B3E58-13" target="p-BD0-B3DD7-6">
+  </arc>
+  <arc id="e-BD0-B3F97-27" source="p-BD0-B3DD7-6" target="t-BD0-B3E61-14">
+  </arc>
+  <arc id="e-BD0-B3F9A-28" source="t-BD0-B3E58-13" target="p-BD0-B3DE7-8">
+   <graphics>
+    <position x="276" y="292" />
+    <position x="258" y="136" />
+   </graphics>  </arc>
+  <arc id="e-BD0-B3FA5-29" source="t-BD0-B3DF0-9" target="p-BD0-B3DBD-3">
+  </arc>
+  <arc id="e-BD0-B3FA7-30" source="p-BD0-B3DBD-3" target="t-BD0-B3DFC-10">
   </arc>
  </page>
  </net>
