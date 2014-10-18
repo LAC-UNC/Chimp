@@ -1,0 +1,38 @@
+p 420.0 80.0 mutex 1 n
+p 420.0 195.0 vacios 3 n
+p 420.0 325.0 llenos 0 n
+t 650.0 115.0 t3 c 0 w n {<A, I>} e
+p 185.0 365.0 p4 0 s
+t 185.0 285.0 t1 c 0 w n {<D, N>} w
+p 185.0 205.0 escribir 0 w
+p 650.0 30.0 lector 1 e
+t 80.0 200.0 t4 c 0 w n {<A, N>} w
+p 185.0 30.0 escritor 1 w
+t 185.0 115.0 t0 c 0 w n {<A,I>} w
+p 650.0 200.0 leer 0 e
+t 650.0 285.0 t2 c 0 w n {<D, N>} e
+p 650.0 370.0 p5 0 s
+t 770.0 200.0 t5 c 0 w n {<A, N>} e
+e escritor t0 1 n
+e t0 escribir 1 n
+e escribir t1 1 n
+e t1 p4 1 n
+e p4 0.4522891566 57.56735186 t4 0.7361093205 80.30566605 1 n
+e mutex t0 1 n
+e vacios t0 1 n
+e t1 llenos 1 n
+e t1 mutex 1 n
+e t4 0.2420488743 60.07495318 escritor 0.5622940609 68.15423685 1 n
+e llenos t3 1 n
+e mutex t3 1 n
+e t3 leer 1 n
+e lector t3 1 n
+e leer t2 1 n
+e t2 vacios 1 n
+e t2 mutex 1 n
+e t2 p5 1 n
+e p5 0.088220778 49.39635614 t5 0.724549036 62.80127387 1 n
+e t5 0.2832670346 67.46851117 lector 0.9262081912 58.13776741 1 n
+h readerWriter
+
+

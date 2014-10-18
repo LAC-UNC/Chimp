@@ -36,7 +36,7 @@ public class FullIntegrationMutexPetriNet {
 		
 
 		try {
-			PetriNet pn = pnmlConfigurator.loadConfiguration(getJarpath() + "pnml/mutexPnml.pnml");
+			PetriNet pn = pnmlConfigurator.loadConfiguration(getJarpath() + "pnml/mutexPnmlVuelta.pnml");
 			
 			FullIntegrationMutexPetriNet.Counter dumb1 = new FullIntegrationMutexPetriNet.Counter(pn,"t1", "Dumb1");
 			FullIntegrationMutexPetriNet.Counter dumb2 = new FullIntegrationMutexPetriNet.Counter(pn,"t4", "Dumb2");
@@ -44,9 +44,7 @@ public class FullIntegrationMutexPetriNet {
 			pn.assignDummy("t0", dumb1);
 			pn.assignDummy("t3", dumb2);
 			
-			while(true){
-				pn.nextCicle();
-			}
+			pn.startListening();
 //			pn.nextCicle();
 //			pn.nextCicle();
 //			pn.nextCicle();
