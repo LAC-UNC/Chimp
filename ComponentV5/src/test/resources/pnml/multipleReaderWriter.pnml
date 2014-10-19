@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-A68-CB380-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>multipleReaderWriter</text>
+  </name>
+ <page id="g-A68-CB38E-1">
+  <place id="p-A68-CB392-2">
+  <name>
+   <text>escribir</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="185" y="205"/>
+   </graphics>
+  </place>
+  <place id="p-A68-CB3AA-3">
+  <name>
+   <text>escritor</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="185" y="30"/>
+   </graphics>
+  </place>
+  <place id="p-A68-CB3B0-4">
+  <name>
+   <text>lector</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>5</text>
+   </initialMarking>
+   <graphics>
+    <position x="755" y="250"/>
+   </graphics>
+  </place>
+  <place id="p-A68-CB3B7-5">
+  <name>
+   <text>leer</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="635" y="370"/>
+   </graphics>
+  </place>
+  <place id="p-A68-CB3BC-6">
+  <name>
+   <text>llenos</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="420" y="325"/>
+   </graphics>
+  </place>
+  <place id="p-A68-CB3C1-7">
+  <name>
+   <text>mutex</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="420" y="80"/>
+   </graphics>
+  </place>
+  <place id="p-A68-CB3C6-8">
+  <name>
+   <text>noHayNadieEscribiendo</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="635" y="205"/>
+   </graphics>
+  </place>
+  <place id="p-A68-CB3CD-9">
+  <name>
+   <text>p0</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="635" y="530"/>
+   </graphics>
+  </place>
+  <place id="p-A68-CB3D2-10">
+  <name>
+   <text>p4</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="185" y="365"/>
+   </graphics>
+  </place>
+  <transition id="t-A68-CB3D6-11">
+  <name>
+   <text>t0</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;A,I&gt;</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="185" y="115"/>
+   </graphics>
+  </transition>
+  <transition id="t-A68-CB3DE-12">
+  <name>
+   <text>t1</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;D, N&gt;</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="185" y="285"/>
+   </graphics>
+  </transition>
+  <transition id="t-A68-CB3E4-13">
+  <name>
+   <text>t2</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;A, I&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="635" y="295"/>
+   </graphics>
+  </transition>
+  <transition id="t-A68-CB3EA-14">
+  <name>
+   <text>t3</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;A, N&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="635" y="115"/>
+   </graphics>
+  </transition>
+  <transition id="t-A68-CB3EF-15">
+  <name>
+   <text>t4</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;A, N&gt;</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="80" y="200"/>
+   </graphics>
+  </transition>
+  <transition id="t-A68-CB3F5-16">
+  <name>
+   <text>t5</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;D, N&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="635" y="445"/>
+   </graphics>
+  </transition>
+  <transition id="t-A68-CB456-17">
+  <name>
+   <text>t6</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;A, N&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="755" y="400"/>
+   </graphics>
+  </transition>
+  <place id="p-A68-CB45D-18">
+  <name>
+   <text>vacios</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>3</text>
+   </initialMarking>
+   <graphics>
+    <position x="420" y="195"/>
+   </graphics>
+  </place>
+  <arc id="e-A68-CB466-19" source="p-A68-CB3AA-3" target="t-A68-CB3D6-11">
+  </arc>
+  <arc id="e-A68-CB469-20" source="t-A68-CB3EF-15" target="p-A68-CB3AA-3">
+   <graphics>
+    <position x="82" y="152" />
+    <position x="135" y="51" />
+   </graphics>  </arc>
+  <arc id="e-A68-CB478-21" source="p-A68-CB3BC-6" target="t-A68-CB3EA-14">
+  </arc>
+  <arc id="e-A68-CB479-22" source="p-A68-CB3C1-7" target="t-A68-CB3EA-14">
+  </arc>
+  <arc id="e-A68-CB47A-23" source="t-A68-CB3EA-14" target="p-A68-CB3C6-8">
+  </arc>
+  <arc id="e-A68-CB47B-24" source="p-A68-CB3C6-8" target="t-A68-CB3E4-13">
+  </arc>
+  <arc id="e-A68-CB47B-25" source="t-A68-CB3E4-13" target="p-A68-CB3C1-7">
+  </arc>
+  <arc id="e-A68-CB47D-26" source="t-A68-CB3E4-13" target="p-A68-CB3B7-5">
+  </arc>
+  <arc id="e-A68-CB47D-27" source="p-A68-CB3B7-5" target="t-A68-CB3F5-16">
+   <graphics>
+    <position x="634" y="400" />
+    <position x="634" y="427" />
+   </graphics>  </arc>
+  <arc id="e-A68-CB485-28" source="p-A68-CB3B0-4" target="t-A68-CB3E4-13">
+   <graphics>
+    <position x="727" y="243" />
+    <position x="657" y="269" />
+   </graphics>  </arc>
+  <arc id="e-A68-CB48C-29" source="t-A68-CB3F5-16" target="p-A68-CB45D-18">
+   <graphics>
+    <position x="594" y="439" />
+    <position x="434" y="260" />
+   </graphics>  </arc>
+  <arc id="e-A68-CB494-30" source="t-A68-CB3D6-11" target="p-A68-CB392-2">
+  </arc>
+  <arc id="e-A68-CB496-31" source="t-A68-CB3F5-16" target="p-A68-CB3CD-9">
+  </arc>
+  <arc id="e-A68-CB496-32" source="p-A68-CB3CD-9" target="t-A68-CB456-17">
+   <graphics>
+    <position x="692" y="528" />
+    <position x="753" y="450" />
+   </graphics>  </arc>
+  <arc id="e-A68-CB49D-33" source="t-A68-CB456-17" target="p-A68-CB3B0-4">
+  </arc>
+  <arc id="e-A68-CB49E-34" source="p-A68-CB392-2" target="t-A68-CB3DE-12">
+  </arc>
+  <arc id="e-A68-CB49F-35" source="t-A68-CB3DE-12" target="p-A68-CB3D2-10">
+  </arc>
+  <arc id="e-A68-CB4A0-36" source="p-A68-CB3D2-10" target="t-A68-CB3EF-15">
+   <graphics>
+    <position x="141" y="351" />
+    <position x="74" y="264" />
+   </graphics>  </arc>
+  <arc id="e-A68-CB4A7-37" source="p-A68-CB3C1-7" target="t-A68-CB3D6-11">
+  </arc>
+  <arc id="e-A68-CB4A8-38" source="p-A68-CB45D-18" target="t-A68-CB3D6-11">
+  </arc>
+  <arc id="e-A68-CB4A9-39" source="t-A68-CB3DE-12" target="p-A68-CB3BC-6">
+  </arc>
+  <arc id="e-A68-CB4AA-40" source="t-A68-CB3DE-12" target="p-A68-CB3C1-7">
+  </arc>
+ </page>
+ </net>
+</pnml>

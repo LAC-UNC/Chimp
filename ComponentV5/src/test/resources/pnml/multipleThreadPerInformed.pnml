@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-6DC-A8B52-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>multipleThreadPerInformed</text>
+  </name>
+ <page id="g-6DC-A8B5E-1">
+  <place id="p-6DC-A8B61-2">
+  <name>
+   <text>p0</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="210" y="50"/>
+   </graphics>
+  </place>
+  <place id="p-6DC-A8B7A-3">
+  <name>
+   <text>p1</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="50" y="235"/>
+   </graphics>
+  </place>
+  <place id="p-6DC-A8B80-4">
+  <name>
+   <text>p2</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="210" y="230"/>
+   </graphics>
+  </place>
+  <place id="p-6DC-A8B85-5">
+  <name>
+   <text>p3</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="370" y="230"/>
+   </graphics>
+  </place>
+  <transition id="t-6DC-A8B89-6">
+  <name>
+   <text>t1</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;A, I&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="210" y="150"/>
+   </graphics>
+  </transition>
+  <transition id="t-6DC-A8B92-7">
+  <name>
+   <text>t3</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;D, N&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="50" y="320"/>
+   </graphics>
+  </transition>
+  <transition id="t-6DC-A8B98-8">
+  <name>
+   <text>t4</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;D, N&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="210" y="320"/>
+   </graphics>
+  </transition>
+  <transition id="t-6DC-A8B9E-9">
+  <name>
+   <text>t5</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;D, N&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="370" y="320"/>
+   </graphics>
+  </transition>
+  <arc id="e-6DC-A8BA6-10" source="p-6DC-A8B61-2" target="t-6DC-A8B89-6">
+  </arc>
+  <arc id="e-6DC-A8BA8-11" source="p-6DC-A8B7A-3" target="t-6DC-A8B92-7">
+  </arc>
+  <arc id="e-6DC-A8BA9-12" source="t-6DC-A8B89-6" target="p-6DC-A8B80-4">
+  </arc>
+  <arc id="e-6DC-A8BAA-13" source="p-6DC-A8B80-4" target="t-6DC-A8B98-8">
+  </arc>
+  <arc id="e-6DC-A8BAB-14" source="p-6DC-A8B85-5" target="t-6DC-A8B9E-9">
+  </arc>
+  <arc id="e-6DC-A8BAC-15" source="t-6DC-A8B89-6" target="p-6DC-A8B7A-3">
+  </arc>
+  <arc id="e-6DC-A8BAC-16" source="t-6DC-A8B89-6" target="p-6DC-A8B85-5">
+  </arc>
+ </page>
+ </net>
+</pnml>

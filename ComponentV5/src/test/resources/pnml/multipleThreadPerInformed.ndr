@@ -1,0 +1,18 @@
+p 210.0 50.0 p0 1 n
+t 210.0 150.0 t1 c 0 w n {<A, I>} e
+p 370.0 230.0 p3 0 w
+t 50.0 320.0 t3 c 0 w n {<D, N>} e
+t 210.0 320.0 t4 c 0 w n {<D, N>} e
+t 370.0 320.0 t5 c 0 w n {<D, N>} e
+p 50.0 235.0 p1 0 w
+p 210.0 230.0 p2 0 w
+e p0 t1 1 n
+e p1 t3 1 n
+e t1 p2 1 n
+e p2 t4 1 n
+e p3 t5 1 n
+e t1 p1 1 n
+e t1 p3 1 n
+h multipleThreadPerInformed
+
+

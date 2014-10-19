@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-232C-3B161-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>multipleThreadPerInformedBucled</text>
+  </name>
+ <page id="g-232C-3B170-1">
+  <place id="p-232C-3B175-2">
+  <name>
+   <text>p0</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="210" y="30"/>
+   </graphics>
+  </place>
+  <place id="p-232C-3B196-3">
+  <name>
+   <text>p1</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="50" y="205"/>
+   </graphics>
+  </place>
+  <place id="p-232C-3B19D-4">
+  <name>
+   <text>p2</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="210" y="195"/>
+   </graphics>
+  </place>
+  <place id="p-232C-3B1A4-5">
+  <name>
+   <text>p3</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="370" y="195"/>
+   </graphics>
+  </place>
+  <place id="p-232C-3B1AA-6">
+  <name>
+   <text>p4</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="50" y="375"/>
+   </graphics>
+  </place>
+  <place id="p-232C-3B1B0-7">
+  <name>
+   <text>p5</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="210" y="375"/>
+   </graphics>
+  </place>
+  <place id="p-232C-3B1B7-8">
+  <name>
+   <text>p6</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="370" y="375"/>
+   </graphics>
+  </place>
+  <transition id="t-232C-3B1BD-9">
+  <name>
+   <text>t1</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;D, I&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="210" y="115"/>
+   </graphics>
+  </transition>
+  <transition id="t-232C-3B1C6-10">
+  <name>
+   <text>t3</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;D, N&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="50" y="285"/>
+   </graphics>
+  </transition>
+  <transition id="t-232C-3B1CE-11">
+  <name>
+   <text>t4</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;D, N&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="210" y="285"/>
+   </graphics>
+  </transition>
+  <transition id="t-232C-3B1D5-12">
+  <name>
+   <text>t5</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;D, N&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="370" y="285"/>
+   </graphics>
+  </transition>
+  <transition id="t-232C-3B1DD-13">
+  <name>
+   <text>t7</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;A, N&gt;</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="210" y="505"/>
+   </graphics>
+  </transition>
+  <arc id="e-232C-3B1E8-14" source="p-232C-3B1B0-7" target="t-232C-3B1DD-13">
+  </arc>
+  <arc id="e-232C-3B1EC-15" source="t-232C-3B1BD-9" target="p-232C-3B196-3">
+  </arc>
+  <arc id="e-232C-3B1ED-16" source="t-232C-3B1BD-9" target="p-232C-3B1A4-5">
+  </arc>
+  <arc id="e-232C-3B1EE-17" source="t-232C-3B1C6-10" target="p-232C-3B1AA-6">
+  </arc>
+  <arc id="e-232C-3B1F0-18" source="t-232C-3B1CE-11" target="p-232C-3B1B0-7">
+  </arc>
+  <arc id="e-232C-3B1F1-19" source="p-232C-3B175-2" target="t-232C-3B1BD-9">
+  </arc>
+  <arc id="e-232C-3B1F2-20" source="t-232C-3B1D5-12" target="p-232C-3B1B7-8">
+  </arc>
+  <arc id="e-232C-3B1F3-21" source="p-232C-3B1AA-6" target="t-232C-3B1DD-13">
+  </arc>
+  <arc id="e-232C-3B1F5-22" source="p-232C-3B1B7-8" target="t-232C-3B1DD-13">
+  </arc>
+  <arc id="e-232C-3B260-23" source="t-232C-3B1DD-13" target="p-232C-3B175-2">
+   <graphics>
+    <position x="394" y="517" />
+    <position x="434" y="94" />
+   </graphics>  </arc>
+  <arc id="e-232C-3B276-24" source="p-232C-3B196-3" target="t-232C-3B1C6-10">
+  </arc>
+  <arc id="e-232C-3B278-25" source="t-232C-3B1BD-9" target="p-232C-3B19D-4">
+  </arc>
+  <arc id="e-232C-3B279-26" source="p-232C-3B19D-4" target="t-232C-3B1CE-11">
+  </arc>
+  <arc id="e-232C-3B27A-27" source="p-232C-3B1A4-5" target="t-232C-3B1D5-12">
+  </arc>
+ </page>
+ </net>
+</pnml>

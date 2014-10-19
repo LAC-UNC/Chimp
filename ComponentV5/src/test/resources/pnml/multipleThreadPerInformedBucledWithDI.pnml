@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-2918-9FD0F-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>multipleThreadPerInformedBucledWithDI</text>
+  </name>
+ <page id="g-2918-9FD1D-1">
+  <place id="p-2918-9FD20-2">
+  <name>
+   <text>p0</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="210" y="30"/>
+   </graphics>
+  </place>
+  <place id="p-2918-9FD3A-3">
+  <name>
+   <text>p1</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="50" y="310"/>
+   </graphics>
+  </place>
+  <place id="p-2918-9FD40-4">
+  <name>
+   <text>p2</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="210" y="300"/>
+   </graphics>
+  </place>
+  <place id="p-2918-9FD45-5">
+  <name>
+   <text>p3</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="370" y="300"/>
+   </graphics>
+  </place>
+  <place id="p-2918-9FD4A-6">
+  <name>
+   <text>p4</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="50" y="480"/>
+   </graphics>
+  </place>
+  <place id="p-2918-9FD4E-7">
+  <name>
+   <text>p5</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="210" y="480"/>
+   </graphics>
+  </place>
+  <place id="p-2918-9FD52-8">
+  <name>
+   <text>p6</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="370" y="480"/>
+   </graphics>
+  </place>
+  <place id="p-2918-9FD56-9">
+  <name>
+   <text>p7</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="210" y="155"/>
+   </graphics>
+  </place>
+  <transition id="t-2918-9FD5B-10">
+  <name>
+   <text>t0</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;A, I&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="210" y="90"/>
+   </graphics>
+  </transition>
+  <transition id="t-2918-9FD63-11">
+  <name>
+   <text>t1</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;D, I&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="210" y="220"/>
+   </graphics>
+  </transition>
+  <transition id="t-2918-9FD68-12">
+  <name>
+   <text>t3</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;D, N&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="50" y="390"/>
+   </graphics>
+  </transition>
+  <transition id="t-2918-9FD6E-13">
+  <name>
+   <text>t4</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;D, N&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="210" y="390"/>
+   </graphics>
+  </transition>
+  <transition id="t-2918-9FD74-14">
+  <name>
+   <text>t5</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;D, N&gt;</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="370" y="390"/>
+   </graphics>
+  </transition>
+  <transition id="t-2918-9FD79-15">
+  <name>
+   <text>t7</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;A, N&gt;</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="210" y="610"/>
+   </graphics>
+  </transition>
+  <arc id="e-2918-9FD82-16" source="p-2918-9FD4E-7" target="t-2918-9FD79-15">
+  </arc>
+  <arc id="e-2918-9FD84-17" source="p-2918-9FD4A-6" target="t-2918-9FD79-15">
+  </arc>
+  <arc id="e-2918-9FD85-18" source="p-2918-9FD52-8" target="t-2918-9FD79-15">
+  </arc>
+  <arc id="e-2918-9FDEF-19" source="t-2918-9FD79-15" target="p-2918-9FD20-2">
+   <graphics>
+    <position x="394" y="622" />
+    <position x="434" y="94" />
+   </graphics>  </arc>
+  <arc id="e-2918-9FDFF-20" source="p-2918-9FD3A-3" target="t-2918-9FD68-12">
+  </arc>
+  <arc id="e-2918-9FE01-21" source="t-2918-9FD63-11" target="p-2918-9FD40-4">
+  </arc>
+  <arc id="e-2918-9FE02-22" source="p-2918-9FD40-4" target="t-2918-9FD6E-13">
+  </arc>
+  <arc id="e-2918-9FE02-23" source="p-2918-9FD45-5" target="t-2918-9FD74-14">
+  </arc>
+  <arc id="e-2918-9FE04-24" source="t-2918-9FD63-11" target="p-2918-9FD3A-3">
+  </arc>
+  <arc id="e-2918-9FE04-25" source="t-2918-9FD63-11" target="p-2918-9FD45-5">
+  </arc>
+  <arc id="e-2918-9FE05-26" source="t-2918-9FD68-12" target="p-2918-9FD4A-6">
+  </arc>
+  <arc id="e-2918-9FE06-27" source="t-2918-9FD6E-13" target="p-2918-9FD4E-7">
+  </arc>
+  <arc id="e-2918-9FE07-28" source="p-2918-9FD20-2" target="t-2918-9FD5B-10">
+  </arc>
+  <arc id="e-2918-9FE08-29" source="t-2918-9FD5B-10" target="p-2918-9FD56-9">
+  </arc>
+  <arc id="e-2918-9FE0A-30" source="p-2918-9FD56-9" target="t-2918-9FD63-11">
+  </arc>
+  <arc id="e-2918-9FE0A-31" source="t-2918-9FD74-14" target="p-2918-9FD52-8">
+  </arc>
+ </page>
+ </net>
+</pnml>
