@@ -150,6 +150,9 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 		String configFolderParentPath;
 		try {
 			configFolderParentPath = getJarpath();
+			while(configFolderParentPath.contains(".jar")){
+				configFolderParentPath = configFolderParentPath.substring(0,  configFolderParentPath.lastIndexOf("/"));
+			}
 		} catch (URISyntaxException e) {
 			throw new PetriNetException(e.getMessage(), e); 
 		}
