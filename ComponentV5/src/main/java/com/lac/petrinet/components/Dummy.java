@@ -12,13 +12,16 @@ public abstract class Dummy implements Callable<Void> {
 	
 	abstract protected void execute() throws PetriNetException;
 	
-	protected Dummy(PetriNet pn, String tName){
+	protected Dummy(PetriNet pn, String tName) throws PetriNetException{
 		this.petriNet = pn;
-		this.transitionName = tName;
+		if(pn.containFired(tName))
+			this.transitionName = tName;
+		else
+			throw new PetriNetException("There is no fired transition named: " + tName);
 	}
 	
 	@Override
-	public Void call() throws Exception {
+	public Void call() throws PetriNetException {
 		execute();
 		petriNet.fire(transitionName);
 		return null;

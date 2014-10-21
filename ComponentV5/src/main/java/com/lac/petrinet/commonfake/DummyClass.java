@@ -4,6 +4,7 @@ import static org.mockito.Mockito.mock;
 
 import com.lac.petrinet.components.Dummy;
 import com.lac.petrinet.core.PetriNet;
+import com.lac.petrinet.exceptions.PetriNetException;
 
 public class DummyClass extends Dummy {
 	public class SomeResource {
@@ -18,11 +19,11 @@ public class DummyClass extends Dummy {
 	
 	public SomeResource mockedResource = mock(SomeResource.class);
 	
-	public DummyClass(String tName){
+	public DummyClass(String tName) throws PetriNetException{
 		super(mock(PetriNet.class), tName);
 	}
 	
-	public DummyClass(PetriNet pn, String tName){
+	public DummyClass(PetriNet pn, String tName) throws PetriNetException{
 		super(pn, tName);
 	}
 	

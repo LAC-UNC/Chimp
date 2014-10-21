@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.lac.petrinet.components.Dummy;
+import com.lac.petrinet.exceptions.PetriNetException;
 import com.lac.petrinet.netcommunicator.FiredTransition;
 import com.lac.petrinet.netcommunicator.InformedTransition;
 
@@ -40,13 +41,20 @@ public class PetriNet {
 		return;
 	}
 	
-	public void assignDummy(String transition, Dummy dumb){
-		informedTransitions.get(transition).addDummy(dumb);
+	public void assignDummy(String transition, Dummy dumb) throws PetriNetException{
+		InformedTransition it = informedTransitions.get(transition);
+		if(it == null)
+			throw new PetriNetException("There is no informed transition named: " + transition);
+		
+		it.addDummy(dumb);
 	}
 	
-	public void fire(String transition){
-		// TODO: What happen when there is no transition with the given name??
-		firedTransitions.get(transition).communicate();
+	public void fire(String transition) throws PetriNetException{
+		FiredTransition ft = firedTransitions.get(transition);
+		if(ft == null)
+			throw new PetriNetException("There is no fired transition named: " + transition);
+		
+		ft.communicate();
 	}
 	
 	public void addInformed(String name, InformedTransition informedTransition){
@@ -59,6 +67,10 @@ public class PetriNet {
 	
 	public FiredTransition getFired(String name) {
 		return firedTransitions.get(name);
+	}
+	
+	public boolean containFired(String name) {
+		return firedTransitions.containsKey(name);
 	}
 	
 	public InformedTransition getInformed(String name) {

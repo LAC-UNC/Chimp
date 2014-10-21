@@ -37,7 +37,7 @@ public class FullIntegrationReaderWriter {
 	public static class Reader extends Dummy {
 		private Buffer b;
 		
-		public Reader(PetriNet pn, String tName, Buffer buffer){
+		public Reader(PetriNet pn, String tName, Buffer buffer) throws PetriNetException{
 			super(pn, tName);
 			this.b = buffer;
 		}
@@ -55,7 +55,7 @@ public class FullIntegrationReaderWriter {
 		private Buffer b;
 		private int counter;
 		
-		public Writer(PetriNet pn, String tName, Buffer buffer){
+		public Writer(PetriNet pn, String tName, Buffer buffer) throws PetriNetException{
 			super(pn, tName);
 			this.b = buffer;
 			this.counter = 0;

@@ -13,7 +13,7 @@ public class FullIntegrationMultipleThreadPerInformed {
 	public static class Talker extends Dummy {
 		private String msg;
 		
-		public Talker(PetriNet pn, String tName, String message){
+		public Talker(PetriNet pn, String tName, String message) throws PetriNetException{
 			super(pn, tName);
 			this.msg = message;
 		}

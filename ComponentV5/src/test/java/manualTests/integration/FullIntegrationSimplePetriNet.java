@@ -16,7 +16,7 @@ public class FullIntegrationSimplePetriNet {
 	public static class Counter extends Dummy {
 		private String msg;
 		
-		public Counter(PetriNet pn, String tName, String message){
+		public Counter(PetriNet pn, String tName, String message) throws PetriNetException{
 			super(pn, tName);
 			this.msg = message;
 		}

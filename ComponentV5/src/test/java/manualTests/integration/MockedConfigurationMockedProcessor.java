@@ -9,6 +9,7 @@ import java.util.concurrent.Executors;
 import com.lac.petrinet.commonfake.DummyClass;
 import com.lac.petrinet.components.Dummy;
 import com.lac.petrinet.core.PetriNet;
+import com.lac.petrinet.exceptions.PetriNetException;
 import com.lac.petrinet.netcommunicator.FiredTransition;
 import com.lac.petrinet.netcommunicator.InformedTransition;
 import com.lac.petrinet.netcommunicator.ProcessorHandler;
@@ -22,7 +23,7 @@ public class MockedConfigurationMockedProcessor {
 	public static class Counter extends Dummy {
 		private String msg;
 		
-		public Counter(PetriNet pn, String tName, String message){
+		public Counter(PetriNet pn, String tName, String message) throws PetriNetException{
 			super(pn, tName);
 			this.msg = message;
 		}
@@ -37,7 +38,7 @@ public class MockedConfigurationMockedProcessor {
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws PetriNetException {
 		//This is some similar to what a Chimp user can do.
 		PetriNet pn = loadConfiguration();
 		
@@ -45,9 +46,14 @@ public class MockedConfigurationMockedProcessor {
 		MockedConfigurationMockedProcessor.Counter dumb2 = new MockedConfigurationMockedProcessor.Counter(pn,"someFired12", "Two");
 		MockedConfigurationMockedProcessor.Counter dumb3 = new MockedConfigurationMockedProcessor.Counter(pn,"someFired13", "Three");
 			
-		pn.assignDummy("someInformed1", dumb1);
-		pn.assignDummy("someInformed2", dumb2);
-		pn.assignDummy("someInformed3", dumb3);
+		try {
+			pn.assignDummy("someInformed1", dumb1);
+			pn.assignDummy("someInformed2", dumb2);
+			pn.assignDummy("someInformed3", dumb3);
+		} catch (PetriNetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		when(mockedProcessor.listen(1)).thenReturn(true);
 		when(mockedProcessor.listen(2)).thenReturn(false);

@@ -7,24 +7,32 @@ import static org.mockito.Mockito.when;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.lac.petrinet.netcommunicator.InformedTransition;
 import com.lac.petrinet.netcommunicator.ProcessorHandler;
 import com.lac.petrinet.commonfake.DummyClass;
+import com.lac.petrinet.core.PetriNet;
+import com.lac.petrinet.exceptions.PetriNetException;
 
 import static org.testng.AssertJUnit.*;
 
 
 public class InformedTransitionTest {
-	
+	public PetriNet mockedPN = mock(PetriNet.class);
 	private ProcessorHandler mockedProcessor = mock(ProcessorHandler.class);
 	private ExecutorService threadPool = Executors.newCachedThreadPool();
+
+	@BeforeMethod
+	public void PnMocker(){
+		when(mockedPN.containFired("someTransition")).thenReturn(true);
+	}
 	
 	@Test
-	public void addDummyToTransition() {
+	public void addDummyToTransition() throws PetriNetException {
 		InformedTransition it = new InformedTransition(mockedProcessor, 7170, threadPool);
-		DummyClass dumb = new DummyClass("someTransition");
+		DummyClass dumb = new DummyClass(mockedPN, "someTransition");
 		
 		assertFalse(it.contains(dumb));
 		it.addDummy(dumb);
@@ -52,9 +60,9 @@ public class InformedTransitionTest {
 	}*/
 	
 	@Test
-	public void transitionShouldExecuteTaskWhenIsTriggered() {
+	public void transitionShouldExecuteTaskWhenIsTriggered() throws PetriNetException {
 		InformedTransition it = new InformedTransition(mockedProcessor, 7, threadPool);
-		DummyClass dumb = new DummyClass("someTransition");
+		DummyClass dumb = new DummyClass(mockedPN, "someTransition");
 		
 		when(mockedProcessor.listen(7)).thenReturn(true);
 		
