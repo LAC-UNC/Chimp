@@ -14,13 +14,13 @@ import petrinet.support.procesador.ProcesadorPetri;
  public class ProcesadorPetriVirtual
    implements ProcesadorPetri
  {
-   private static final String INCIDENCIA = "incidencia";
+   /*private static final String INCIDENCIA = "incidencia";
    private static final String MARCADO = "marcado";
    private static final String RELACION = "relacion";
    private static final String COTAS = "cotas";
    private static final String AUTOMATICOS = "automaticos";
    private static final String PRIORIDADES = "prioridades";
-   private static final String PRIORIDADESDISTRIBUIDAS = "prioridadesDistribuidas";
+   private static final String PRIORIDADESDISTRIBUIDAS = "prioridadesDistribuidas";*/
    private String fileIncidencia;
    private String fileMarcado;
    private String fileRelacion;

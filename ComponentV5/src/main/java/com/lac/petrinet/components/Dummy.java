@@ -12,26 +12,34 @@ public abstract class Dummy implements Callable<Void> {
 	
 	abstract protected void execute() throws PetriNetException;
 	
-	protected Dummy(PetriNet pn, String tName) throws PetriNetException{
-		this.petriNet = pn;
-		if(pn.containFired(tName))
-			this.transitionName = tName;
-		else
-			throw new PetriNetException("There is no fired transition named: " + tName);
+	protected Dummy(String tName) throws PetriNetException{
+		this.transitionName = tName;
+		this.petriNet = null;
 	}
 	
 	@Override
 	public Void call() throws PetriNetException {
-		execute();
-		petriNet.fire(transitionName);
-		return null;
+		if(this.petriNet != null) {
+			execute();
+			petriNet.fire(transitionName);
+			return null;
+		}
+		else
+			throw new PetriNetException("There is no petrinet assigned for this Dummy");
 	}
 
-	public void setTransitionName(String transitionName) {
-		this.transitionName = transitionName;
+	public void setPetriNet(PetriNet petriNet) throws PetriNetException {
+		if(petriNet.containFired(this.transitionName))
+			this.petriNet = petriNet;
+		else
+			throw new PetriNetException("There is no fired transition named: " + this.transitionName);
 	}
 
-	public void setPetriNet(PetriNet petriNet) {
-		this.petriNet = petriNet;
+	public String getTransitionName() {
+		return this.transitionName;
+	}
+	
+	public PetriNet getPetriNet() {
+		return this.petriNet;
 	}
 }

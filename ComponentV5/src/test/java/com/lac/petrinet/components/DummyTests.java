@@ -1,14 +1,14 @@
 package com.lac.petrinet.components;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.lac.petrinet.components.Dummy;
 import com.lac.petrinet.core.PetriNet;
 import com.lac.petrinet.exceptions.PetriNetException;
-
-import static org.mockito.Mockito.*;
 
 public class DummyTests {
 	//mock creation
@@ -16,7 +16,7 @@ public class DummyTests {
 
 	public class DummyClass extends Dummy {
 		public DummyClass(String tName) throws PetriNetException{
-			super(DummyTests.this.mockedPN, tName);
+			super(tName);
 		}
 		@Override
 		protected void execute() {
@@ -32,7 +32,8 @@ public class DummyTests {
 	@Test
 	public void fireTransitionAfterExecutionTest() throws Exception{
 		DummyClass dummyObj = new DummyClass("SomeTransition");
-
+		dummyObj.setPetriNet(mockedPN);
+		
 		dummyObj.call();
 		verify(mockedPN).fire("SomeTransition");
 	}

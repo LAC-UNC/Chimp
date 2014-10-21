@@ -32,7 +32,7 @@ public class InformedTransitionTest {
 	@Test
 	public void addDummyToTransition() throws PetriNetException {
 		InformedTransition it = new InformedTransition(mockedProcessor, 7170, threadPool);
-		DummyClass dumb = new DummyClass(mockedPN, "someTransition");
+		DummyClass dumb = new DummyClass("someTransition");
 		
 		assertFalse(it.contains(dumb));
 		it.addDummy(dumb);
@@ -62,7 +62,8 @@ public class InformedTransitionTest {
 	@Test
 	public void transitionShouldExecuteTaskWhenIsTriggered() throws PetriNetException {
 		InformedTransition it = new InformedTransition(mockedProcessor, 7, threadPool);
-		DummyClass dumb = new DummyClass(mockedPN, "someTransition");
+		DummyClass dumb = new DummyClass("someTransition");
+		dumb.setPetriNet(mockedPN);
 		
 		when(mockedProcessor.listen(7)).thenReturn(true);
 		

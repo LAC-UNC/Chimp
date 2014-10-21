@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,8 +18,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.lac.petrinet.configuration.PNData;
 import com.lac.petrinet.configuration.ConfigurationReader;
+import com.lac.petrinet.configuration.PNData;
 import com.lac.petrinet.core.PetriNet;
 import com.lac.petrinet.exceptions.PetriNetException;
 import com.lac.petrinet.netcommunicator.FiredTransition;

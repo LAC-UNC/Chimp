@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.lac.petrinet.commonfake.DummyClass;
 import com.lac.petrinet.components.Dummy;
 import com.lac.petrinet.core.PetriNet;
 import com.lac.petrinet.exceptions.PetriNetException;
@@ -23,8 +22,8 @@ public class MockedConfigurationMockedProcessor {
 	public static class Counter extends Dummy {
 		private String msg;
 		
-		public Counter(PetriNet pn, String tName, String message) throws PetriNetException{
-			super(pn, tName);
+		public Counter(String tName, String message) throws PetriNetException{
+			super(tName);
 			this.msg = message;
 		}
 		
@@ -42,9 +41,9 @@ public class MockedConfigurationMockedProcessor {
 		//This is some similar to what a Chimp user can do.
 		PetriNet pn = loadConfiguration();
 		
-		MockedConfigurationMockedProcessor.Counter dumb1 = new MockedConfigurationMockedProcessor.Counter(pn,"someFired11", "One");
-		MockedConfigurationMockedProcessor.Counter dumb2 = new MockedConfigurationMockedProcessor.Counter(pn,"someFired12", "Two");
-		MockedConfigurationMockedProcessor.Counter dumb3 = new MockedConfigurationMockedProcessor.Counter(pn,"someFired13", "Three");
+		MockedConfigurationMockedProcessor.Counter dumb1 = new MockedConfigurationMockedProcessor.Counter("someFired11", "One");
+		MockedConfigurationMockedProcessor.Counter dumb2 = new MockedConfigurationMockedProcessor.Counter("someFired12", "Two");
+		MockedConfigurationMockedProcessor.Counter dumb3 = new MockedConfigurationMockedProcessor.Counter("someFired13", "Three");
 			
 		try {
 			pn.assignDummy("someInformed1", dumb1);

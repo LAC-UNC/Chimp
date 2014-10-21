@@ -16,8 +16,8 @@ public class FullIntegrationSimplePetriNet {
 	public static class Counter extends Dummy {
 		private String msg;
 		
-		public Counter(PetriNet pn, String tName, String message) throws PetriNetException{
-			super(pn, tName);
+		public Counter(String tName, String message) throws PetriNetException{
+			super(tName);
 			this.msg = message;
 		}
 		
@@ -38,8 +38,8 @@ public class FullIntegrationSimplePetriNet {
 		try {
 			PetriNet pn = pnmlConfigurator.loadConfiguration(getJarpath() + "pnml/simplePnml.pnml");
 			
-			FullIntegrationSimplePetriNet.Counter dumb1 = new FullIntegrationSimplePetriNet.Counter(pn,"t1", "Dumb1");
-			FullIntegrationSimplePetriNet.Counter dumb2 = new FullIntegrationSimplePetriNet.Counter(pn,"t2", "Dumb2");
+			FullIntegrationSimplePetriNet.Counter dumb1 = new FullIntegrationSimplePetriNet.Counter("t1", "Dumb1");
+			FullIntegrationSimplePetriNet.Counter dumb2 = new FullIntegrationSimplePetriNet.Counter("t2", "Dumb2");
 			
 			pn.assignDummy("t0", dumb1);
 			pn.assignDummy("t1", dumb2);

@@ -47,6 +47,7 @@ public class PetriNet {
 			throw new PetriNetException("There is no informed transition named: " + transition);
 		
 		it.addDummy(dumb);
+		dumb.setPetriNet(this);
 	}
 	
 	public void fire(String transition) throws PetriNetException{

@@ -15,7 +15,7 @@ import petrinet.support.procesadorPNVirtual.ColaTransiciones;
    public IPCoreHPN(int[][] _prioridades_distribuidas, int totalTransiciones)
    {
      this.matriz_prioridades = _prioridades_distribuidas;
-     this.redes = new ArrayList();
+     this.redes = new ArrayList<PetriNet>();
      this.colaSalida = new ColaTransiciones(totalTransiciones);
    }
    

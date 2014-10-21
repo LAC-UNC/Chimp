@@ -2,19 +2,15 @@ package com.lac.petrinet.core;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.times;
 import static org.testng.AssertJUnit.assertFalse;
-import static org.testng.AssertJUnit.assertTrue;
 import static org.testng.AssertJUnit.assertSame;
+import static org.testng.AssertJUnit.assertTrue;
 
 import java.util.concurrent.ExecutorService;
 
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.lac.petrinet.commonfake.DummyClass;
-import com.lac.petrinet.core.PetriNet;
 import com.lac.petrinet.exceptions.PetriNetException;
 import com.lac.petrinet.netcommunicator.FiredTransition;
 import com.lac.petrinet.netcommunicator.InformedTransition;
@@ -60,7 +56,7 @@ public class PetriNetTest {
 		InformedTransition it = new InformedTransition(mockedProcessor, 216, threadPool);
 		p.addInformed("someInformed", it);
 		p.addFired("someFired", new FiredTransition(mockedProcessor, 27));
-		DummyClass dumb = new DummyClass(p,"someFired");
+		DummyClass dumb = new DummyClass("someFired");
 
 		assertFalse(it.contains(dumb));
 		p.assignDummy("someInformed", dumb);
@@ -84,9 +80,9 @@ public class PetriNetTest {
 		p.addFired("someFired2", ft2);
 		p.addFired("someFired3", ft3);
 		
-		DummyClass dumb1 = new DummyClass(p,"someFired1");
-		DummyClass dumb2 = new DummyClass(p,"someFired2");
-		DummyClass dumb3 = new DummyClass(p,"someFired3");
+		DummyClass dumb1 = new DummyClass("someFired1");
+		DummyClass dumb2 = new DummyClass("someFired2");
+		DummyClass dumb3 = new DummyClass("someFired3");
 		
 		p.startListening(1);
 		

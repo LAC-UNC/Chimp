@@ -2,7 +2,6 @@ package com.lac.petrinet.netcommunicator;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import com.lac.petrinet.components.Dummy;
 

@@ -13,8 +13,8 @@ public class FullIntegrationMultipleThreadPerInformed {
 	public static class Talker extends Dummy {
 		private String msg;
 		
-		public Talker(PetriNet pn, String tName, String message) throws PetriNetException{
-			super(pn, tName);
+		public Talker(String tName, String message) throws PetriNetException{
+			super(tName);
 			this.msg = message;
 		}
 		
@@ -33,10 +33,10 @@ public class FullIntegrationMultipleThreadPerInformed {
 		try {
 			PetriNet pn = pnmlConfigurator.loadConfiguration(getJarpath() + "pnml/multipleThreadPerInformedBucledWithDI.pnml");
 			
-			FullIntegrationMultipleThreadPerInformed.Talker dumb0 = new FullIntegrationMultipleThreadPerInformed.Talker(pn,"t1", "----START----");
-			FullIntegrationMultipleThreadPerInformed.Talker dumb1 = new FullIntegrationMultipleThreadPerInformed.Talker(pn,"t3", "Dumb1");
-			FullIntegrationMultipleThreadPerInformed.Talker dumb2 = new FullIntegrationMultipleThreadPerInformed.Talker(pn,"t4", "Dumb2");
-			FullIntegrationMultipleThreadPerInformed.Talker dumb3 = new FullIntegrationMultipleThreadPerInformed.Talker(pn,"t5", "Dumb3");
+			FullIntegrationMultipleThreadPerInformed.Talker dumb0 = new FullIntegrationMultipleThreadPerInformed.Talker("t1", "----START----");
+			FullIntegrationMultipleThreadPerInformed.Talker dumb1 = new FullIntegrationMultipleThreadPerInformed.Talker("t3", "Dumb1");
+			FullIntegrationMultipleThreadPerInformed.Talker dumb2 = new FullIntegrationMultipleThreadPerInformed.Talker("t4", "Dumb2");
+			FullIntegrationMultipleThreadPerInformed.Talker dumb3 = new FullIntegrationMultipleThreadPerInformed.Talker("t5", "Dumb3");
 			
 			pn.assignDummy("t0", dumb0);
 			pn.assignDummy("t1", dumb1);

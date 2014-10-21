@@ -18,7 +18,7 @@ import javax.swing.table.TableModel;
      throws FileNotFoundException, IOException
    {
      String text = null;
-     List<String> lista = new ArrayList();
+     List<String> lista = new ArrayList<String>();
      
      BufferedReader bf = new BufferedReader(new FileReader(_path));
      while ((text = bf.readLine()) != null) {
@@ -38,12 +38,12 @@ import javax.swing.table.TableModel;
      String[] temp = null;
      
  
-     List<String[]> filas = new ArrayList();
+     List<String[]> filas = new ArrayList<String[]>();
      for (int i = 0; i < _lines.length; i++)
      {
        temp = _lines[i].split(" ");
        
-       List<String> lista = new ArrayList();
+       List<String> lista = new ArrayList<String>();
        for (int j = 0; j < temp.length; j++) {
          if (!temp[j].equals("")) {
            lista.add(temp[j]);

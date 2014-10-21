@@ -37,8 +37,8 @@ public class FullIntegrationReaderWriter {
 	public static class Reader extends Dummy {
 		private Buffer b;
 		
-		public Reader(PetriNet pn, String tName, Buffer buffer) throws PetriNetException{
-			super(pn, tName);
+		public Reader(String tName, Buffer buffer) throws PetriNetException{
+			super(tName);
 			this.b = buffer;
 		}
 		
@@ -55,8 +55,8 @@ public class FullIntegrationReaderWriter {
 		private Buffer b;
 		private int counter;
 		
-		public Writer(PetriNet pn, String tName, Buffer buffer) throws PetriNetException{
-			super(pn, tName);
+		public Writer(String tName, Buffer buffer) throws PetriNetException{
+			super(tName);
 			this.b = buffer;
 			this.counter = 0;
 		}
@@ -79,8 +79,8 @@ public class FullIntegrationReaderWriter {
 		try {
 			PetriNet pn = pnmlConfigurator.loadConfiguration(getJarpath() + "pnml/readerWriter.pnml");
 			
-			FullIntegrationReaderWriter.Reader r1 = new FullIntegrationReaderWriter.Reader(pn,"t2", sharedBuffer);
-			FullIntegrationReaderWriter.Writer w1 = new FullIntegrationReaderWriter.Writer(pn,"t1", sharedBuffer);
+			FullIntegrationReaderWriter.Reader r1 = new FullIntegrationReaderWriter.Reader("t2", sharedBuffer);
+			FullIntegrationReaderWriter.Writer w1 = new FullIntegrationReaderWriter.Writer("t1", sharedBuffer);
 			
 			pn.assignDummy("t0", w1);
 			pn.assignDummy("t3", r1);
