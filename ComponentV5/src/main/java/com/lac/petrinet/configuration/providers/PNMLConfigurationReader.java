@@ -20,6 +20,7 @@ import org.xml.sax.SAXException;
 
 import com.lac.petrinet.configuration.ConfigurationReader;
 import com.lac.petrinet.configuration.PNData;
+import com.lac.petrinet.configuration.handler.MatrixHandler;
 import com.lac.petrinet.core.PetriNet;
 import com.lac.petrinet.exceptions.PetriNetException;
 import com.lac.petrinet.netcommunicator.FiredTransition;
@@ -67,6 +68,11 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 	 */
 	private static final String SININFORME = "sinInforme";
 
+	private PNData pnData;
+	
+	public PNData getPnData() {
+		return this.pnData;
+	}
 	
 	/**
 	 * Read the values from PNML file y create the transitions instance adding it to the transitions attribute. 
@@ -155,13 +161,14 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 			throw new PetriNetException(e.getMessage(), e); 
 		}
 		// create configuration files for processor and Transitions
-		PNData pnData = new PNData();
-		pnData.cargarRed(pnmlFilepath);
-		String configFileFolderPath = generateConfigFiles(pnData, configFolderParentPath);
+		this.pnData = new PNData();
+		this.pnData.cargarRed(pnmlFilepath);
+		String configFileFolderPath = generateConfigFiles(this.pnData, configFolderParentPath);
 		// create processorHandler
-		ProcessorHandler processorHandler = new ProcessorHandlerImpl(pathForPNNVHack(configFileFolderPath), pnData.getTransiciones().size());
+		ProcessorHandler processorHandler = new ProcessorHandlerImpl(pathForPNNVHack(configFileFolderPath), this.pnData.getTransiciones().size());
 		// Create PetriNet and assign processorHandler to its.
 		PetriNet petriNet = createPNFromPNML(pnmlFilepath, processorHandler);
+		MatrixHandler.getInstance().setPNData(pnData);
 		return petriNet;
 	}
 	

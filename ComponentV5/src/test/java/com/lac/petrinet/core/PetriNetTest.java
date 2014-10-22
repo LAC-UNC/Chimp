@@ -2,6 +2,7 @@ package com.lac.petrinet.core;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertSame;
 import static org.testng.AssertJUnit.assertTrue;
@@ -11,6 +12,7 @@ import java.util.concurrent.ExecutorService;
 import org.testng.annotations.Test;
 
 import com.lac.petrinet.commonfake.DummyClass;
+import com.lac.petrinet.configuration.handler.MatrixHandler;
 import com.lac.petrinet.exceptions.PetriNetException;
 import com.lac.petrinet.netcommunicator.FiredTransition;
 import com.lac.petrinet.netcommunicator.InformedTransition;
@@ -53,9 +55,14 @@ public class PetriNetTest {
 	@Test
 	public void assignDummyToInformedFromPetriNet() throws PetriNetException {
 		PetriNet p = new PetriNet();
-		InformedTransition it = new InformedTransition(mockedProcessor, 216, threadPool);
+		MatrixHandler mockedMH = mock(MatrixHandler.class);
+		MatrixHandler.INSTANCE = mockedMH;
+		
+		InformedTransition it = new InformedTransition(mockedProcessor, 3, threadPool);
+		FiredTransition ft = new FiredTransition(mockedProcessor, 2);
+		when(mockedMH.sharePlaceVertically(3,2)).thenReturn(true);
 		p.addInformed("someInformed", it);
-		p.addFired("someFired", new FiredTransition(mockedProcessor, 27));
+		p.addFired("someFired", ft);
 		DummyClass dumb = new DummyClass("someFired");
 
 		assertFalse(it.contains(dumb));

@@ -43,11 +43,15 @@ public class PetriNet {
 	
 	public void assignDummy(String transition, Dummy dumb) throws PetriNetException{
 		InformedTransition it = informedTransitions.get(transition);
+		dumb.setPetriNet(this);
+		
 		if(it == null)
 			throw new PetriNetException("There is no informed transition named: " + transition);
 		
+		if(!it.isCointiguousWith(this.getFired(dumb.getTransitionName())))
+			throw new PetriNetException("The informed transition " + transition + " is not separed by only a place with the fired transition " + dumb.getTransitionName());
+		
 		it.addDummy(dumb);
-		dumb.setPetriNet(this);
 	}
 	
 	public void fire(String transition) throws PetriNetException{
