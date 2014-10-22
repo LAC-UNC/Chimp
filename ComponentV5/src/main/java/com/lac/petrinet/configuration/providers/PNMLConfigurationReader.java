@@ -20,7 +20,6 @@ import org.xml.sax.SAXException;
 
 import com.lac.petrinet.configuration.ConfigurationReader;
 import com.lac.petrinet.configuration.PNData;
-import com.lac.petrinet.configuration.handler.MatrixHandler;
 import com.lac.petrinet.core.PetriNet;
 import com.lac.petrinet.exceptions.PetriNetException;
 import com.lac.petrinet.netcommunicator.FiredTransition;
@@ -168,7 +167,7 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 		ProcessorHandler processorHandler = new ProcessorHandlerImpl(pathForPNNVHack(configFileFolderPath), this.pnData.getTransiciones().size());
 		// Create PetriNet and assign processorHandler to its.
 		PetriNet petriNet = createPNFromPNML(pnmlFilepath, processorHandler);
-		MatrixHandler.getInstance().setPNData(pnData);
+		petriNet.setPNData(this.pnData);
 		return petriNet;
 	}
 	

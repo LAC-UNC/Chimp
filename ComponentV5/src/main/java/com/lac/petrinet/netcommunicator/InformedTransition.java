@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 
 import com.lac.petrinet.components.Dummy;
-import com.lac.petrinet.configuration.handler.MatrixHandler;
 
 public class InformedTransition extends Transition {
 
@@ -35,9 +34,5 @@ public class InformedTransition extends Transition {
 	
 	public boolean contains(Dummy dumb) {
 		return this.dummies.contains(dumb);
-	}
-	
-	public boolean isCointiguousWith(FiredTransition ft){
-		return MatrixHandler.getInstance().sharePlaceVertically(this.transitionId, ft.transitionId);
 	}
 }

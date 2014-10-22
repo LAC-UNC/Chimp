@@ -95,14 +95,14 @@ public class PNData {
 	 * Getter.
 	 * @return Matriz de Incidencia Positiva
 	 */
-	public final int[][] getMatrizIncidenciaPositiva() {
+	public int[][] getMatrizIncidenciaPositiva() {
 		return this.matrizIncidenciaMarcadoInicial.getMatrizPositiva();
 	}
 	/**
 	 * Getter.
 	 * @return Matriz de Incidencia Negativa
 	 */
-	public final int[][] getMatrizIncidenciaNegativa() {
+	public int[][] getMatrizIncidenciaNegativa() {
 		return this.matrizIncidenciaMarcadoInicial.getMatrizNegativa();
 	}
 	/**

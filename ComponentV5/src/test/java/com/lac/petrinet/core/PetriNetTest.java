@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutorService;
 import org.testng.annotations.Test;
 
 import com.lac.petrinet.commonfake.DummyClass;
-import com.lac.petrinet.configuration.handler.MatrixHandler;
+import com.lac.petrinet.configuration.PNData;
 import com.lac.petrinet.exceptions.PetriNetException;
 import com.lac.petrinet.netcommunicator.FiredTransition;
 import com.lac.petrinet.netcommunicator.InformedTransition;
@@ -54,13 +54,15 @@ public class PetriNetTest {
 	
 	@Test
 	public void assignDummyToInformedFromPetriNet() throws PetriNetException {
+		PNData pnDataMocked = mock(PNData.class);
+		int[][] pos = {{1, 0}, {0, 1}};
+		int[][] neg = {{0, 1}, {1, 0}};
+		when(pnDataMocked.getMatrizIncidenciaPositiva()).thenReturn(pos);
+		when(pnDataMocked.getMatrizIncidenciaNegativa()).thenReturn(neg);
 		PetriNet p = new PetriNet();
-		MatrixHandler mockedMH = mock(MatrixHandler.class);
-		MatrixHandler.INSTANCE = mockedMH;
-		
-		InformedTransition it = new InformedTransition(mockedProcessor, 3, threadPool);
-		FiredTransition ft = new FiredTransition(mockedProcessor, 2);
-		when(mockedMH.sharePlaceVertically(3,2)).thenReturn(true);
+		p.setPNData(pnDataMocked);
+		InformedTransition it = new InformedTransition(mockedProcessor, 0, threadPool);
+		FiredTransition ft = new FiredTransition(mockedProcessor, 1);
 		p.addInformed("someInformed", it);
 		p.addFired("someFired", ft);
 		DummyClass dumb = new DummyClass("someFired");

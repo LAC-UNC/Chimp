@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.lac.petrinet.components.Dummy;
+import com.lac.petrinet.configuration.PNData;
 import com.lac.petrinet.exceptions.PetriNetException;
 import com.lac.petrinet.netcommunicator.FiredTransition;
 import com.lac.petrinet.netcommunicator.InformedTransition;
@@ -14,6 +15,7 @@ public class PetriNet {
 
 	Map<String,InformedTransition> informedTransitions = new HashMap<String, InformedTransition>(); 
 	Map<String, FiredTransition> firedTransitions = new HashMap<String, FiredTransition>(); 
+	PNData pnData;
 	
 	public void startListening(){
 		while(true) { // As far as I know, this method can't be tested because of this infinite cycle.
@@ -48,10 +50,24 @@ public class PetriNet {
 		if(it == null)
 			throw new PetriNetException("There is no informed transition named: " + transition);
 		
-		if(!it.isCointiguousWith(this.getFired(dumb.getTransitionName())))
+		if(!this.sharePlaceVertically(it.getTransitionId(), this.getFired(dumb.getTransitionName()).getTransitionId()))
 			throw new PetriNetException("The informed transition " + transition + " is not separed by only a place with the fired transition " + dumb.getTransitionName());
 		
 		it.addDummy(dumb);
+	}
+	
+	public boolean sharePlaceVertically(int tAbove, int tBelow) {
+		// TODO Auto-generated method stub
+		int[][] pos = this.pnData.getMatrizIncidenciaPositiva();
+		int[][] neg = this.pnData.getMatrizIncidenciaNegativa();
+		
+		for(int i = 0; i<pos.length; i++){
+			if(pos[i][tAbove] > 0 && neg[i][tBelow] > 0) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	public void fire(String transition) throws PetriNetException{
@@ -80,5 +96,9 @@ public class PetriNet {
 	
 	public InformedTransition getInformed(String name) {
 		return informedTransitions.get(name);
+	}
+
+	public void setPNData(PNData pd) {
+		this.pnData = pd;
 	}
 }
