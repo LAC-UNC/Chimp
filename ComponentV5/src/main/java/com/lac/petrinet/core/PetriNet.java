@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import com.lac.petrinet.components.Dummy;
 import com.lac.petrinet.configuration.PNData;
@@ -101,4 +102,14 @@ public class PetriNet {
 	public void setPNData(PNData pd) {
 		this.pnData = pd;
 	}
+	
+		
+	public Set<String> getInformedNameList(){
+		return informedTransitions.keySet();
+	}
+
+	public Set<String> getFiredTransitions() {
+		return firedTransitions.keySet();
+	}
+
 }
