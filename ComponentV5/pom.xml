@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>lac</groupId>
   <artifactId>ConcurrenceHandler</artifactId>
-  <version>1.0-snapshot</version>
+  <version>1.0-SNAPSHOT</version>
   <name>concurrenceHandler</name>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
@@ -27,6 +27,7 @@
         <configuration>
           <source>1.7</source>
           <target>1.7</target>
+          <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
     </plugins>
@@ -47,7 +48,7 @@
 		</repository>
 		<snapshotRepository>
 			<id>snapshots</id>
-			<name>Internal Releases</name>
+			<name>Internal Snapshots</name>
 			<url>http://nexusdiy-projintegration.rhcloud.com/nexus/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
