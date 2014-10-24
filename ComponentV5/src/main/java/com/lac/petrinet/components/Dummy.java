@@ -12,7 +12,7 @@ public abstract class Dummy implements Callable<Void> {
 	
 	abstract protected void execute() throws PetriNetException;
 	
-	protected Dummy(String tName) throws PetriNetException{
+	protected Dummy(String tName){
 		this.transitionName = tName;
 		this.petriNet = null;
 	}
