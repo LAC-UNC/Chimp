@@ -89,9 +89,9 @@ public class PetriNetTest {
 		p.addFired("someFired2", ft2);
 		p.addFired("someFired3", ft3);
 		
-		DummyClass dumb1 = new DummyClass("someFired1");
-		DummyClass dumb2 = new DummyClass("someFired2");
-		DummyClass dumb3 = new DummyClass("someFired3");
+//		DummyClass dumb1 = new DummyClass("someFired1");
+//		DummyClass dumb2 = new DummyClass("someFired2");
+//		DummyClass dumb3 = new DummyClass("someFired3");
 		
 		p.startListening(1);
 		

@@ -53,9 +53,10 @@ import petrinet.support.procesador.ProcesadorPetri;
      }
      catch (Exception e)
      {
-       JOptionPane.showMessageDialog(null, "No se cargaron los path de los archivos de configuracion", 
-       
-         "ERROR", 0);
+//       JOptionPane.showMessageDialog(null, "No se cargaron los path de los archivos de configuracion", 
+//       
+//         "ERROR", 0);
+       e.printStackTrace();
        System.exit(1);
      }
      try
