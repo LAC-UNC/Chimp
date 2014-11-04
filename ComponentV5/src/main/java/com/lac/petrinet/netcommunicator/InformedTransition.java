@@ -18,14 +18,12 @@ public class InformedTransition extends Transition {
 	
 	@Override
 	public void communicate() {
-		if(this.processor.listen(this.transitionId)){
-			try {
-				threadPool.invokeAll(this.dummies);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		
+		if(this.processor.listen(this.transitionId)){ 
+			for(Dummy dumb : dummies){
+				threadPool.submit(dumb);
+			}
 		}
+		
 	}
 	
 	public void addDummy(Dummy dumb) {
