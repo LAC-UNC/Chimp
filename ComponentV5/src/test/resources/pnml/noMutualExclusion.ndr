@@ -1,0 +1,11 @@
+t 70.0 35.0 t0 w 0 w n {<A, I>} c
+t 70.0 295.0 t1 w 0 w n {<D, N>} c
+p 70.0 170.0 p1 0 w
+p 270.0 175.0 p0 1K e
+e p0 t0 1 n
+e t1 p0 1 n
+e t0 p1 1 n
+e p1 t1 1 n
+h noMutualExclusion large
+
+

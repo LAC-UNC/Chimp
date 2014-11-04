@@ -60,7 +60,7 @@ public class InformedTransitionTest {
 	}*/
 	
 	@Test
-	public void transitionShouldExecuteTaskWhenIsTriggered() throws PetriNetException {
+	public void transitionShouldExecuteTaskWhenIsTriggered() throws PetriNetException, InterruptedException {
 		InformedTransition it = new InformedTransition(mockedProcessor, 7, threadPool);
 		DummyClass dumb = new DummyClass("someTransition");
 		dumb.setPetriNet(mockedPN);
@@ -69,7 +69,8 @@ public class InformedTransitionTest {
 		
 		it.addDummy(dumb);
 		it.communicate();
-		
+
+		Thread.sleep(100);//wait to execute - Kamikazeeee
 		verify(dumb.mockedResource).SomeResourceAction();
 	}
 }

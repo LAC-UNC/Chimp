@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-5298-72028-0" type ="http://www.laas.fr/tina/tpn">
+  <toolspecific tool="Tina" version="3.3.0">
+   <size>large</size>
+   <color></color>
+  </toolspecific>
+  <name>
+   <text>noMutualExclusion</text>
+  </name>
+ <page id="g-5298-72048-1">
+  <place id="p-5298-72049-2">
+  <name>
+   <text>p0</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1000</text>
+   </initialMarking>
+   <graphics>
+    <position x="270" y="175"/>
+   </graphics>
+  </place>
+  <place id="p-5298-72078-3">
+  <name>
+   <text>p1</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="70" y="170"/>
+   </graphics>
+  </place>
+  <transition id="t-5298-7207E-4">
+  <name>
+   <text>t0</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;A, I&gt;</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="70" y="35"/>
+   </graphics>
+  </transition>
+  <transition id="t-5298-72085-5">
+  <name>
+   <text>t1</text>
+    <graphics>
+     <offset x="-10" y="0" />
+    </graphics>
+  </name>
+   <label>
+    <text>&lt;D, N&gt;</text>
+    <graphics>
+     <offset x="0" y="0" />
+    </graphics>
+   </label>
+   <graphics>
+    <position x="70" y="295"/>
+   </graphics>
+  </transition>
+  <arc id="e-5298-7208F-6" source="p-5298-72049-2" target="t-5298-7207E-4">
+  </arc>
+  <arc id="e-5298-72093-7" source="t-5298-72085-5" target="p-5298-72049-2">
+  </arc>
+  <arc id="e-5298-72095-8" source="t-5298-7207E-4" target="p-5298-72078-3">
+  </arc>
+  <arc id="e-5298-72095-9" source="p-5298-72078-3" target="t-5298-72085-5">
+  </arc>
+ </page>
+ </net>
+</pnml>
