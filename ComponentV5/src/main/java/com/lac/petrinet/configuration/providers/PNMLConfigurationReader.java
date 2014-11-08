@@ -128,7 +128,6 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 					segundoValor = "N";
 				}
 
-				// TODO: re code the transition genereation. 
 				if(primerValor.compareToIgnoreCase("d") == 0 ){
 					FiredTransition newTransition = new FiredTransition(processorHandler, transitionID);
 					petriNet.addFired(idTransicion, newTransition);
