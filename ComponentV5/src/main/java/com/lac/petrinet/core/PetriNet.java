@@ -2,6 +2,7 @@ package com.lac.petrinet.core;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -16,15 +17,55 @@ public class PetriNet {
 
 	Map<String,InformedTransition> informedTransitions = new HashMap<String, InformedTransition>(); 
 	Map<String, FiredTransition> firedTransitions = new HashMap<String, FiredTransition>(); 
+	// Para largar varios hilos q escuchen el procesador...hacer una lista de listas, y crear una clase runnable que el constructor
+	// reciba una lista. recorrer esta lista de lista (a partir de ahora 'transitionGroupList' ) y crear los 
+	// runnables pasandole cada una de estas listas, si esta 'transitionGroupList' esta vacia, seguir haciendo 
+	// como estaba hasta ahora. 
+	// este modo o lista sera seteado como un metodo por separado ( no en el constructor, para mantener compatibilidad hacia atras.)
+	// TODO: agergar manejo para cuando no estan todas las informadas en las listas de escucha. 
 	PNData pnData;
+	private List<List<InformedTransition>>  transitionGroupList;
+
+	public PetriNet(){
+		
+	}
+	
+	public PetriNet(List<List<InformedTransition>> TransitionGroupList){
+		this.transitionGroupList = TransitionGroupList;
+	}
 	
 	public void startListening(){
+		if(transitionGroupList == null || transitionGroupList.isEmpty()){
+			listenAll();
+		}
+		else{
+			transitionGroupListening();
+		}
+	}
+	
+	public void startListening(int numberOfCicles){
+		if(transitionGroupList == null || transitionGroupList.isEmpty()){
+			listenAll(numberOfCicles);
+		}
+		else{
+			transitionGroupListening();
+		}
+	}
+	
+	private void transitionGroupListening(){
+		for(List<InformedTransition> transitionGroup : transitionGroupList){
+			Thread t = new Thread(new TransitionCycleListener(transitionGroup));
+			t.run();
+		}
+	}
+	
+	private void listenAll(){
 		while(true) { // As far as I know, this method can't be tested because of this infinite cycle.
 			this.nextCicle();
 		}
 	}
 	
-	public void startListening(int numberOfCicles){
+	private void listenAll(int numberOfCicles){
 		while(numberOfCicles-- > 0) {
 			this.nextCicle();
 		}
@@ -77,6 +118,10 @@ public class PetriNet {
 			throw new PetriNetException("There is no fired transition named: " + transition);
 		
 		ft.communicate();
+	}
+	
+	public void setTransitionGroupList(List<List<InformedTransition>> TransitionGroupList){
+		this.transitionGroupList = TransitionGroupList;
 	}
 	
 	public void addInformed(String name, InformedTransition informedTransition){
