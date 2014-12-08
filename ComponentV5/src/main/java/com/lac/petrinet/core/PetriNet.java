@@ -25,6 +25,7 @@ public class PetriNet {
 	// este modo o lista sera seteado como un metodo por separado ( no en el constructor, para mantener compatibilidad hacia atras.)
 	PNData pnData;
 	private List<List<InformedTransition>>  transitionGroupList = new ArrayList<List<InformedTransition>>();
+	List<Thread> listenerThreads = new ArrayList<Thread>();
 
 	public PetriNet(){
 		
@@ -57,6 +58,7 @@ public class PetriNet {
 	private void transitionGroupListening(){
 		for(List<InformedTransition> transitionGroup : transitionGroupList){
 			Thread t = new Thread(new TransitionCycleListener(transitionGroup));
+			listenerThreads.add(t);
 			t.start();
 		}
 	}
@@ -64,6 +66,7 @@ public class PetriNet {
 	private void transitionGroupListening(int numberOfCycles){
 		for(List<InformedTransition> transitionGroup : transitionGroupList){
 			Thread t = new Thread(new TransitionCycleListener(transitionGroup,numberOfCycles));
+			listenerThreads.add(t);
 			t.start();
 		}
 	}
@@ -79,6 +82,7 @@ public class PetriNet {
 			}
 		}
 		Thread t = new Thread(new TransitionCycleListener(transitionsNonGrouped));
+		listenerThreads.add(t);
 		t.start();
 		
 	}
@@ -86,13 +90,27 @@ public class PetriNet {
 	private void listenAll(){
 		List<InformedTransition> list = new ArrayList<InformedTransition>(informedTransitions.values());
 		Thread t = new Thread(new TransitionCycleListener(list));
+		listenerThreads.add(t);
 		t.start();
 	}
 	
 	private void listenAll(int numberOfCicles){
 		List<InformedTransition> list = new ArrayList<InformedTransition>(informedTransitions.values());
 		Thread t = new Thread(new TransitionCycleListener(list, numberOfCicles));
+		listenerThreads.add(t);
 		t.start();
+	}
+	
+	public void addTransitionGroup(List<InformedTransition> group){
+		this.transitionGroupList.add(group);
+	}
+	
+	public void addTransitionNameGroup(List<String> group){
+		List<InformedTransition> tempList = new ArrayList<InformedTransition>();
+		for(String name : group){
+			tempList.add(getInformed(name));
+		}
+		addTransitionGroup(tempList);
 	}
 	
 	/**
