@@ -49,7 +49,7 @@ public class FullIntegrationMultipleThreadMultiListenerPerInformed {
 			t0List.add(pn.getInformed("t1"));
 			transitionListForListeners.add(t0List);
 			transitionListForListeners.add(t1List);
-			
+			pn.setTransitionGroupList(transitionListForListeners);
 			
 			pn.assignDummy("t0", dumb0);
 			pn.assignDummy("t1", dumb1);

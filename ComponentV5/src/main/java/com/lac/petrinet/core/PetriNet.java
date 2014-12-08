@@ -1,5 +1,6 @@
 package com.lac.petrinet.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -22,9 +23,8 @@ public class PetriNet {
 	// runnables pasandole cada una de estas listas, si esta 'transitionGroupList' esta vacia, seguir haciendo 
 	// como estaba hasta ahora. 
 	// este modo o lista sera seteado como un metodo por separado ( no en el constructor, para mantener compatibilidad hacia atras.)
-	// TODO: agergar manejo para cuando no estan todas las informadas en las listas de escucha. 
 	PNData pnData;
-	private List<List<InformedTransition>>  transitionGroupList;
+	private List<List<InformedTransition>>  transitionGroupList = new ArrayList<List<InformedTransition>>();
 
 	public PetriNet(){
 		
@@ -40,6 +40,7 @@ public class PetriNet {
 		}
 		else{
 			transitionGroupListening();
+			listenNonGroupedTransitions();
 		}
 	}
 	
@@ -48,27 +49,50 @@ public class PetriNet {
 			listenAll(numberOfCicles);
 		}
 		else{
-			transitionGroupListening();
+			transitionGroupListening(numberOfCicles);
+			listenNonGroupedTransitions();
 		}
 	}
 	
 	private void transitionGroupListening(){
 		for(List<InformedTransition> transitionGroup : transitionGroupList){
 			Thread t = new Thread(new TransitionCycleListener(transitionGroup));
-			t.run();
+			t.start();
 		}
+	}
+	
+	private void transitionGroupListening(int numberOfCycles){
+		for(List<InformedTransition> transitionGroup : transitionGroupList){
+			Thread t = new Thread(new TransitionCycleListener(transitionGroup,numberOfCycles));
+			t.start();
+		}
+	}
+	
+	
+	private void listenNonGroupedTransitions(){
+		List<InformedTransition>	transitionsNonGrouped = new ArrayList<InformedTransition>();
+		for(InformedTransition transition: informedTransitions.values()){
+			for(List<InformedTransition> groupList : transitionGroupList){
+				if(!groupList.contains(transition)){
+					transitionsNonGrouped.add(transition);
+				}
+			}
+		}
+		Thread t = new Thread(new TransitionCycleListener(transitionsNonGrouped));
+		t.start();
+		
 	}
 	
 	private void listenAll(){
-		while(true) { // As far as I know, this method can't be tested because of this infinite cycle.
-			this.nextCicle();
-		}
+		List<InformedTransition> list = new ArrayList<InformedTransition>(informedTransitions.values());
+		Thread t = new Thread(new TransitionCycleListener(list));
+		t.start();
 	}
 	
 	private void listenAll(int numberOfCicles){
-		while(numberOfCicles-- > 0) {
-			this.nextCicle();
-		}
+		List<InformedTransition> list = new ArrayList<InformedTransition>(informedTransitions.values());
+		Thread t = new Thread(new TransitionCycleListener(list, numberOfCicles));
+		t.start();
 	}
 	
 	/**
