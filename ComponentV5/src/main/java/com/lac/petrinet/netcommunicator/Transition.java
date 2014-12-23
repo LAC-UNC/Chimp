@@ -10,7 +10,7 @@ public abstract class Transition {
 		this.setTransitionId(trasitionId);
 	}
 	
-	public abstract void communicate();
+	public abstract boolean communicate();
 	
 	protected void setTransitionId(int transitionId){
 		this.transitionId = transitionId;

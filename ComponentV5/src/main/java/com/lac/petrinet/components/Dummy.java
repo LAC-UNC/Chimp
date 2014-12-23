@@ -1,6 +1,7 @@
 package com.lac.petrinet.components;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.Semaphore;
 
 import com.lac.petrinet.core.PetriNet;
 import com.lac.petrinet.exceptions.PetriNetException;
@@ -8,7 +9,8 @@ import com.lac.petrinet.exceptions.PetriNetException;
 public abstract class Dummy implements Callable<Void> {
 	
 	protected String transitionName;
-	private PetriNet petriNet;  
+	private PetriNet petriNet; 
+	private Semaphore syncronizer;
 	
 	abstract protected void execute() throws PetriNetException;
 	
@@ -20,6 +22,10 @@ public abstract class Dummy implements Callable<Void> {
 	@Override
 	public Void call() throws PetriNetException {
 		if(this.petriNet != null) {
+			if(this.syncronizer != null){
+				this.syncronizer.release();
+			}
+
 			execute();
 			petriNet.fire(transitionName);
 			return null;
@@ -41,5 +47,9 @@ public abstract class Dummy implements Callable<Void> {
 	
 	public PetriNet getPetriNet() {
 		return this.petriNet;
+	}
+	
+	public void setSyncronizer(Semaphore s) {
+		this.syncronizer = s;
 	}
 }

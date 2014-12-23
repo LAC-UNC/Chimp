@@ -74,13 +74,12 @@ public class PetriNet {
 	
 	private void listenNonGroupedTransitions(){
 		List<InformedTransition>	transitionsNonGrouped = new ArrayList<InformedTransition>();
-		for(InformedTransition transition: informedTransitions.values()){
-			for(List<InformedTransition> groupList : transitionGroupList){
-				if(!groupList.contains(transition)){
-					transitionsNonGrouped.add(transition);
-				}
-			}
+		transitionsNonGrouped.addAll(informedTransitions.values());
+		List<InformedTransition> transitionsGrouped = new ArrayList<InformedTransition>();
+		for(List<InformedTransition> transitions: transitionGroupList){
+			transitionsGrouped.addAll(transitions);
 		}
+		transitionsNonGrouped.removeAll(transitionsGrouped);
 		Thread t = new Thread(new TransitionCycleListener(transitionsNonGrouped));
 		listenerThreads.add(t);
 		t.start();

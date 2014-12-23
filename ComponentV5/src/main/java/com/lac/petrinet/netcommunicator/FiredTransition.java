@@ -7,7 +7,8 @@ public class FiredTransition extends Transition {
 	}
 	
 	@Override
-	public void communicate() {
+	public boolean communicate() {
 		this.processor.fire(this.transitionId);
+		return true;
 	}
 }
