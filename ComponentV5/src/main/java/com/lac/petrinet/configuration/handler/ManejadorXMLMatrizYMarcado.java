@@ -8,23 +8,24 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import com.lac.petrinet.configuration.data.AbstractElemento;
-import com.lac.petrinet.configuration.data.Arco;
-import com.lac.petrinet.configuration.data.MatrizIncidenciaMarcadoInicial;
-import com.lac.petrinet.configuration.data.Plaza;
+import com.lac.petrinet.configuration.data.ElementoArco;
+import com.lac.petrinet.configuration.data.MatricesPN;
+import com.lac.petrinet.configuration.data.ElementoPlaza;
 import com.lac.petrinet.configuration.data.Transicion;
 
 /**
  * Genera una instancia de la clase MatrizIncidenciaMarcadoInicial y a medida que lee
  * informacion le agrega una instancia de transicion, arco o plaza segun
  * corresponda.
- * @author María Florencia Caro & Ignacio Furey
+ * @author Marï¿½a Florencia Caro & Ignacio Furey
  */
 
 public class ManejadorXMLMatrizYMarcado extends DefaultHandler {
+	
 	/**
-	 * matriz.
+	 * matriz Incidencia Marcado Inicial.
 	 */
-	private MatrizIncidenciaMarcadoInicial matriz;
+	private MatricesPN matriz;
 	/**
 	 * Elemento actual.
 	 */
@@ -56,38 +57,46 @@ public class ManejadorXMLMatrizYMarcado extends DefaultHandler {
 	
 	private boolean isActualTransition;
 	
+	private boolean isActualArco;
+	
 	private boolean isPlace;
 	
 	private Map<String, String> idsMap ;
 	
 	private String tempId;
+	private boolean isType;
 	/**
 	 * Constructor.
 	 */
 	public ManejadorXMLMatrizYMarcado() {
-		this.matriz = new MatrizIncidenciaMarcadoInicial();
-		this.plaza = new Plaza();
+		this.matriz = new MatricesPN();
+		this.plaza = new ElementoPlaza();
 		this.transicion = new Transicion();
-		this.arco = new Arco();
+		this.arco = new ElementoArco();
 		this.isText = false;
 		this.isAPeso = false;
 		this.isTMarcadoInicial = false;
 		this.isActualTransition = false;
+		this.isActualArco = false;
 		this.isPlace = false;
+		this.isType = false;
 		this.idsMap = new HashMap<String,String>();
 		this.tempId=null;
+		
 	}
 	@Override
 	public void startDocument() throws SAXException {
 	}
 	@Override
 	public void endDocument() throws SAXException {
-		this.matriz.crearMatriz(idsMap);
+		this.matriz.crearMatrizPositivaNegativa(idsMap);
+		this.matriz.crearMatrizInhibidores(idsMap);
 	}
 	@Override
 	public void startElement(final String uri, final String localName, final String name,
 							final Attributes attributes) throws SAXException {
 
+		// localname es el nobmbre del tag. Aqui debemos obtener todo los valores internos la propio tag. 
 		switch (localName) {
 			case "place":
 				this.actual = this.plaza;
@@ -106,6 +115,7 @@ public class ManejadorXMLMatrizYMarcado extends DefaultHandler {
 				this.actual.setId(attributes.getValue("id"));
 				this.actual.setSourceTarget(attributes.getValue("source"),
 						attributes.getValue("target"));
+				this.isActualArco = true;
 				break;
 
 			case "initialMarking":
@@ -119,6 +129,10 @@ public class ManejadorXMLMatrizYMarcado extends DefaultHandler {
 			case "text":
 				this.isText = true;
 				break;
+			case "type":
+				this.isType = true;
+				break;
+			
 			default:
 				break;
 		}
@@ -155,15 +169,23 @@ public class ManejadorXMLMatrizYMarcado extends DefaultHandler {
 				this.isText = false;
 			}
 		}
+		else if(this.isType && this.isActualArco == true){
+			((ElementoArco)this.actual).setInhibitor(true);
+			this.isType = false;
+			this.isActualArco = false;
+			
+		}
 	}
 
 	@Override
 	public void endElement(final String uri, final String localName, final String name)
 		throws SAXException {
 
-		if (localName.equals("place") || localName.equals("transition") ||
-				localName.equals("arc")) {
+		if (localName.equals("place") || localName.equals("transition") ) {
 			this.actual.agregarElementoAMatriz(this.matriz);
+		}
+		else if(localName.equals("arc")){
+				this.actual.agregarElementoAMatriz(this.matriz);	
 		}
 	}
 	/**
@@ -171,7 +193,7 @@ public class ManejadorXMLMatrizYMarcado extends DefaultHandler {
 	 * haberse hecho el parseo del archivo XML con ProcesaXML.
 	 * @return La matriz de incidencia de la red descripta por el archivo XML.
 	 */
-	public MatrizIncidenciaMarcadoInicial getMatriz() {
+	public MatricesPN getMatriz() {
 		return this.matriz;
 	}
 }

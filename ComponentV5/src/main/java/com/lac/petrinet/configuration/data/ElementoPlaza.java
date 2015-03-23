@@ -2,15 +2,17 @@ package com.lac.petrinet.configuration.data;
 
 /**
  * Clase utilizada para completar una instancia de MatrizIncidencia, en este
- * caso, se completan los valores definidos por las transiciones de la red de petri.
+ * caso, se completan los valores.
+ * definidos por las plazas de la red de petri.
  * @author Mar�a Florencia Caro & Ignacio Furey
  */
 
-public class Transicion extends AbstractElemento {
+public class ElementoPlaza extends AbstractElemento {
+
 	/**
 	 * class constructor.
 	 */
-	public Transicion() {
+	public ElementoPlaza() {
 		super();
 	}
 	/* (non-Javadoc)
@@ -18,7 +20,7 @@ public class Transicion extends AbstractElemento {
 	 */
 	@Override
 	public void agregarElementoAMatriz(final MatricesPN matriz) {
-		matriz.agregarTransicion(id);
+		matriz.agregarPlaza(id, valorElemento);
 		this.reset();
 	}
 	/* (non-Javadoc)
@@ -26,7 +28,7 @@ public class Transicion extends AbstractElemento {
 	 */
 	@Override
 	public void setSourceTarget(final String source, final String target) {
-		throw new RuntimeException("Una transicion no deberia tener " +
-			"campos source ni target");
+		throw new RuntimeException("Una plaza no deberia tener campos " +
+			"source ni target");
 	}
 }

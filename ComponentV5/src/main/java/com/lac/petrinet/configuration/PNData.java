@@ -6,7 +6,8 @@ import java.util.Iterator;
 
 import com.lac.petrinet.configuration.data.Etiqueta;
 import com.lac.petrinet.configuration.data.Intervalo;
-import com.lac.petrinet.configuration.data.MatrizIncidenciaMarcadoInicial;
+import com.lac.petrinet.configuration.data.MatricesPN;
+import com.lac.petrinet.configuration.data.Plaza;
 import com.lac.petrinet.configuration.handler.ManejadorEtiquetas;
 import com.lac.petrinet.configuration.handler.ManejadorIntervalos;
 import com.lac.petrinet.configuration.handler.ManejadorXMLMatrizYMarcado;
@@ -15,7 +16,7 @@ import com.lac.petrinet.configuration.handler.ProcesaXML;
 
 /**
  * Clase abstracta para el manejo de redes de petri.
- * @author María Florencia Caro & Ignacio Furey
+ * @author Marï¿½a Florencia Caro & Ignacio Furey
  */
 
 public class PNData {
@@ -31,7 +32,7 @@ public class PNData {
 	/**
 	 * Intancia con los datos de la matriz de incidencia y el marcado inicial.
 	 */
-	protected MatrizIncidenciaMarcadoInicial matrizIncidenciaMarcadoInicial;
+	protected MatricesPN matrizIncidenciaMarcadoInicial;
 	/**
 	 * Un manejador de etiquetas.
 	 */
@@ -107,6 +108,13 @@ public class PNData {
 	}
 	/**
 	 * Getter.
+	 * @return Matriz de Inhibidores
+	 */
+	public int[][] getMatrizInhibidores() {
+		return this.matrizIncidenciaMarcadoInicial.getMatrizInhibidores();
+	}
+	/**
+	 * Getter.
 	 * @return Marcado Inicial
 	 */
 	public final int[] getMarcadoInicial() {
@@ -116,7 +124,7 @@ public class PNData {
 	 * Getter.
 	 * @return Marcado Transiciones
 	 */
-	public final HashMap<String, Integer[]> getPlazas() {
+	public final HashMap<String,Plaza> getPlazas() {
 		return this.matrizIncidenciaMarcadoInicial.getPlazas();
 	}
 	/**
@@ -139,7 +147,7 @@ public class PNData {
 	 * @return Vector de disparos automaticos
 	 */
 	public final int[] getVectorDisparosAtomaticos() {
-		//Se genera vector con tamaño igual a cantidad de transiciones.
+		//Se genera vector con tamaï¿½o igual a cantidad de transiciones.
 		final int[] disparosAutomaticos = 
 				new int[this.manejadorEtiquetas.getEtiquetas().size()];
 		//Se genera un iterator con el array list de etiquetas.
@@ -172,7 +180,7 @@ public class PNData {
 	 * @return Vector de disparos automatios.
 	 */
 	public final int[] getVectorDisparosSinInforme() {
-		//Se genera vector con tamaño igual a cantidad de transiciones.
+		//Se genera vector con tamaï¿½o igual a cantidad de transiciones.
 		final int[] disparosSinInforme = 
 				new int[this.manejadorEtiquetas.getEtiquetas().size()];
 		//Se genera un iterator con el array list de etiquetas.

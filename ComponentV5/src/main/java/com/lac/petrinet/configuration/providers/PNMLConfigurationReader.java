@@ -12,6 +12,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.io.FilenameUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -37,6 +38,10 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 	 * Nombre de archivo para la matriz de incidencia.
 	 */
 	private static final String INCIDENCIA = "incidencia";
+	/**
+	 * Nombre de archivo para la matriz de inhibidores.
+	 */
+	private static final String INHIBIDORES = "inhibidores";
 	/**
 	 * Nombre de archivo para el marcado inicial.
 	 */
@@ -163,7 +168,7 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 		this.pnData.cargarRed(pnmlFilepath);
 		String configFileFolderPath = generateConfigFiles(this.pnData, configFolderParentPath);
 		// create processorHandler
-		ProcessorHandler processorHandler = new ProcessorHandlerImpl(pathForPNNVHack(configFileFolderPath), this.pnData.getTransiciones().size());
+		ProcessorHandler processorHandler = new ProcessorHandlerImpl(pathForPNNVHack(FilenameUtils.separatorsToSystem(configFileFolderPath)), this.pnData.getTransiciones().size());
 		// Create PetriNet and assign processorHandler to its.
 		PetriNet petriNet = createPNFromPNML(pnmlFilepath, processorHandler);
 		petriNet.setPNData(this.pnData);
@@ -177,51 +182,56 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 	 * @param pathArchivos path del proyecto.
 	 * @return path to the folder that contain all the configuration files. 
 	 */
-	private String generateConfigFiles( final PNData infoRed, final String exitFilePath) {
+	private String generateConfigFiles( final PNData infoRed, String exitFilePath) {
 		String pathConfig ;
-		if(exitFilePath.endsWith("/") || exitFilePath.endsWith("\\")){
+		exitFilePath = FilenameUtils.separatorsToSystem(exitFilePath);
+		if( exitFilePath.endsWith(FilenameUtils.separatorsToSystem("\\"))){
 			pathConfig =  exitFilePath + "archivosConfiguracion";
 		}
 		else{
-			pathConfig = exitFilePath + "\\archivosConfiguracion";
+			pathConfig = exitFilePath + FilenameUtils.separatorsToSystem("\\") + "archivosConfiguracion";
 		}
+		pathConfig = FilenameUtils.separatorsToSystem(pathConfig);
 		final File folderConfig = new File(pathConfig);
 		folderConfig.mkdirs();
+		
 		////Se genera la matriz de prioridades distribuidas con un vector nulo,
 		//por que no existen transiciones distribuidas.
 		generarVectorCero(1,
-				pathConfig + "\\" + PRIORIDADESDISTRIBUIDAS + ".txt",
+				pathConfig + FilenameUtils.separatorsToSystem("\\") + PRIORIDADESDISTRIBUIDAS + ".txt",
 				"\n");
 		//Matriz de incidencia
 		generarArchivoMatriz(infoRed.getMatrizIncidenciaPositiva(),
 				infoRed.getMatrizIncidenciaNegativa(),
-				pathConfig + "\\" + INCIDENCIA + "0.txt");
+				pathConfig + FilenameUtils.separatorsToSystem("\\") + INCIDENCIA + "0.txt");
+		//Matriz de Inhibidores
+		generarArchivoMatrizInihibidores(infoRed.getMatrizInhibidores() ,pathConfig + FilenameUtils.separatorsToSystem(FilenameUtils.separatorsToSystem("\\")) + INHIBIDORES + "0.txt");
 		//Marcado Inicial
 		generarArchivoVectorVertical(infoRed.getMarcadoInicial(),
-				pathConfig + "\\" + MARCADO + "0.txt");
+				pathConfig + FilenameUtils.separatorsToSystem("\\") + MARCADO + "0.txt");
 		//Se genera la matriz de relaciones con un vector nulo, de modo que
 		//no existan relaciones.
 		generarVectorCero(infoRed.getMatrizIncidenciaPositiva()[0].length,
-				pathConfig + "\\" + RELACION + "0.txt",
+				pathConfig + FilenameUtils.separatorsToSystem("\\") + RELACION + "0.txt",
 				" ");
 		//Se genera las cotas de plazas con un vector nulo, de modo que
 		//no existan limitaciones de tokens en las plazas.
 		generarVectorCero(infoRed.getMatrizIncidenciaPositiva().length,
-				pathConfig + "\\" + COTAS + "0.txt",
+				pathConfig + FilenameUtils.separatorsToSystem("\\") + COTAS + "0.txt",
 				"\n");
 		//Se genera el vector de disparos automaticos.
 		generarArchivoVectorVertical(infoRed.getVectorDisparosAtomaticos(),
-				pathConfig + "\\" + AUTOMATICOS + "0.txt");
+				pathConfig + FilenameUtils.separatorsToSystem("\\") + AUTOMATICOS + "0.txt");
 		//Se genera el vector de disparos sin informe.
 		generarArchivoVectorVertical(infoRed.getVectorDisparosSinInforme(),
-				pathConfig + "\\" + SININFORME + "0.txt");
+				pathConfig + FilenameUtils.separatorsToSystem("\\") + SININFORME + "0.txt");
 		//Se genera una matriz identidad de prioridades.
 		generarMatrizIdentidad(infoRed.getMatrizIncidenciaPositiva()[0].length,
-				pathConfig + "\\" + PRIORIDADES + "0.txt");
+				pathConfig + FilenameUtils.separatorsToSystem("\\") + PRIORIDADES + "0.txt");
 		//Se genera el archivo de configuracion con los nombres del resto de los
 		//archivos.
-		generarArchivoConfig(pathConfig + "\\config.txt");
-		return pathConfig + "\\config.txt";
+		generarArchivoConfig(pathConfig + FilenameUtils.separatorsToSystem("\\") + "config.txt");
+		return pathConfig + FilenameUtils.separatorsToSystem("\\") + "config.txt";
 	}
 	
 	/**
@@ -255,6 +265,39 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 			}
 		}
 	}
+	
+	/**
+	 * Generador del archivo matriz de inhibidores de configuracion del procesador.
+	 * @param matrizInhibidores matriz de incidencia positiva
+	 * @param matrizNegativa matriz de incidencia negativa
+	 * @param filePath path donde crear el archivo
+	 */
+	protected void generarArchivoMatrizInihibidores(final int[][] matrizInhibidores, final String filePath) {
+		File matrizFile = null;
+		BufferedWriter bw = null;
+        try {
+        	matrizFile = new File(filePath);
+        	matrizFile.createNewFile();
+        	bw = new BufferedWriter(new FileWriter(matrizFile));
+			for (int f = 0; f < matrizInhibidores.length; f = f + 1) {
+				for (int c = 0; c < matrizInhibidores[0].length; c = c + 1) {
+					final int valor = matrizInhibidores[f][c] ;
+					bw.write(String.valueOf(valor) + " ");
+				}
+				bw.newLine();
+			}
+        } catch (java.io.IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				bw.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	
 	/**
 	 * Crea un archivo cuyo path sera filePath con un vector vertical con los
 	 * valores definidos en valores.
@@ -364,6 +407,9 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 			bw.write("<" +  MARCADO + ">"  +  MARCADO + "X.txt" +
 					"</" +  MARCADO + ">");
 			bw.newLine();
+			bw.write("<" +  INHIBIDORES + ">"  +  INHIBIDORES + "X.txt" +
+					"</" +  INHIBIDORES + ">");
+			bw.newLine();
 			bw.write("<" + COTAS + ">"  + COTAS + "X.txt" +
 					"</" + COTAS + ">");
 			bw.newLine();
@@ -399,7 +445,7 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 	 * @return
 	 */
 	private String pathForPNNVHack(String path){
-		return path.replace("/", "\\");
+		return path.replace("/", FilenameUtils.separatorsToSystem("\\"));
 	}
 	
 	private String getJarpath() throws URISyntaxException {

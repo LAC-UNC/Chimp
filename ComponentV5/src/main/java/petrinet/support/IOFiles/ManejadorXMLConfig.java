@@ -1,9 +1,11 @@
  package petrinet.support.IOFiles;
  
  import java.io.BufferedReader;
- import java.io.FileNotFoundException;
- import java.io.FileReader;
- import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import org.apache.commons.io.FilenameUtils;
  
  public class ManejadorXMLConfig
  {
@@ -11,7 +13,7 @@
      throws FileNotFoundException, IOException, Exception
    {
      String text = null;
-     
+     path = FilenameUtils.separatorsToSystem(path);
      BufferedReader bf = new BufferedReader(new FileReader(path));
      while ((text = bf.readLine()) != null) {
        if ((text.startsWith("<" + etiqueta + ">")) && (text.endsWith("</" + etiqueta + ">")))

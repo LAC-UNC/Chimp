@@ -2,7 +2,7 @@ package com.lac.petrinet.configuration.data;
 
 /**
  * Clase utilizada para completar una instancia de MatrizIncidencia.
- * @author María Florencia Caro & Ignacio Furey
+ * @author Marï¿½a Florencia Caro & Ignacio Furey
  */
 
 public abstract class AbstractElemento {
@@ -28,7 +28,7 @@ public abstract class AbstractElemento {
 	 * @param matriz Matriz a la cual se agregara el elmento.
 	 */
 	public abstract void agregarElementoAMatriz(
-			MatrizIncidenciaMarcadoInicial matriz);
+			MatricesPN matriz);
 	/**
 	 * Establece los valores de source y target, solo debe implementarse
 	 * para elementos de tipo arco.
@@ -59,5 +59,15 @@ public abstract class AbstractElemento {
 	 */
 	public void setValorElemento(final int valor) {
 		this.valorElemento = Integer.valueOf(valor);
+	}
+	public String getId() {
+		return id;
+	}
+	
+	public Integer getValorElemento() {
+		return valorElemento;
+	}
+	public void setValorElemento(Integer valorElemento) {
+		this.valorElemento = valorElemento;
 	}
 }

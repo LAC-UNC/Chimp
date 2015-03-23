@@ -11,6 +11,8 @@ import java.util.logging.Logger;
 
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
+
+import org.apache.commons.io.FilenameUtils;
  
  public class ManejadorTXT
  {
@@ -19,8 +21,7 @@ import javax.swing.table.TableModel;
    {
      String text = null;
      List<String> lista = new ArrayList<String>();
-     
-     BufferedReader bf = new BufferedReader(new FileReader(_path));
+     BufferedReader bf = new BufferedReader(new FileReader(FilenameUtils.separatorsToSystem(_path)));
      while ((text = bf.readLine()) != null) {
        lista.add(text);
      }

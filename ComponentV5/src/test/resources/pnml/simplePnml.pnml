@@ -102,6 +102,12 @@
   </arc>
   <arc id="e-37C0-85977-12" source="p-37C0-85817-4" target="t-37C0-8582A-7">
   </arc>
+  <arc id="e-37C0-85977-13" source="t-37C0-8582A-7" target="p-37C0-85811-3">
+   <type value="inhibitor"/>
+   <graphics>
+    <position x="145" y="28" />
+    <position x="117" y="28" />
+   </graphics>  </arc>
  </page>
  </net>
 </pnml>

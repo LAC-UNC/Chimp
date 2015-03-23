@@ -55,6 +55,8 @@ import petrinet.support.procesadorPNVirtual.ColaTransiciones;
          }
        }
      }
+     
+     //TODO: agregar condicion de inhibidores a los sensibilizados Aqui  (sensibilizados_distribuidos)! 
      int[][] disparo_distribuido = generarDisparoDistribuido(sensibilizados_distribuidos);
      for (int i = 0; i < this.redes.size(); i++) {
        ((PetriNet)this.redes.get(i)).setDisparoDistribuido(disparo_distribuido);

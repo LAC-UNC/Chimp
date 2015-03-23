@@ -5,6 +5,8 @@ import java.util.StringTokenizer;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.io.FilenameUtils;
+
 import petrinet.support.IOFiles.ManejadorTXT;
 import petrinet.support.IOFiles.ManejadorXMLConfig;
 import petrinet.support.Petri.IPCoreHPN;
@@ -111,12 +113,14 @@ import petrinet.support.procesador.ProcesadorPetri;
    
    private String obtenerFolderPath(String original)
    {
-     StringTokenizer token = new StringTokenizer(original, "\\");
-     String path = new String("");
-     while (token.countTokens() > 1) {
-       path = path + token.nextToken() + "\\";
-     }
-     return path;
+	   return FilenameUtils.separatorsToSystem(original).substring(0, FilenameUtils.separatorsToSystem(original).lastIndexOf(FilenameUtils.separatorsToSystem("/"))+1);
+	   
+//     StringTokenizer token = new StringTokenizer(original, "\\");
+//     String path = new String("");
+//     while (token.countTokens() > 1) {
+//       path = path + token.nextToken() + "\\";
+//     }
+//     return path;
    }
    
    public boolean consultarDisparoTransicion(int transicion)
