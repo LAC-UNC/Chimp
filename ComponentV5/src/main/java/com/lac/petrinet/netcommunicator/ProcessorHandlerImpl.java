@@ -7,7 +7,7 @@ public class ProcessorHandlerImpl implements ProcessorHandler{
 
 	private static ProcesadorPetriVirtual virtualProcessor;
 	
-	public ProcessorHandlerImpl(String configFilePath, int TransitionQuantities){
+	public ProcessorHandlerImpl(String configFilePath, int TransitionQuantities) throws Exception{
 		virtualProcessor = new ProcesadorPetriVirtual(configFilePath, TransitionQuantities);
 	}
 	

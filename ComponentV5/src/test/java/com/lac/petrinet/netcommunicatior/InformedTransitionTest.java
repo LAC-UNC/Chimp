@@ -70,7 +70,7 @@ public class InformedTransitionTest {
 		it.addDummy(dumb);
 		it.communicate();
 
-		Thread.sleep(100);//wait to execute - Kamikazeeee
+		Thread.sleep(1000);//wait to execute - Kamikazeeee
 		verify(dumb.mockedResource).SomeResourceAction();
 	}
 }

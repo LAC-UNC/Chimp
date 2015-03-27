@@ -168,7 +168,12 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 		this.pnData.cargarRed(pnmlFilepath);
 		String configFileFolderPath = generateConfigFiles(this.pnData, configFolderParentPath);
 		// create processorHandler
-		ProcessorHandler processorHandler = new ProcessorHandlerImpl(pathForPNNVHack(FilenameUtils.separatorsToSystem(configFileFolderPath)), this.pnData.getTransiciones().size());
+		ProcessorHandler processorHandler;
+		try {
+			processorHandler = new ProcessorHandlerImpl(pathForPNNVHack(FilenameUtils.separatorsToSystem(configFileFolderPath)), this.pnData.getTransiciones().size());
+		} catch (Exception e) {
+			throw new PetriNetException("Error creating the Petri Net Virtual Processor.", e);
+		}
 		// Create PetriNet and assign processorHandler to its.
 		PetriNet petriNet = createPNFromPNML(pnmlFilepath, processorHandler);
 		petriNet.setPNData(this.pnData);
