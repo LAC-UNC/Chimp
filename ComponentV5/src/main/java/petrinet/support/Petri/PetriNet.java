@@ -73,7 +73,13 @@ public class PetriNet
 	}
 
 	private int[][] obtenerTransicionesInhibidas(){
-		return producto(this.matrizInhibidores, this.marcado_actual);
+		int[][] temp = new int[this.matrizInhibidores.length][this.matrizInhibidores[0].length];
+		for(int i = 0 ; i < (this.matrizInhibidores.length-1); i++){
+			for(int j = 0; j < (this.matrizInhibidores[0].length-1); j++){
+				temp[i][j] = this.matrizInhibidores[i][j] * this.marcado_actual[i][0];   
+			}
+		}
+		return temp;
 	}
 
 	private void calcularSensibilizadosSigno()
@@ -81,16 +87,12 @@ public class PetriNet
 		int[][] tempTransicionesInhibidas = obtenerTransicionesInhibidas();
 		for (int j = 0; j < this.matriz_resultado[0].length; j++)
 		{
-			int negativo = 0;
+			this.sensibilizados_signo[j][0] = 1;
 			for (int i = 0; i < this.matriz_resultado.length; i++) {
-				if (this.matriz_resultado[i][j] < 0) {
-					negativo = 1;
+				if (this.matriz_resultado[i][j] < 0 || tempTransicionesInhibidas[i][j] !=0 ) {
+					this.sensibilizados_signo[j][0] = 0;
+					break;
 				}
-			}
-			if (negativo == 0 && tempTransicionesInhibidas[j][0] == 0) {
-				this.sensibilizados_signo[j][0] = 1;
-			} else {
-				this.sensibilizados_signo[j][0] = 0;
 			}
 		}
 	}
