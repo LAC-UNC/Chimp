@@ -181,11 +181,9 @@ public class ManejadorXMLMatrizYMarcado extends DefaultHandler {
 	public void endElement(final String uri, final String localName, final String name)
 		throws SAXException {
 
-		if (localName.equals("place") || localName.equals("transition") ) {
+		if (localName.equals("place") || localName.equals("transition") ||
+				localName.equals("arc")) {
 			this.actual.agregarElementoAMatriz(this.matriz);
-		}
-		else if(localName.equals("arc")){
-				this.actual.agregarElementoAMatriz(this.matriz);	
 		}
 	}
 	/**

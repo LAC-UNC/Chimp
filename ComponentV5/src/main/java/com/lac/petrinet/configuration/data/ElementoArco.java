@@ -51,6 +51,7 @@ public class ElementoArco extends AbstractElemento implements Cloneable{
 		super.reset();
 		this.source = null;
 		this.target = null;
+		this.isInhibitor=false;
 		this.valorElemento = Integer.valueOf(1);
 	}
 	

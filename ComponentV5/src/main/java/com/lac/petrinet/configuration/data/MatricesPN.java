@@ -200,7 +200,7 @@ public class MatricesPN {
 				//FILA = numero de Plaza de la plaza indicada por el idSource del arco actual.
 				//COLUMNA = numero de transicion de la transicion indicada por el idTarget del arco atual
 				//Se carga la posicion de la matriz de incidencia negativa.
-				this.negativa[posicionSource][posicionTarget] = peso;
+				this.negativa[posicionTarget][posicionSource] = peso;
 			}
 			else {
 				System.out.println("no se encontro idSource: " +
@@ -236,9 +236,9 @@ public class MatricesPN {
 			//Si existe en transiciones una key con
 			//el valor de idSource, implica que el peso
 			//debe ir en la matriz positiva.
-			if (this.transiciones.containsKey(arcosValue.getValue().getSource())) {
-				int posicionTarget = this.plazas.get(arcosValue.getValue().getTarget()).getPosicionFilaMatriz();
-				int posicionSource = this.transiciones.get(arcosValue.getValue().getSource());
+			if (this.plazas.containsKey(arcosValue.getValue().getSource())) {
+				int posicionTarget = this.plazas.get(arcosValue.getValue().getSource()).getPosicionFilaMatriz();
+				int posicionSource = this.transiciones.get(arcosValue.getValue().getTarget());
 				//FILA = numero de Plaza de la plaza indicada por el idTarget del arco actual.
 				//COLUMNA = numero de transicion de la transicion indicada por el idSource del arco atual.
 				this.inhibidores[posicionTarget][posicionSource] = peso;
