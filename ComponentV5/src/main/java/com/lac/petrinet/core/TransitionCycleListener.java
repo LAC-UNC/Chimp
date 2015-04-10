@@ -23,23 +23,34 @@ public class TransitionCycleListener implements Runnable {
 	@Override
 	public void run() {
 		int counter = 0;
+		boolean needNewRound = false;
 		List<InformedTransition> transitionsWithInformed = new ArrayList<InformedTransition>();		
 		
 		while(counter < numberOfCycles || numberOfCycles < 0){
 			try {
 				transitionsWithInformed.removeAll(transitionsWithInformed);
-				for(InformedTransition transition : transitions ){
-					if(transition.communicate()){
-						transitionsWithInformed.add(transition);	
+				do{
+					needNewRound = false;
+					for(InformedTransition transition : transitions ){
+						if(transition.communicate()){
+							transitionsWithInformed.add(transition);	
+							needNewRound = true;
+						}
+					}
+				}while(needNewRound);
+				
+				int i = 0; 
+				for(InformedTransition t : transitions){
+					if(transitionsWithInformed.contains(t)){
+						transitionsWithInformed.remove(transitionsWithInformed.indexOf(t));
+						t.startDummies();
+						Thread.yield();
+						i++;
 					}
 				}
-				for(InformedTransition t : transitionsWithInformed){
-					t.startDummies();
-					Thread.yield();
-				}
+				
 				counter++;
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

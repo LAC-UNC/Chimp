@@ -11,6 +11,7 @@ public class InformedTransition extends Transition {
 	private ExecutorService threadPool;
 	private ArrayList<Dummy> dummies;
 	private Semaphore syncronizer;
+	private String name;
 	
 	public InformedTransition(ProcessorHandler processor, int trasitionId, ExecutorService threadPool) {
 		super(processor, trasitionId);
@@ -38,5 +39,13 @@ public class InformedTransition extends Transition {
 	
 	public boolean contains(Dummy dumb) {
 		return this.dummies.contains(dumb);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

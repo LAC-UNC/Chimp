@@ -132,7 +132,7 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 					primerValor = "A";
 					segundoValor = "N";
 				}
-
+ 
 				if(primerValor.compareToIgnoreCase("d") == 0 ){
 					FiredTransition newTransition = new FiredTransition(processorHandler, transitionID);
 					petriNet.addFired(idTransicion, newTransition);
@@ -141,6 +141,7 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 				}
 				if(segundoValor.compareToIgnoreCase("i") == 0 ){
 					InformedTransition newTransition = new InformedTransition(processorHandler, transitionID,threadPool);
+					newTransition.setName(idTransicion);
 					petriNet.addInformed(idTransicion, newTransition);
 				}else if(segundoValor.compareToIgnoreCase("n") != 0){
 					throw new PetriNetException("Transition has invalid etiquete for inform. Transition id: " + idTransicion);
