@@ -26,6 +26,7 @@ public class PetriNet {
 	PNData pnData;
 	private List<List<InformedTransition>>  transitionGroupList = new ArrayList<List<InformedTransition>>();
 	List<Thread> listenerThreads = new ArrayList<Thread>();
+	private HashMap<String, String> inputEventsMap = null;
 
 	public PetriNet(){
 		
@@ -154,9 +155,16 @@ public class PetriNet {
 	}
 	
 	public void fire(String transition) throws PetriNetException{
-		FiredTransition ft = firedTransitions.get(transition);
+		String tName = transition;
+		if(this.inputEventsMap != null) {
+			if(this.inputEventsMap.containsKey(tName)) {
+				tName = this.inputEventsMap.get(tName);
+			}
+		}
+		
+		FiredTransition ft = firedTransitions.get(tName);
 		if(ft == null)
-			throw new PetriNetException("There is no fired transition named: " + transition);
+			throw new PetriNetException("There is no input event named: " + tName);
 		
 		ft.communicate();
 	}
@@ -198,4 +206,7 @@ public class PetriNet {
 		return firedTransitions.keySet();
 	}
 
+	public void setInputEventsMap(HashMap<String, String> InputEventsMap) {
+		this.inputEventsMap = InputEventsMap;
+	}
 }
