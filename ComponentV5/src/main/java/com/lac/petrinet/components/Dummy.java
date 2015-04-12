@@ -52,4 +52,8 @@ public abstract class Dummy implements Callable<Void> {
 	public void setSyncronizer(Semaphore s) {
 		this.syncronizer = s;
 	}
+	
+	protected void trigger(String event) throws PetriNetException{
+		petriNet.fire(event);
+	}
 }
