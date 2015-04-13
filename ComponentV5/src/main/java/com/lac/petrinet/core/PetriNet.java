@@ -27,6 +27,7 @@ public class PetriNet {
 	private List<List<InformedTransition>>  transitionGroupList = new ArrayList<List<InformedTransition>>();
 	List<Thread> listenerThreads = new ArrayList<Thread>();
 	private HashMap<String, String> inputEventsMap = null;
+	private HashMap<String, String> outputEventsMap;
 
 	public PetriNet(){
 		
@@ -108,7 +109,7 @@ public class PetriNet {
 	public void addTransitionNameGroup(List<String> group){
 		List<InformedTransition> tempList = new ArrayList<InformedTransition>();
 		for(String name : group){
-			tempList.add(getInformed(name));
+			tempList.add(getInformed(this.convertOutputEventNameToTransitionName(name)));
 		}
 		addTransitionGroup(tempList);
 	}
@@ -127,15 +128,17 @@ public class PetriNet {
 		return;
 	}
 	
-	public void assignDummy(String transition, Dummy dumb) throws PetriNetException{
-		InformedTransition it = informedTransitions.get(transition);
+	public void assignDummy(String event, Dummy dumb) throws PetriNetException{
+		String tName = this.convertOutputEventNameToTransitionName(event);
+		
+		InformedTransition it = informedTransitions.get(tName);
 		dumb.setPetriNet(this);
 		
 		if(it == null)
-			throw new PetriNetException("There is no informed transition named: " + transition);
+			throw new PetriNetException("There is no output event named: " + tName);
 		
 		if(!this.sharePlaceVertically(it.getTransitionId(), this.getFired(dumb.getTransitionName()).getTransitionId()))
-			throw new PetriNetException("The informed transition " + transition + " is not separed by only a place with the fired transition " + dumb.getTransitionName());
+			throw new PetriNetException("The informed transition " + tName + " is not separed by only a place with the fired transition " + dumb.getTransitionName());
 		
 		it.addDummy(dumb);
 	}
@@ -154,13 +157,8 @@ public class PetriNet {
 		return false;
 	}
 	
-	public void fire(String transition) throws PetriNetException{
-		String tName = transition;
-		if(this.inputEventsMap != null) {
-			if(this.inputEventsMap.containsKey(tName)) {
-				tName = this.inputEventsMap.get(tName);
-			}
-		}
+	public void fire(String event) throws PetriNetException{
+		String tName = this.convertInputEventNameToTransitionName(event);
 		
 		FiredTransition ft = firedTransitions.get(tName);
 		if(ft == null)
@@ -189,6 +187,10 @@ public class PetriNet {
 		return firedTransitions.containsKey(name);
 	}
 	
+	public boolean containInformed(String name) {
+		return informedTransitions.containsKey(name);
+	}
+	
 	public InformedTransition getInformed(String name) {
 		return informedTransitions.get(name);
 	}
@@ -206,7 +208,64 @@ public class PetriNet {
 		return firedTransitions.keySet();
 	}
 
-	public void setInputEventsMap(HashMap<String, String> InputEventsMap) {
+	/*public void setInputEventsMap(HashMap<String, String> InputEventsMap) {
 		this.inputEventsMap = InputEventsMap;
+	}
+	
+	public void setOutputEventsMap(HashMap<String, String> OutputEventsMap) {
+		this.outputEventsMap = OutputEventsMap;
+	}*/
+	
+	public void addInputEventAlias(String eventAlias, String transitionName) throws PetriNetException {
+		if(this.inputEventsMap == null) {
+			this.inputEventsMap = new HashMap<String, String>();
+		}
+		
+		if(this.containFired(transitionName)) {
+			this.inputEventsMap.put(eventAlias, transitionName);
+		} else {
+			throw new PetriNetException("There is no fired transition named: " + transitionName);
+		}
+	}
+	
+	public void addOutputEventAlias(String eventAlias, String transitionName) throws PetriNetException {
+		if(this.outputEventsMap == null) {
+			this.outputEventsMap = new HashMap<String, String>();
+		}
+		
+		if(this.containInformed(transitionName)) {
+			this.outputEventsMap.put(eventAlias, transitionName);
+		} else {
+			throw new PetriNetException("There is no informed transition named: " + transitionName);
+		}
+	}
+
+	public boolean containsInputEvent(String eventName) {
+		return this.containsEvent(eventName, this.inputEventsMap);
+	}
+
+	public String convertInputEventNameToTransitionName(String eventName) {
+		return convertEventNameToTransitionName(eventName, this.inputEventsMap);
+	}
+	
+	public boolean containsOutputEvent(String eventName) {
+		return this.containsEvent(eventName, this.outputEventsMap);
+	}
+
+	public String convertOutputEventNameToTransitionName(String eventName) {
+		return convertEventNameToTransitionName(eventName, this.outputEventsMap);
+	}
+	
+	private boolean containsEvent(String eventName, HashMap<String, String> eventsMap) {
+		return eventsMap != null && eventsMap.containsKey(eventName);
+	}
+	
+	private String convertEventNameToTransitionName(String eventName, HashMap<String, String> eventsMap) {
+		String toRet = eventName;
+		if(containsEvent(eventName, eventsMap)) {
+			toRet = eventsMap.get(eventName);
+		}
+		
+		return toRet;
 	}
 }

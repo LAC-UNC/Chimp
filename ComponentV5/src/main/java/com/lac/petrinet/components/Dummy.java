@@ -9,13 +9,14 @@ import com.lac.petrinet.exceptions.PetriNetException;
 public abstract class Dummy implements Callable<Void> {
 	
 	protected String transitionName;
+	protected String eventName;
 	private PetriNet petriNet; 
 	private Semaphore syncronizer;
 	
 	abstract protected void execute() throws PetriNetException;
 	
-	protected Dummy(String tName){
-		this.transitionName = tName;
+	protected Dummy(String event){
+		this.eventName = event;
 		this.petriNet = null;
 	}
 	
@@ -35,6 +36,8 @@ public abstract class Dummy implements Callable<Void> {
 	}
 
 	public void setPetriNet(PetriNet petriNet) throws PetriNetException {
+		this.transitionName = petriNet.convertInputEventNameToTransitionName(this.eventName);
+		
 		if(petriNet.containFired(this.transitionName))
 			this.petriNet = petriNet;
 		else
