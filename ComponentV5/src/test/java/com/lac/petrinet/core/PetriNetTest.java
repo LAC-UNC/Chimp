@@ -73,7 +73,7 @@ public class PetriNetTest {
 	}
 	
 	@Test
-	public void startListeningShouldListenToTheTransitionOnTheProcessor() throws PetriNetException {
+	public void startListeningShouldListenToTheTransitionOnTheProcessor() throws PetriNetException, InterruptedException {
 		PetriNet p = new PetriNet();
 		InformedTransition it1 = new InformedTransition(mockedProcessor, 1, threadPool);
 		InformedTransition it2 = new InformedTransition(mockedProcessor, 2, threadPool);
@@ -94,6 +94,8 @@ public class PetriNetTest {
 //		DummyClass dumb3 = new DummyClass("someFired3");
 		
 		p.startListening(1);
+		
+		Thread.sleep(1 * 1000);
 		
 		verify(mockedProcessor).listen(1);
 		verify(mockedProcessor).listen(2);

@@ -8,6 +8,7 @@ public class PetriNet
 {
 	private int[][] matriz_incidencia;
 	private int[][] matrizInhibidores;
+	private int[][] matrizLectores;
 	private int[][] marcado_inicial;
 	private int[][] matriz_relacion;
 	private int[][] vector_cotas;
@@ -31,10 +32,11 @@ public class PetriNet
 	private ColaEntrada colaEntrada = null;
 
 	public PetriNet(int[][] _matriz_incidencia, int[][] _marcado_inicial, int[][] _matriz_relacion,
-			int[][] _vector_cotas, int[][] _disparos_automaticos, int[][] _matriz_prioridad, int [][] matrizInhibidores)
+			int[][] _vector_cotas, int[][] _disparos_automaticos, int[][] _matriz_prioridad, int [][] matrizInhibidores, int[][] matrizLectores)
 	{
 		this.matriz_incidencia = _matriz_incidencia;
 		this.matrizInhibidores = matrizInhibidores;
+		this.matrizLectores = matrizLectores;
 		this.marcado_inicial = _marcado_inicial;
 		this.matriz_relacion = _matriz_relacion;
 		this.vector_cotas = _vector_cotas;
@@ -81,15 +83,27 @@ public class PetriNet
 		}
 		return temp;
 	}
+	
+	private int[][] obtenerTransicionesInhibidiasPorLectura(){
+		int[][] temp = new int[this.matrizLectores.length][this.matrizLectores[0].length];
+		for(int i = 0 ; i < (this.matrizLectores.length-1); i++){
+			for(int j = 0; j < (this.matrizLectores[0].length-1); j++){
+				temp[i][j] = (this.matrizLectores[i][j] == 1 &&  this.marcado_actual[i][0] == 0) ? 1 : 0;
+			}
+		}
+		return temp;
+	}
+	
 
 	private void calcularSensibilizadosSigno()
 	{
 		int[][] tempTransicionesInhibidas = obtenerTransicionesInhibidas();
+		int[][] tempTransicionesInhibidasPorLectura = obtenerTransicionesInhibidiasPorLectura();
 		for (int j = 0; j < this.matriz_resultado[0].length; j++)
 		{
 			this.sensibilizados_signo[j][0] = 1;
 			for (int i = 0; i < this.matriz_resultado.length; i++) {
-				if (this.matriz_resultado[i][j] < 0 || tempTransicionesInhibidas[i][j] !=0 ) {
+				if (this.matriz_resultado[i][j] < 0 || tempTransicionesInhibidas[i][j] !=0 || tempTransicionesInhibidasPorLectura[i][j] == 1) {
 					this.sensibilizados_signo[j][0] = 0;
 					break;
 				}
@@ -304,11 +318,12 @@ public class PetriNet
 		}
 
 		public static PetriNet createPetriNet(String _incidenciaPath, String _marcadoPath, 
-				String _relacionPath, String _cotasPath, String _automaticosPath, String _prioridadPath, String _inhibidoresPath)
+				String _relacionPath, String _cotasPath, String _automaticosPath, String _prioridadPath, String _inhibidoresPath, String _lectoresPath)
 		{
 			return new PetriNet(ManejadorTXT.getMatrix(_incidenciaPath), ManejadorTXT.getMatrix(_marcadoPath), 
 					ManejadorTXT.getMatrix(_relacionPath), ManejadorTXT.getMatrix(_cotasPath), 
-					ManejadorTXT.getMatrix(_automaticosPath), ManejadorTXT.getMatrix(_prioridadPath), ManejadorTXT.getMatrix(_inhibidoresPath));
+					ManejadorTXT.getMatrix(_automaticosPath), ManejadorTXT.getMatrix(_prioridadPath), ManejadorTXT.getMatrix(_inhibidoresPath),
+					ManejadorTXT.getMatrix(_lectoresPath));
 		}
 
 		public static int[][] producto(int[][] A, int[][] B)

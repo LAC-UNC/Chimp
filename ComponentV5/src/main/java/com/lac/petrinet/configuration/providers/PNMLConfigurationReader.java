@@ -42,6 +42,12 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 	 * Nombre de archivo para la matriz de inhibidores.
 	 */
 	private static final String INHIBIDORES = "inhibidores";
+
+	 /**
+	  *  Nombre de archivo para la matriz de lectores.
+	 */
+	private static final String LECTORES = "lectores";
+	
 	/**
 	 * Nombre de archivo para el marcado inicial.
 	 */
@@ -211,7 +217,9 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 				infoRed.getMatrizIncidenciaNegativa(),
 				pathConfig + FilenameUtils.separatorsToSystem("\\") + INCIDENCIA + "0.txt");
 		//Matriz de Inhibidores
-		generarArchivoMatrizInihibidores(infoRed.getMatrizInhibidores() ,pathConfig + FilenameUtils.separatorsToSystem(FilenameUtils.separatorsToSystem("\\")) + INHIBIDORES + "0.txt");
+		generarArchivoMatriz(infoRed.getMatrizInhibidores() ,pathConfig + FilenameUtils.separatorsToSystem(FilenameUtils.separatorsToSystem("\\")) + INHIBIDORES + "0.txt");
+		//Matriz de lectores
+		generarArchivoMatriz(infoRed.getMatrizLectores() ,pathConfig + FilenameUtils.separatorsToSystem(FilenameUtils.separatorsToSystem("\\")) + LECTORES + "0.txt");
 		//Marcado Inicial
 		generarArchivoVectorVertical(infoRed.getMarcadoInicial(),
 				pathConfig + FilenameUtils.separatorsToSystem("\\") + MARCADO + "0.txt");
@@ -273,21 +281,20 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 	}
 	
 	/**
-	 * Generador del archivo matriz de inhibidores de configuracion del procesador.
-	 * @param matrizInhibidores matriz de incidencia positiva
-	 * @param matrizNegativa matriz de incidencia negativa
+	 * Generador del archivo matriz de configuracion del procesador.
+	 * @param matriz matriz de la cual crear el archivo
 	 * @param filePath path donde crear el archivo
 	 */
-	protected void generarArchivoMatrizInihibidores(final int[][] matrizInhibidores, final String filePath) {
+	protected void generarArchivoMatriz(final int[][] matriz, final String filePath) {
 		File matrizFile = null;
 		BufferedWriter bw = null;
         try {
         	matrizFile = new File(filePath);
         	matrizFile.createNewFile();
         	bw = new BufferedWriter(new FileWriter(matrizFile));
-			for (int f = 0; f < matrizInhibidores.length; f = f + 1) {
-				for (int c = 0; c < matrizInhibidores[0].length; c = c + 1) {
-					final int valor = matrizInhibidores[f][c] ;
+			for (int f = 0; f < matriz.length; f = f + 1) {
+				for (int c = 0; c < matriz[0].length; c = c + 1) {
+					final int valor = matriz[f][c] ;
 					bw.write(String.valueOf(valor) + " ");
 				}
 				bw.newLine();
@@ -415,6 +422,9 @@ public class PNMLConfigurationReader implements ConfigurationReader {
 			bw.newLine();
 			bw.write("<" +  INHIBIDORES + ">"  +  INHIBIDORES + "X.txt" +
 					"</" +  INHIBIDORES + ">");
+			bw.newLine();
+			bw.write("<" +  LECTORES + ">"  +  LECTORES + "X.txt" +
+					"</" +  LECTORES + ">");
 			bw.newLine();
 			bw.write("<" + COTAS + ">"  + COTAS + "X.txt" +
 					"</" + COTAS + ">");

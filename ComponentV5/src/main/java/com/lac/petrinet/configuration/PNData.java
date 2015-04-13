@@ -113,6 +113,15 @@ public class PNData {
 	public int[][] getMatrizInhibidores() {
 		return this.matrizIncidenciaMarcadoInicial.getMatrizInhibidores();
 	}
+	
+	/**
+	 * Getter.
+	 * @return Matriz de Inhibidores
+	 */
+	public int[][] getMatrizLectores() {
+		return this.matrizIncidenciaMarcadoInicial.getMatrizLectores();
+	}
+	
 	/**
 	 * Getter.
 	 * @return Marcado Inicial

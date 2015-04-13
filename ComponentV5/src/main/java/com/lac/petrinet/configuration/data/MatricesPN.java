@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.lac.petrinet.configuration.data.ElementoArco.TipoArco;
+
 /**
  * En esta clase estan contenidos todos los datos necesarios para obtener la
  * matriz de incidencia de una red y la matriz de inhibidores.
@@ -27,6 +29,8 @@ public class MatricesPN {
 
 
 	private int[][] inhibidores;
+	
+	private int[][] lectores;
 
 	/**
 	 * Marcado inicial de las plazas.
@@ -174,7 +178,7 @@ public class MatricesPN {
 		//Luego se completan la matriz de incidencia positiva y negativa
 		for(Entry<String, ElementoArco> arcosValue : this.arcos.entrySet()){
 			// si es un brazo inhibidor no debo incluirlo en estas matrices, ya que tendra su propia matriz.
-			if(arcosValue.getValue().isInhibitor())
+			if(!(arcosValue.getValue().getTipo() == TipoArco.REGULAR) )
 				continue;
 			//Se determina si el peso del arco debe ir 
 			//en la matriz positiva en caso que el idSource coincida con una transicion
@@ -229,13 +233,11 @@ public class MatricesPN {
 		//Luego se completan la matriz de inhibidores
 		for(Entry<String, ElementoArco> arcosValue : this.arcos.entrySet()){
 			// si es un brazo inhibidor no debo incluirlo en estas matrices, ya que tendra su propia matriz.
-			if(! arcosValue.getValue().isInhibitor())
+			if(!(arcosValue.getValue().getTipo() == TipoArco.INHIBIDOR))
 				continue;
 
 			int peso = arcosValue.getValue().getValorElemento().intValue();
-			//Si existe en transiciones una key con
-			//el valor de idSource, implica que el peso
-			//debe ir en la matriz positiva.
+			//Si no existe en la plazas el source del brazo entonces hay un error. 
 			if (this.plazas.containsKey(arcosValue.getValue().getSource())) {
 				int posicionTarget = this.plazas.get(arcosValue.getValue().getSource()).getPosicionFilaMatriz();
 				int posicionSource = this.transiciones.get(arcosValue.getValue().getTarget());
@@ -250,7 +252,44 @@ public class MatricesPN {
 		}
 
 	}
+	/**
+	 *Metodo que completa la matriz de brazos lectores  de una red segun los 
+	 *componentes que se cargaron hasta el momento. Este metodo debe ser 
+	 *llamado una vez se termine de cargar todos los compenentes de la 
+	 *red de petri de la que se desea obtener la matriz.
+	 * @param idsMap 
+	 */
+	public void crearMatrizLectores(Map<String, String> idsMap) {
+		replaceBrokenArcIds(idsMap);
+		this.lectores = new int[this.plazas.size()][this.transiciones.size()];
+		//Pone a cero todos los valores de los arreglos
+		for (int f = 0; f < this.plazas.size(); f = f + 1) {
+			for (int c = 0; c < this.transiciones.size(); c = c + 1) {
+				this.lectores[f][c] = 0;
+			}
+		}
+		//Luego se completan la matriz de inhibidores
+		for(Entry<String, ElementoArco> arcosValue : this.arcos.entrySet()){
+			// si es un brazo inhibidor no debo incluirlo en estas matrices, ya que tendra su propia matriz.
+			if(!(arcosValue.getValue().getTipo() == TipoArco.LECTOR))
+				continue;
 
+			int peso = arcosValue.getValue().getValorElemento().intValue();
+			//Si no existe en la plazas el source del brazo entonces hay un error. 
+			if (this.plazas.containsKey(arcosValue.getValue().getSource())) {
+				int posicionTarget = this.plazas.get(arcosValue.getValue().getSource()).getPosicionFilaMatriz();
+				int posicionSource = this.transiciones.get(arcosValue.getValue().getTarget());
+				//FILA = numero de Plaza de la plaza indicada por el idTarget del arco actual.
+				//COLUMNA = numero de transicion de la transicion indicada por el idSource del arco atual.
+				this.lectores[posicionTarget][posicionSource] = peso;
+			}
+			else {
+				System.out.println("no se encontro idSource: " +
+						arcosValue.getValue().getSource() + ", del arco: " + arcosValue.getKey());
+			}
+		}
+
+	}
 
 
 	/**
@@ -288,8 +327,13 @@ public class MatricesPN {
 	public final HashMap<String, Integer> getTransiciones() {
 		return this.transiciones;
 	}
+	
 	public int[][] getMatrizInhibidores() {
 		return inhibidores;
+	}
+	
+	public int[][] getMatrizLectores() {
+		return lectores;
 	}
 	/**
 	 * Imprime todas las transiciones, mostrando su  nombre y numero de columna.

@@ -7,6 +7,10 @@ package com.lac.petrinet.configuration.data;
  */
 
 public class ElementoArco extends AbstractElemento implements Cloneable{
+	public enum TipoArco{
+		INHIBIDOR, LECTOR, REGULAR
+	}
+	
 	/**
 	 * plaza o transicion de inicio del arco.
 	 */
@@ -16,13 +20,13 @@ public class ElementoArco extends AbstractElemento implements Cloneable{
 	 */
 	private String target;
 	
-	private boolean isInhibitor;
+	private TipoArco tipo;
 	/**
 	 * Class contructor.
 	 */
 	public ElementoArco() {
 		super();
-		isInhibitor = false;
+		this.tipo = TipoArco.REGULAR;
 		this.reset();
 	}
 	/* (non-Javadoc)
@@ -51,7 +55,7 @@ public class ElementoArco extends AbstractElemento implements Cloneable{
 		super.reset();
 		this.source = null;
 		this.target = null;
-		this.isInhibitor=false;
+		this.tipo = TipoArco.REGULAR;
 		this.valorElemento = Integer.valueOf(1);
 	}
 	
@@ -59,19 +63,16 @@ public class ElementoArco extends AbstractElemento implements Cloneable{
 	public ElementoArco clone(){
 		ElementoArco nuevoArco = new ElementoArco();
 		nuevoArco.setId(this.id);
-		nuevoArco.setInhibitor(this.isInhibitor);
+		nuevoArco.setTipo(this.tipo);
 		nuevoArco.setSource(this.source);
 		nuevoArco.setTarget(this.target);
 		nuevoArco.setValorElemento(this.valorElemento);
 		
 		return nuevoArco;
 	}
-	public boolean isInhibitor() {
-		return isInhibitor;
-	}
-	public void setInhibitor(boolean isInhibitor) {
-		this.isInhibitor = isInhibitor;
-	}
+
+	
+	
 	public String getSource() {
 		return source;
 	}
@@ -83,5 +84,11 @@ public class ElementoArco extends AbstractElemento implements Cloneable{
 	}
 	public void setTarget(String target) {
 		this.target = target;
+	}
+	public TipoArco getTipo() {
+		return tipo;
+	}
+	public void setTipo(TipoArco tipo) {
+		this.tipo = tipo;
 	}
 }

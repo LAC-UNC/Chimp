@@ -9,8 +9,9 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.lac.petrinet.configuration.data.AbstractElemento;
 import com.lac.petrinet.configuration.data.ElementoArco;
-import com.lac.petrinet.configuration.data.MatricesPN;
+import com.lac.petrinet.configuration.data.ElementoArco.TipoArco;
 import com.lac.petrinet.configuration.data.ElementoPlaza;
+import com.lac.petrinet.configuration.data.MatricesPN;
 import com.lac.petrinet.configuration.data.Transicion;
 
 /**
@@ -91,6 +92,7 @@ public class ManejadorXMLMatrizYMarcado extends DefaultHandler {
 	public void endDocument() throws SAXException {
 		this.matriz.crearMatrizPositivaNegativa(idsMap);
 		this.matriz.crearMatrizInhibidores(idsMap);
+		this.matriz.crearMatrizLectores(idsMap);
 	}
 	@Override
 	public void startElement(final String uri, final String localName, final String name,
@@ -131,6 +133,14 @@ public class ManejadorXMLMatrizYMarcado extends DefaultHandler {
 				break;
 			case "type":
 				this.isType = true;
+				String value = attributes.getValue("value");
+				if(value.compareToIgnoreCase("test")== 0){
+					((ElementoArco)this.actual).setTipo(TipoArco.LECTOR);
+				}else if (value.compareToIgnoreCase("inhibitor") == 0){
+					((ElementoArco)this.actual).setTipo(TipoArco.INHIBIDOR);
+				}else{
+					throw new SAXException("Tipo de Arco no soportado: " + value);
+				}
 				break;
 			
 			default:
@@ -170,7 +180,15 @@ public class ManejadorXMLMatrizYMarcado extends DefaultHandler {
 			}
 		}
 		else if(this.isType && this.isActualArco == true){
-			((ElementoArco)this.actual).setInhibitor(true);
+//			String value = String.valueOf(ch, start, length);
+//			if(value.compareToIgnoreCase("test")== 0){
+//				((ElementoArco)this.actual).setTipo(TipoArco.LECTOR);
+//			}else if (value.compareToIgnoreCase("inhibitor") == 0){
+//				((ElementoArco)this.actual).setTipo(TipoArco.INHIBIDOR);
+//			}else{
+//				throw new SAXException("Tipo de Arco no soportado: " + value);
+//			}
+			
 			this.isType = false;
 			this.isActualArco = false;
 			
