@@ -26,8 +26,9 @@ public class PetriNet {
 	PNData pnData;
 	private List<List<InformedTransition>>  transitionGroupList = new ArrayList<List<InformedTransition>>();
 	List<Thread> listenerThreads = new ArrayList<Thread>();
-	private HashMap<String, String> inputEventsMap = null;
-	private HashMap<String, String> outputEventsMap;
+	private final HashMap<String, String> inputEventsMap = new HashMap<String, String>();
+	private final HashMap<String, String> outputEventsMap = new HashMap<String, String>();
+	private boolean started = false;
 
 	public PetriNet(){
 		
@@ -38,22 +39,28 @@ public class PetriNet {
 	}
 	
 	public void startListening(){
-		if(transitionGroupList == null || transitionGroupList.isEmpty()){
-			listenAll();
-		}
-		else{
-			transitionGroupListening();
-			listenNonGroupedTransitions();
+		if(!this.started ) {
+			if(transitionGroupList == null || transitionGroupList.isEmpty()){
+				listenAll();
+			}
+			else{
+				transitionGroupListening();
+				listenNonGroupedTransitions();
+			}
+			this.started = true;
 		}
 	}
 	
 	public void startListening(int numberOfCicles){
-		if(transitionGroupList == null || transitionGroupList.isEmpty()){
-			listenAll(numberOfCicles);
-		}
-		else{
-			transitionGroupListening(numberOfCicles);
-			listenNonGroupedTransitions();
+		if(!this.started ) {
+			if(transitionGroupList == null || transitionGroupList.isEmpty()){
+				listenAll(numberOfCicles);
+			}
+			else{
+				transitionGroupListening(numberOfCicles);
+				listenNonGroupedTransitions();
+			}
+			this.started = true;
 		}
 	}
 	
@@ -217,26 +224,22 @@ public class PetriNet {
 	}*/
 	
 	public void addInputEventAlias(String eventAlias, String transitionName) throws PetriNetException {
-		if(this.inputEventsMap == null) {
-			this.inputEventsMap = new HashMap<String, String>();
-		}
-		
-		if(this.containFired(transitionName)) {
-			this.inputEventsMap.put(eventAlias, transitionName);
-		} else {
-			throw new PetriNetException("There is no fired transition named: " + transitionName);
+		if(!this.started) {
+			if(this.containFired(transitionName)) {
+				this.inputEventsMap.put(eventAlias, transitionName);
+			} else {
+				throw new PetriNetException("There is no fired transition named: " + transitionName);
+			}
 		}
 	}
 	
 	public void addOutputEventAlias(String eventAlias, String transitionName) throws PetriNetException {
-		if(this.outputEventsMap == null) {
-			this.outputEventsMap = new HashMap<String, String>();
-		}
-		
-		if(this.containInformed(transitionName)) {
-			this.outputEventsMap.put(eventAlias, transitionName);
-		} else {
-			throw new PetriNetException("There is no informed transition named: " + transitionName);
+		if(!this.started) {
+			if(this.containInformed(transitionName)) {
+				this.outputEventsMap.put(eventAlias, transitionName);
+			} else {
+				throw new PetriNetException("There is no informed transition named: " + transitionName);
+			}
 		}
 	}
 
